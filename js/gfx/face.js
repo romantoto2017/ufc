@@ -8,6 +8,7 @@ export const SKIN = [
 ];
 export const HAIR = {
   negro: '#1d1a19', castano: '#5a3a22', castano_claro: '#8a6a42', rubio: '#c9a14a', pelirrojo: '#a2482a', gris: '#9a9a9a',
+  platino: '#efe3b8', rosa: '#ff5fae', verde: '#3fd17a', azul: '#3d7bff', morado: '#9b5cff', rojo: '#d23a2a',
 };
 const OUTLINE = '#22140d';
 const MOUTH = '#7a3b2e';
@@ -49,6 +50,8 @@ export function portraitGrid(face = {}, opts = {}) {
 
   // Pelo largo por detrás
   if (face.pelo === 'largo') for (let y = 8; y < 27; y++) for (let x = CX - 10; x < CX + 10; x++) set(x, y, shade(hair, 0.8));
+  if (face.pelo === 'mullet') for (let y = 12; y < 28; y++) for (let x = CX - 10; x < CX + 10; x++) if (y > 18 || Math.abs(x + 0.5 - CX) > 7) set(x, y, shade(hair, 0.8));
+  if (face.pelo === 'rastas') for (let y = 8; y < 30; y++) for (let x = CX - 11; x < CX + 11; x++) if ((x + (y >> 2)) % 3 !== 0) set(x, y, (x % 3 === 0) ? shade(hair, 0.65) : shade(hair, 0.85));
   // Torso y cuello
   for (let y = 27; y < 32; y++) for (let x = 4; x < 28; x++) set(x, y, (x > 22 || y > 30) ? skinD : skin);
   for (let y = 22; y < 29; y++) for (let x = 12; x < 20; x++) set(x, y, x > 17 ? skinD : skin);
@@ -114,12 +117,31 @@ export function portraitGrid(face = {}, opts = {}) {
   } else if (p === 'medio' || p === 'largo') {
     for (let y = TOP - 2; y < 11; y++) { const hw = hwAt(Math.max(y, TOP)) + 1 - (y < TOP ? 1 : 0); hairRow(y, CX - hw, CX + hw); }
     for (let y = 11; y < 17; y++) { set(CX - hwAt(y) - 1, y, hair); set(CX - hwAt(y), y, hair); set(CX + hwAt(y), y, hair); set(CX + hwAt(y) - 1, y, hair); }
+  } else if (p === 'mullet') {
+    for (let y = TOP - 2; y < 10; y++) { const hw = hwAt(Math.max(y, TOP)) + (y < TOP ? 0 : 1); hairRow(y, CX - hw, CX + hw); }
+    for (let y = 10; y < 15; y++) { set(CX - hwAt(y) - 1, y, hair); set(CX + hwAt(y), y, hair); }
+  } else if (p === 'rastas') {
+    for (let y = TOP - 2; y < 10; y++) { const hw = hwAt(Math.max(y, TOP)) + 1; for (let x = CX - hw; x < CX + hw; x++) set(x, y, (x + y) % 3 === 0 ? shade(hair, 0.6) : hair); }
+    for (let y = 10; y < 22; y++) { for (const x of [CX - hwAt(y) - 1, CX - hwAt(y), CX + hwAt(y) - 1, CX + hwAt(y)]) if (y % 3 !== 0) set(x, y, hair); }
   } else if (p === 'mohicano') {
     for (let y = 2; y < 11; y++) hairRow(y, 14, 18);
   } else if (p === 'rizado') {
     for (let y = TOP - 3; y < 11; y++) { const hw = hwAt(Math.max(y, TOP)) + 1; for (let x = CX - hw; x < CX + hw; x++) if (y >= TOP - 1 || (x + y) % 3 !== 0) set(x, y, (x + y) % 4 === 0 ? shade(hair, 1.3) : hair); }
   } else if (p === 'calvo') {
     set(12, 8, '#ffffff'); set(13, 8, shade(skin, 1.08));
+  }
+  // Tintura en dos colores (p. ej. el pelo de colores de O'Malley): alterna mechones.
+  if (face.colorPelo2 && HAIR[face.colorPelo2]) {
+    const c2 = HAIR[face.colorPelo2];
+    for (let y = 0; y < 16; y++) for (let x = 0; x < W; x++) if (g[y][x] === hair && ((x >> 1) + (y >> 1)) % 2 === 0) set(x, y, c2);
+  }
+  // Tatuajes en hombros y pecho
+  if (face.tatuajes) {
+    const ink = '#2c3a4a';
+    // Diseño tribal en los hombros y una pieza en el pecho
+    const tribal = [[4, 28], [5, 28], [6, 28], [7, 29], [7, 30], [6, 31], [5, 30], [4, 30]];
+    for (const [x, y] of tribal) { set(x, y, ink); set(31 - x, y, ink); }
+    for (const [x, y] of [[13, 29], [14, 30], [15, 29], [16, 29], [17, 30], [18, 29]]) set(x, y, ink);
   }
   // Daño visible
   if (hurt > 0.35) { set(12, 13, '#b22'); set(20, 16, '#c8434f'); }
@@ -190,7 +212,10 @@ export function headSmallGrid(face = {}, hurt = 0) {
   else if (p === 'largo') { rowHair(0, 2, 8); rowHair(1, 1, 9); rowHair(2, 1, 6); for (let y = 3; y < 10; y++) { set(1, y, hair); set(0, y + 1, hair); } }
   else if (p === 'mohicano') { rowHair(0, 3, 7); set(2, 1, hair); set(7, 1, hair); }
   else if (p === 'rizado') { rowHair(0, 2, 8); rowHair(1, 1, 9); rowHair(2, 1, 7); set(1, 3, hair); set(1, 4, hair); }
+  else if (p === 'mullet') { rowHair(0, 2, 8); rowHair(1, 1, 9); rowHair(2, 1, 6); for (let y = 3; y < 10; y++) { set(1, y, hair); set(0, y + 1, hair); } }
+  else if (p === 'rastas') { rowHair(0, 2, 8); rowHair(1, 1, 9); rowHair(2, 1, 6); for (let y = 3; y < 11; y++) { set(1, y, hair); if (y % 2) set(0, y, hair); } }
   else if (p === 'calvo') { set(4, 1, shade(skin, 1.12)); }
+  if (face.colorPelo2 && HAIR[face.colorPelo2]) for (let y = 0; y < 4; y++) for (let x = 0; x < W; x++) if (g[y][x] === hair && (x + y) % 2 === 0) set(x, y, HAIR[face.colorPelo2]);
   // Contorno
   const snap = g.map(r => r.slice());
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {

@@ -1,6 +1,6 @@
 // Service worker: funciona sin conexión. Los JSON de /data y /lang usan red primero
 // para que los cambios que edites se vean al recargar; el resto, caché primero.
-const VERSION = 'pixelmma-v2';
+const VERSION = 'pixelmma-v3';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/main.js', 'js/store.js', 'js/i18n.js', 'js/audio.js', 'js/ratings.js', 'js/sim.js',

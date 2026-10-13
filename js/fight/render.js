@@ -213,7 +213,9 @@ export class Renderer {
     ctx.fillStyle = '#8e8d86'; ctx.fillRect(x0, 130, x1 - x0, 2);
     // Logo en la lona
     if (this.logo) {
-      const lw = 90, lh = Math.round(lw * this.logo.height / this.logo.width * 0.45);
+      // Encajar en 90x60 y aplastar en perspectiva sobre la lona
+      const sc = Math.min(90 / this.logo.width, 60 / this.logo.height);
+      const lw = Math.round(this.logo.width * sc), lh = Math.round(this.logo.height * sc * 0.45);
       ctx.globalAlpha = 0.85;
       ctx.drawImage(this.logo, ARENA_W / 2 - lw / 2, 158 - lh / 2, lw, lh);
       ctx.globalAlpha = 1;
@@ -314,6 +316,14 @@ export class Renderer {
     line(ctx, hx, hy, nx, ny, 10, OUT);
     line(ctx, hx, hy, nx, ny, 8, bodyDmg > 0.5 ? mixHex(skin, '#a3394a', (bodyDmg - 0.5)) : skin);
     seg('sb', 'sf', 3, skin, false);
+    // Tatuajes (pecho y brazos)
+    if (f.data.cara?.tatuajes) {
+      const ink = '#2c3a4a';
+      const lerpPt = (k1, k2, t) => { const [x1, y1] = pt(k1), [x2, y2] = pt(k2); return [Math.round(x1 + (x2 - x1) * t), Math.round(y1 + (y2 - y1) * t)]; };
+      ctx.fillStyle = ink;
+      for (const t of [0.15, 0.3]) { const [x, y] = lerpPt('nk', 'hp', t); ctx.fillRect(x - 2, y, 2, 1); ctx.fillRect(x + 1, y + 1, 1, 2); }
+      for (const t of [0.3, 0.6]) { const [x, y] = lerpPt('sb', 'eb', t); ctx.fillRect(x, y, 1, 2); }
+    }
     // Shorts
     box('hp', 10, 6, corner.shorts);
     { const [x, y] = pt('hp'); ctx.fillStyle = corner.trim; ctx.fillRect(x - 5, y - 3, 10, 1); }
@@ -329,6 +339,7 @@ export class Renderer {
     drawHeadSmall(ctx, f.data.cara, hdx, hdy, lying ? dir : dir, f.dmg.head / 100);
     // Brazo delantero
     seg('sf', 'ef', 3, skin); seg('ef', 'hf', 3, skin); box('hf', 5, 5, corner.glove);
+    if (f.data.cara?.tatuajes) { const [x0, y0] = pt('sf'), [x1, y1] = pt('ef'); ctx.fillStyle = '#2c3a4a'; ctx.fillRect(Math.round((x0 + x1) / 2), Math.round((y0 + y1) / 2), 2, 2); ctx.fillRect(x1, y1, 1, 1); }
     { const [x, y] = pt('hf'); ctx.fillStyle = '#111'; ctx.fillRect(x - 2, y + 1, 5, 1); }
   }
 

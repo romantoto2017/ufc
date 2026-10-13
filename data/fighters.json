@@ -85,12 +85,12 @@
    },
    "cara": {
     "piel": 2,
-    "pelo": "medio",
+    "pelo": "fade",
     "colorPelo": "negro",
     "barba": "bigote",
-    "cejas": "finas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -142,12 +142,13 @@
    },
    "cara": {
     "piel": 4,
-    "pelo": "rizado",
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "finas",
+    "barba": "corta",
+    "cejas": "normales",
     "cabeza": "redonda",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -199,12 +200,13 @@
    },
    "cara": {
     "piel": 2,
-    "pelo": "corto",
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "candado",
-    "cejas": "normales",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "barba": "completa",
+    "cejas": "gruesas",
+    "cabeza": "redonda",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -255,13 +257,14 @@
     "velocidad": 80
    },
    "cara": {
-    "piel": 0,
-    "pelo": "corto",
+    "piel": 1,
+    "pelo": "medio",
     "colorPelo": "castano",
-    "barba": "candado",
+    "barba": "bigote",
     "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -312,13 +315,13 @@
     "velocidad": 79
    },
    "cara": {
-    "piel": 0,
-    "pelo": "fade",
+    "piel": 1,
+    "pelo": "corto",
     "colorPelo": "negro",
     "barba": "ninguna",
-    "cejas": "gruesas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -369,13 +372,13 @@
     "velocidad": 82
    },
    "cara": {
-    "piel": 1,
+    "piel": 2,
     "pelo": "corto",
-    "colorPelo": "castano",
+    "colorPelo": "negro",
     "barba": "sombra",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cejas": "normales",
+    "cabeza": "redonda",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -540,11 +543,11 @@
    "cara": {
     "piel": 1,
     "pelo": "corto",
-    "colorPelo": "castano",
-    "barba": "bigote",
+    "colorPelo": "negro",
+    "barba": "sombra",
     "cejas": "normales",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -595,13 +598,13 @@
     "velocidad": 73
    },
    "cara": {
-    "piel": 1,
-    "pelo": "medio",
+    "piel": 2,
+    "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "bigote",
-    "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "barba": "completa",
+    "cejas": "gruesas",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -652,13 +655,14 @@
     "velocidad": 74
    },
    "cara": {
-    "piel": 3,
-    "pelo": "rizado",
+    "piel": 2,
+    "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "normales",
+    "barba": "candado",
+    "cejas": "gruesas",
     "cabeza": "redonda",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -710,13 +714,13 @@
     "velocidad": 78
    },
    "cara": {
-    "piel": 1,
-    "pelo": "medio",
+    "piel": 2,
+    "pelo": "rapado",
     "colorPelo": "negro",
     "barba": "ninguna",
     "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "cuadrada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -1057,13 +1061,13 @@
     "velocidad": 61
    },
    "cara": {
-    "piel": 2,
+    "piel": 1,
     "pelo": "corto",
-    "colorPelo": "castano",
+    "colorPelo": "negro",
     "barba": "completa",
-    "cejas": "normales",
+    "cejas": "gruesas",
     "cabeza": "ovalada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -1228,13 +1232,14 @@
     "velocidad": 63
    },
    "cara": {
-    "piel": 1,
-    "pelo": "rapado",
-    "colorPelo": "castano",
+    "piel": 2,
+    "pelo": "fade",
+    "colorPelo": "negro",
     "barba": "sombra",
-    "cejas": "gruesas",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cejas": "normales",
+    "cabeza": "redonda",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -1282,13 +1287,14 @@
     "velocidad": 56
    },
    "cara": {
-    "piel": 5,
-    "pelo": "fade",
-    "colorPelo": "negro",
-    "barba": "sombra",
-    "cejas": "finas",
+    "piel": 1,
+    "pelo": "rapado",
+    "colorPelo": "castano",
+    "barba": "bigote",
+    "cejas": "normales",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -1510,13 +1516,13 @@
     "velocidad": 63
    },
    "cara": {
-    "piel": 4,
+    "piel": 1,
     "pelo": "corto",
-    "colorPelo": "negro",
-    "barba": "completa",
-    "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "colorPelo": "castano",
+    "barba": "sombra",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -1622,13 +1628,14 @@
     "velocidad": 61
    },
    "cara": {
-    "piel": 1,
-    "pelo": "corto",
+    "piel": 2,
+    "pelo": "largo",
     "colorPelo": "negro",
     "barba": "corta",
     "cejas": "normales",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -1680,13 +1687,14 @@
     "velocidad": 95
    },
    "cara": {
-    "piel": 2,
-    "pelo": "rapado",
+    "piel": 1,
+    "pelo": "corto",
     "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "gruesas",
+    "barba": "sombra",
+    "cejas": "normales",
     "cabeza": "redonda",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -1734,13 +1742,13 @@
     "velocidad": 88
    },
    "cara": {
-    "piel": 2,
-    "pelo": "rapado",
-    "colorPelo": "castano",
+    "piel": 1,
+    "pelo": "calvo",
+    "colorPelo": "negro",
     "barba": "corta",
     "cejas": "gruesas",
     "cabeza": "redonda",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -1792,12 +1800,12 @@
    },
    "cara": {
     "piel": 1,
-    "pelo": "medio",
-    "colorPelo": "castano",
+    "pelo": "fade",
+    "colorPelo": "negro",
     "barba": "ninguna",
     "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -1848,13 +1856,16 @@
     "velocidad": 87
    },
    "cara": {
-    "piel": 1,
-    "pelo": "corto",
-    "colorPelo": "castano",
-    "barba": "ninguna",
+    "piel": 0,
+    "pelo": "medio",
+    "colorPelo": "rosa",
+    "barba": "bigote",
     "cejas": "finas",
     "cabeza": "ovalada",
-    "aproximada": true
+    "colorPelo2": "verde",
+    "colorBarba": "castano",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -1906,13 +1917,13 @@
     "velocidad": 82
    },
    "cara": {
-    "piel": 0,
+    "piel": 2,
     "pelo": "corto",
-    "colorPelo": "castano",
-    "barba": "completa",
+    "colorPelo": "negro",
+    "barba": "sombra",
     "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -1968,9 +1979,9 @@
     "pelo": "corto",
     "colorPelo": "negro",
     "barba": "completa",
-    "cejas": "finas",
+    "cejas": "gruesas",
     "cabeza": "ovalada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -2021,13 +2032,13 @@
     "velocidad": 79
    },
    "cara": {
-    "piel": 3,
-    "pelo": "calvo",
-    "colorPelo": "negro",
-    "barba": "bigote",
-    "cejas": "finas",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "piel": 1,
+    "pelo": "corto",
+    "colorPelo": "castano",
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -2137,12 +2148,12 @@
    },
    "cara": {
     "piel": 2,
-    "pelo": "corto",
-    "colorPelo": "castano",
-    "barba": "candado",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "pelo": "fade",
+    "colorPelo": "negro",
+    "barba": "ninguna",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -2367,13 +2378,13 @@
     "velocidad": 72
    },
    "cara": {
-    "piel": 2,
-    "pelo": "corto",
-    "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "piel": 5,
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -2482,13 +2493,14 @@
     "velocidad": 69
    },
    "cara": {
-    "piel": 3,
-    "pelo": "fade",
+    "piel": 2,
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "completa",
-    "cejas": "finas",
+    "barba": "corta",
+    "cejas": "normales",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -2540,12 +2552,12 @@
    },
    "cara": {
     "piel": 1,
-    "pelo": "corto",
-    "colorPelo": "castano_claro",
-    "barba": "corta",
+    "pelo": "mullet",
+    "colorPelo": "castano",
+    "barba": "bigote",
     "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -2593,13 +2605,14 @@
     "velocidad": 65
    },
    "cara": {
-    "piel": 0,
-    "pelo": "corto",
-    "colorPelo": "negro",
-    "barba": "sombra",
-    "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "piel": 1,
+    "pelo": "fade",
+    "colorPelo": "castano_claro",
+    "barba": "ninguna",
+    "cejas": "finas",
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -2822,13 +2835,14 @@
     "velocidad": 55
    },
    "cara": {
-    "piel": 4,
-    "pelo": "rizado",
+    "piel": 2,
+    "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "sombra",
-    "cejas": "finas",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "barba": "bigote",
+    "cejas": "normales",
+    "cabeza": "redonda",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -3161,13 +3175,13 @@
     "velocidad": 61
    },
    "cara": {
-    "piel": 2,
+    "piel": 1,
     "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "finas",
+    "barba": "completa",
+    "cejas": "gruesas",
     "cabeza": "ovalada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -3277,13 +3291,13 @@
     "velocidad": 87
    },
    "cara": {
-    "piel": 2,
-    "pelo": "calvo",
-    "colorPelo": "negro",
-    "barba": "candado",
+    "piel": 1,
+    "pelo": "corto",
+    "colorPelo": "castano",
+    "barba": "ninguna",
     "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "ancha",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -3332,12 +3346,12 @@
    },
    "cara": {
     "piel": 1,
-    "pelo": "calvo",
+    "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "normales",
+    "barba": "completa",
+    "cejas": "gruesas",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -3391,10 +3405,11 @@
     "piel": 2,
     "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "finas",
+    "barba": "completa",
+    "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -3442,13 +3457,13 @@
     "velocidad": 79
    },
    "cara": {
-    "piel": 1,
-    "pelo": "medio",
-    "colorPelo": "castano",
-    "barba": "sombra",
-    "cejas": "gruesas",
+    "piel": 3,
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "corta",
+    "cejas": "normales",
     "cabeza": "redonda",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -3499,13 +3514,13 @@
     "velocidad": 78
    },
    "cara": {
-    "piel": 1,
-    "pelo": "calvo",
-    "colorPelo": "pelirrojo",
+    "piel": 4,
+    "pelo": "rastas",
+    "colorPelo": "negro",
     "barba": "completa",
-    "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -3553,13 +3568,14 @@
     "velocidad": 84
    },
    "cara": {
-    "piel": 1,
-    "pelo": "corto",
+    "piel": 2,
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "completa",
+    "barba": "bigote",
     "cejas": "normales",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -3613,12 +3629,12 @@
    },
    "cara": {
     "piel": 1,
-    "pelo": "calvo",
+    "pelo": "corto",
     "colorPelo": "castano",
-    "barba": "corta",
+    "barba": "sombra",
     "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -4066,13 +4082,14 @@
     "velocidad": 71
    },
    "cara": {
-    "piel": 1,
+    "piel": 2,
     "pelo": "fade",
     "colorPelo": "negro",
-    "barba": "ninguna",
+    "barba": "sombra",
     "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -4239,13 +4256,14 @@
     "velocidad": 57
    },
    "cara": {
-    "piel": 4,
-    "pelo": "rizado",
-    "colorPelo": "castano",
+    "piel": 2,
+    "pelo": "rapado",
+    "colorPelo": "negro",
     "barba": "corta",
-    "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cejas": "gruesas",
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -4469,13 +4487,14 @@
     "velocidad": 61
    },
    "cara": {
-    "piel": 3,
-    "pelo": "medio",
+    "piel": 1,
+    "pelo": "corto",
     "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "gruesas",
+    "barba": "sombra",
+    "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -4760,11 +4779,11 @@
    "cara": {
     "piel": 1,
     "pelo": "corto",
-    "colorPelo": "rubio",
-    "barba": "sombra",
-    "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "colorPelo": "negro",
+    "barba": "completa",
+    "cejas": "gruesas",
+    "cabeza": "cuadrada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -4981,13 +5000,13 @@
     "velocidad": 89
    },
    "cara": {
-    "piel": 2,
+    "piel": 1,
     "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "completa",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "barba": "corta",
+    "cejas": "gruesas",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -5038,13 +5057,14 @@
     "velocidad": 79
    },
    "cara": {
-    "piel": 3,
-    "pelo": "corto",
+    "piel": 2,
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "ninguna",
+    "barba": "sombra",
     "cejas": "normales",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -5095,13 +5115,14 @@
     "velocidad": 85
    },
    "cara": {
-    "piel": 2,
-    "pelo": "calvo",
-    "colorPelo": "castano_claro",
-    "barba": "candado",
-    "cejas": "finas",
-    "cabeza": "ovalada",
-    "aproximada": true
+    "piel": 3,
+    "pelo": "corto",
+    "colorPelo": "negro",
+    "barba": "sombra",
+    "cejas": "normales",
+    "cabeza": "redonda",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -5152,13 +5173,13 @@
     "velocidad": 80
    },
    "cara": {
-    "piel": 2,
-    "pelo": "corto",
+    "piel": 0,
+    "pelo": "mullet",
     "colorPelo": "castano_claro",
-    "barba": "ninguna",
-    "cejas": "gruesas",
-    "cabeza": "ovalada",
-    "aproximada": true
+    "barba": "sombra",
+    "cejas": "normales",
+    "cabeza": "redonda",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -5261,12 +5282,12 @@
    },
    "cara": {
     "piel": 1,
-    "pelo": "corto",
-    "colorPelo": "rubio",
-    "barba": "ninguna",
-    "cejas": "finas",
-    "cabeza": "ovalada",
-    "aproximada": true
+    "pelo": "rapado",
+    "colorPelo": "castano",
+    "barba": "completa",
+    "cejas": "normales",
+    "cabeza": "cuadrada",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -5314,13 +5335,14 @@
     "velocidad": 72
    },
    "cara": {
-    "piel": 4,
-    "pelo": "rapado",
+    "piel": 2,
+    "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "bigote",
+    "barba": "corta",
     "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -5368,13 +5390,13 @@
     "velocidad": 72
    },
    "cara": {
-    "piel": 2,
+    "piel": 1,
     "pelo": "rapado",
-    "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "finas",
+    "colorPelo": "castano",
+    "barba": "sombra",
+    "cejas": "normales",
     "cabeza": "redonda",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -5537,13 +5559,13 @@
     "velocidad": 73
    },
    "cara": {
-    "piel": 2,
+    "piel": 1,
     "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "ninguna",
+    "barba": "corta",
     "cejas": "normales",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -5652,10 +5674,10 @@
     "piel": 1,
     "pelo": "rapado",
     "colorPelo": "castano",
-    "barba": "completa",
+    "barba": "corta",
     "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cabeza": "redonda",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -5991,13 +6013,13 @@
     "velocidad": 65
    },
    "cara": {
-    "piel": 3,
-    "pelo": "calvo",
-    "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "finas",
+    "piel": 0,
+    "pelo": "medio",
+    "colorPelo": "pelirrojo",
+    "barba": "corta",
+    "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -6448,13 +6470,13 @@
     "velocidad": 89
    },
    "cara": {
-    "piel": 2,
+    "piel": 1,
     "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "finas",
+    "barba": "completa",
+    "cejas": "gruesas",
     "cabeza": "ovalada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -6502,13 +6524,14 @@
     "velocidad": 88
    },
    "cara": {
-    "piel": 3,
-    "pelo": "corto",
+    "piel": 2,
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "corta",
+    "barba": "bigote",
     "cejas": "normales",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -6556,13 +6579,14 @@
     "velocidad": 86
    },
    "cara": {
-    "piel": 4,
-    "pelo": "fade",
-    "colorPelo": "negro",
-    "barba": "corta",
-    "cejas": "finas",
+    "piel": 1,
+    "pelo": "corto",
+    "colorPelo": "castano",
+    "barba": "sombra",
+    "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -6613,13 +6637,13 @@
     "velocidad": 81
    },
    "cara": {
-    "piel": 2,
-    "pelo": "mohicano",
+    "piel": 0,
+    "pelo": "fade",
     "colorPelo": "castano",
-    "barba": "sombra",
-    "cejas": "gruesas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "barba": "ninguna",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -6671,12 +6695,12 @@
    },
    "cara": {
     "piel": 3,
-    "pelo": "calvo",
+    "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "completa",
-    "cejas": "finas",
+    "barba": "sombra",
+    "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -6729,13 +6753,13 @@
     "velocidad": 81
    },
    "cara": {
-    "piel": 1,
-    "pelo": "calvo",
-    "colorPelo": "negro",
-    "barba": "candado",
+    "piel": 0,
+    "pelo": "rapado",
+    "colorPelo": "castano",
+    "barba": "corta",
     "cejas": "normales",
     "cabeza": "redonda",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -6784,12 +6808,12 @@
    },
    "cara": {
     "piel": 2,
-    "pelo": "calvo",
+    "pelo": "rapado",
     "colorPelo": "negro",
     "barba": "corta",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -6842,12 +6866,12 @@
    },
    "cara": {
     "piel": 2,
-    "pelo": "medio",
-    "colorPelo": "castano",
-    "barba": "bigote",
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "completa",
     "cejas": "gruesas",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cabeza": "redonda",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -6898,13 +6922,14 @@
     "velocidad": 78
    },
    "cara": {
-    "piel": 1,
-    "pelo": "corto",
-    "colorPelo": "rubio",
-    "barba": "bigote",
-    "cejas": "finas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "piel": 5,
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -7010,13 +7035,13 @@
     "velocidad": 73
    },
    "cara": {
-    "piel": 1,
-    "pelo": "medio",
-    "colorPelo": "castano",
-    "barba": "sombra",
+    "piel": 4,
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "corta",
     "cejas": "normales",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -7125,12 +7150,12 @@
    },
    "cara": {
     "piel": 5,
-    "pelo": "corto",
-    "colorPelo": "castano",
+    "pelo": "calvo",
+    "colorPelo": "negro",
     "barba": "sombra",
     "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "ancha",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -7178,13 +7203,13 @@
     "velocidad": 73
    },
    "cara": {
-    "piel": 0,
-    "pelo": "rapado",
-    "colorPelo": "pelirrojo",
-    "barba": "ninguna",
-    "cejas": "finas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "piel": 1,
+    "pelo": "corto",
+    "colorPelo": "castano",
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "cuadrada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -7236,13 +7261,14 @@
     "velocidad": 74
    },
    "cara": {
-    "piel": 5,
+    "piel": 4,
     "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "finas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "barba": "bigote",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -7401,13 +7427,13 @@
     "velocidad": 66
    },
    "cara": {
-    "piel": 2,
-    "pelo": "medio",
+    "piel": 1,
+    "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "candado",
+    "barba": "completa",
     "cejas": "gruesas",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -7459,12 +7485,12 @@
    },
    "cara": {
     "piel": 4,
-    "pelo": "calvo",
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "finas",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "barba": "sombra",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -7570,12 +7596,13 @@
    },
    "cara": {
     "piel": 1,
-    "pelo": "fade",
-    "colorPelo": "castano_claro",
-    "barba": "bigote",
+    "pelo": "medio",
+    "colorPelo": "negro",
+    "barba": "completa",
     "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -7790,11 +7817,12 @@
    "cara": {
     "piel": 1,
     "pelo": "medio",
-    "colorPelo": "negro",
-    "barba": "ninguna",
+    "colorPelo": "castano",
+    "barba": "corta",
     "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -7905,10 +7933,12 @@
     "piel": 1,
     "pelo": "corto",
     "colorPelo": "castano",
-    "barba": "sombra",
-    "cejas": "finas",
+    "barba": "completa",
+    "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "colorBarba": "pelirrojo",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8013,13 +8043,14 @@
     "velocidad": 92
    },
    "cara": {
-    "piel": 5,
-    "pelo": "rizado",
-    "colorPelo": "negro",
-    "barba": "corta",
-    "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "piel": 0,
+    "pelo": "rapado",
+    "colorPelo": "castano_claro",
+    "barba": "sombra",
+    "cejas": "finas",
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8068,12 +8099,12 @@
    },
    "cara": {
     "piel": 1,
-    "pelo": "corto",
-    "colorPelo": "castano_claro",
-    "barba": "corta",
+    "pelo": "calvo",
+    "colorPelo": "negro",
+    "barba": "completa",
     "cejas": "gruesas",
     "cabeza": "ancha",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8121,13 +8152,14 @@
     "velocidad": 86
    },
    "cara": {
-    "piel": 5,
+    "piel": 0,
     "pelo": "corto",
-    "colorPelo": "negro",
-    "barba": "sombra",
+    "colorPelo": "castano",
+    "barba": "corta",
     "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8177,11 +8209,11 @@
    "cara": {
     "piel": 1,
     "pelo": "corto",
-    "colorPelo": "pelirrojo",
-    "barba": "ninguna",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "colorPelo": "negro",
+    "barba": "completa",
+    "cejas": "gruesas",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -8232,13 +8264,14 @@
     "velocidad": 86
    },
    "cara": {
-    "piel": 4,
-    "pelo": "rizado",
+    "piel": 0,
+    "pelo": "corto",
     "colorPelo": "castano",
-    "barba": "completa",
+    "barba": "sombra",
     "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -8290,13 +8323,14 @@
     "velocidad": 82
    },
    "cara": {
-    "piel": 2,
-    "pelo": "fade",
-    "colorPelo": "castano_claro",
-    "barba": "completa",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "piel": 0,
+    "pelo": "corto",
+    "colorPelo": "castano",
+    "barba": "sombra",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8344,13 +8378,13 @@
     "velocidad": 79
    },
    "cara": {
-    "piel": 4,
-    "pelo": "fade",
+    "piel": 2,
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "bigote",
-    "cejas": "gruesas",
+    "barba": "corta",
+    "cejas": "normales",
     "cabeza": "redonda",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8398,13 +8432,14 @@
     "velocidad": 78
    },
    "cara": {
-    "piel": 4,
-    "pelo": "calvo",
+    "piel": 2,
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "corta",
-    "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "barba": "completa",
+    "cejas": "normales",
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8452,13 +8487,14 @@
     "velocidad": 74
    },
    "cara": {
-    "piel": 4,
-    "pelo": "fade",
+    "piel": 2,
+    "pelo": "corto",
     "colorPelo": "negro",
-    "barba": "bigote",
-    "cejas": "gruesas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8506,13 +8542,14 @@
     "velocidad": 72
    },
    "cara": {
-    "piel": 5,
-    "pelo": "calvo",
-    "colorPelo": "negro",
-    "barba": "sombra",
-    "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "piel": 4,
+    "pelo": "corto",
+    "colorPelo": "platino",
+    "barba": "ninguna",
+    "cejas": "finas",
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8676,9 +8713,9 @@
     "pelo": "corto",
     "colorPelo": "castano",
     "barba": "ninguna",
-    "cejas": "gruesas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -8784,13 +8821,13 @@
     "velocidad": 73
    },
    "cara": {
-    "piel": 2,
-    "pelo": "medio",
+    "piel": 1,
+    "pelo": "rapado",
     "colorPelo": "castano",
-    "barba": "bigote",
+    "barba": "sombra",
     "cejas": "normales",
-    "cabeza": "ovalada",
-    "aproximada": true
+    "cabeza": "cuadrada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -9125,12 +9162,13 @@
    },
    "cara": {
     "piel": 2,
-    "pelo": "mohicano",
-    "colorPelo": "castano",
-    "barba": "ninguna",
+    "pelo": "corto",
+    "colorPelo": "negro",
+    "barba": "corta",
     "cejas": "normales",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -9578,13 +9616,14 @@
     "velocidad": 92
    },
    "cara": {
-    "piel": 1,
-    "pelo": "fade",
-    "colorPelo": "rubio",
-    "barba": "completa",
-    "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "piel": 3,
+    "pelo": "rizado",
+    "colorPelo": "negro",
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -9632,13 +9671,14 @@
     "velocidad": 87
    },
    "cara": {
-    "piel": 1,
-    "pelo": "rapado",
-    "colorPelo": "castano",
-    "barba": "corta",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "piel": 2,
+    "pelo": "corto",
+    "colorPelo": "negro",
+    "barba": "bigote",
+    "cejas": "gruesas",
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -9692,13 +9732,13 @@
     "velocidad": 83
    },
    "cara": {
-    "piel": 2,
-    "pelo": "fade",
+    "piel": 1,
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "normales",
+    "barba": "completa",
+    "cejas": "gruesas",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -9746,13 +9786,14 @@
     "velocidad": 84
    },
    "cara": {
-    "piel": 1,
-    "pelo": "rapado",
+    "piel": 0,
+    "pelo": "largo",
     "colorPelo": "castano",
-    "barba": "completa",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "barba": "bigote",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -9800,13 +9841,13 @@
     "velocidad": 78
    },
    "cara": {
-    "piel": 3,
+    "piel": 2,
     "pelo": "corto",
-    "colorPelo": "castano",
-    "barba": "candado",
+    "colorPelo": "negro",
+    "barba": "completa",
     "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "ancha",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -9857,13 +9898,14 @@
     "velocidad": 79
    },
    "cara": {
-    "piel": 1,
-    "pelo": "medio",
-    "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "gruesas",
-    "cabeza": "ovalada",
-    "aproximada": true
+    "piel": 4,
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -9968,13 +10010,14 @@
     "velocidad": 74
    },
    "cara": {
-    "piel": 0,
-    "pelo": "fade",
+    "piel": 3,
+    "pelo": "corto",
     "colorPelo": "negro",
     "barba": "sombra",
-    "cejas": "finas",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -10022,13 +10065,13 @@
     "velocidad": 73
    },
    "cara": {
-    "piel": 1,
-    "pelo": "fade",
-    "colorPelo": "rubio",
+    "piel": 0,
+    "pelo": "rapado",
+    "colorPelo": "castano",
     "barba": "ninguna",
     "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -10249,13 +10292,14 @@
     "velocidad": 73
    },
    "cara": {
-    "piel": 1,
-    "pelo": "calvo",
-    "colorPelo": "castano",
-    "barba": "candado",
-    "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "piel": 2,
+    "pelo": "medio",
+    "colorPelo": "negro",
+    "barba": "completa",
+    "cejas": "normales",
+    "cabeza": "cuadrada",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -10477,13 +10521,14 @@
     "velocidad": 67
    },
    "cara": {
-    "piel": 2,
-    "pelo": "fade",
-    "colorPelo": "negro",
+    "piel": 0,
+    "pelo": "rapado",
+    "colorPelo": "castano",
     "barba": "completa",
-    "cejas": "gruesas",
+    "cejas": "normales",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -10538,10 +10583,10 @@
     "piel": 0,
     "pelo": "calvo",
     "colorPelo": "castano",
-    "barba": "candado",
+    "barba": "completa",
     "cejas": "normales",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -10646,10 +10691,10 @@
     "piel": 1,
     "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "sombra",
+    "barba": "completa",
     "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "ancha",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -10805,13 +10850,14 @@
     "velocidad": 60
    },
    "cara": {
-    "piel": 4,
-    "pelo": "fade",
-    "colorPelo": "castano",
-    "barba": "corta",
-    "cejas": "finas",
+    "piel": 5,
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "bigote",
+    "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -11085,12 +11131,12 @@
    },
    "cara": {
     "piel": 1,
-    "pelo": "corto",
-    "colorPelo": "castano",
-    "barba": "ninguna",
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "completa",
     "cejas": "gruesas",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "cabeza": "ancha",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -11141,13 +11187,13 @@
     "velocidad": 84
    },
    "cara": {
-    "piel": 1,
-    "pelo": "rapado",
-    "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "finas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "piel": 3,
+    "pelo": "calvo",
+    "colorPelo": "negro",
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -11195,13 +11241,13 @@
     "velocidad": 87
    },
    "cara": {
-    "piel": 1,
-    "pelo": "corto",
+    "piel": 0,
+    "pelo": "rapado",
     "colorPelo": "castano",
-    "barba": "corta",
+    "barba": "completa",
     "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cabeza": "redonda",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -11249,13 +11295,13 @@
     "velocidad": 90
    },
    "cara": {
-    "piel": 1,
-    "pelo": "calvo",
-    "colorPelo": "negro",
+    "piel": 0,
+    "pelo": "rapado",
+    "colorPelo": "castano",
     "barba": "ninguna",
     "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "cuadrada",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -11303,13 +11349,13 @@
     "velocidad": 80
    },
    "cara": {
-    "piel": 2,
-    "pelo": "corto",
+    "piel": 0,
+    "pelo": "rapado",
     "colorPelo": "castano",
-    "barba": "ninguna",
+    "barba": "sombra",
     "cejas": "normales",
-    "cabeza": "redonda",
-    "aproximada": true
+    "cabeza": "ovalada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -11475,13 +11521,13 @@
     "velocidad": 76
    },
    "cara": {
-    "piel": 1,
-    "pelo": "fade",
-    "colorPelo": "castano_claro",
-    "barba": "ninguna",
+    "piel": 5,
+    "pelo": "rapado",
+    "colorPelo": "negro",
+    "barba": "corta",
     "cejas": "normales",
-    "cabeza": "ancha",
-    "aproximada": true
+    "cabeza": "cuadrada",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -11530,12 +11576,12 @@
    },
    "cara": {
     "piel": 3,
-    "pelo": "rizado",
+    "pelo": "rapado",
     "colorPelo": "negro",
-    "barba": "corta",
-    "cejas": "gruesas",
+    "barba": "completa",
+    "cejas": "normales",
     "cabeza": "ancha",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -11765,7 +11811,8 @@
     "barba": "corta",
     "cejas": "normales",
     "cabeza": "ovalada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -11875,12 +11922,12 @@
    },
    "cara": {
     "piel": 0,
-    "pelo": "fade",
+    "pelo": "rapado",
     "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "gruesas",
+    "barba": "corta",
+    "cejas": "normales",
     "cabeza": "ancha",
-    "aproximada": true
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -11988,13 +12035,14 @@
     "velocidad": 58
    },
    "cara": {
-    "piel": 2,
-    "pelo": "fade",
+    "piel": 0,
+    "pelo": "calvo",
     "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "finas",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "barba": "completa",
+    "cejas": "normales",
+    "cabeza": "ancha",
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -12046,13 +12094,14 @@
     "velocidad": 64
    },
    "cara": {
-    "piel": 1,
-    "pelo": "mohicano",
-    "colorPelo": "pelirrojo",
-    "barba": "completa",
-    "cejas": "gruesas",
+    "piel": 0,
+    "pelo": "rapado",
+    "colorPelo": "castano",
+    "barba": "corta",
+    "cejas": "normales",
     "cabeza": "cuadrada",
-    "aproximada": true
+    "tatuajes": true,
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [
@@ -12158,13 +12207,13 @@
     "velocidad": 53
    },
    "cara": {
-    "piel": 2,
-    "pelo": "corto",
+    "piel": 0,
+    "pelo": "rapado",
     "colorPelo": "castano",
-    "barba": "ninguna",
-    "cejas": "gruesas",
-    "cabeza": "redonda",
-    "aproximada": true
+    "barba": "corta",
+    "cejas": "normales",
+    "cabeza": "cuadrada",
+    "fuente": "manual"
    },
    "verificar": true,
    "camposVerificar": [
@@ -12274,12 +12323,12 @@
    },
    "cara": {
     "piel": 5,
-    "pelo": "fade",
+    "pelo": "calvo",
     "colorPelo": "negro",
-    "barba": "ninguna",
-    "cejas": "gruesas",
-    "cabeza": "cuadrada",
-    "aproximada": true
+    "barba": "completa",
+    "cejas": "normales",
+    "cabeza": "ancha",
+    "fuente": "manual"
    },
    "verificar": false,
    "fuentes": [

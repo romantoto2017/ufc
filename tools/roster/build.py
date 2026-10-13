@@ -11,6 +11,7 @@ ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 sys.path.insert(0, HERE)
 from parse_list import parse  # noqa: E402
 from pick import select, norm  # noqa: E402
+from caras import cara as manual_face  # noqa: E402
 
 TODAY = datetime.date(2026, 10, 13)
 DIV_KG = {'mosca': 56.7, 'gallo': 61.2, 'pluma': 65.8, 'ligero': 70.3, 'welter': 77.1, 'medio': 83.9, 'semipesado': 93.0, 'pesado': 120.2}
@@ -211,7 +212,7 @@ def main(cache):
                 'altura': f['height'], 'alcance': reach, 'postura': st, 'estilo': style, 'record': f['record'],
                 'metodosVictoria': methods, 'racha': streak, 'ranking': f['ranking'],
                 'elite': f['ranking'] == 0 or norm(f['name']) in p4p,
-                'fuente': 'calculado', 'ajustesPerfil': ajustes, 'atributos': None, 'cara': face_for(fid, country),
+                'fuente': 'calculado', 'ajustesPerfil': ajustes, 'atributos': None, 'cara': manual_face(fid) or face_for(fid, country),
                 'verificar': bool(to_verify),
             }
             if to_verify: entry['camposVerificar'] = to_verify

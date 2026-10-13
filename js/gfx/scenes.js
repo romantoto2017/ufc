@@ -6,7 +6,46 @@ function px(ctx, x, y, w, h, c) { ctx.fillStyle = c; ctx.fillRect(Math.round(x),
 
 // Personaje de cuerpo entero (estilo chibi, ~40 px de alto) mirando al frente.
 // tipo: 'dana' (calvo, traje negro), 'announcer' (esmoquin, pelo gris, micrófono), 'ref' (camisa negra, guantes azules)
+// Dana White: pelado, gordito, conjunto negro (remera y saco negros).
+export function drawDana(ctx, x, y, { t = 0, armUp = false } = {}) {
+  const OUT = '#120c09', skin = '#efbf9e', skinD = '#d29d7c', black = '#141418', black2 = '#22222a';
+  y += Math.round(Math.sin(t * 4) * 0.6);
+  // Piernas cortas y anchas
+  px(ctx, x - 8, y - 13, 7, 13, OUT); px(ctx, x + 1, y - 13, 7, 13, OUT);
+  px(ctx, x - 7, y - 13, 5, 12, black2); px(ctx, x + 2, y - 13, 5, 12, black2);
+  px(ctx, x - 9, y - 2, 8, 2, '#050505'); px(ctx, x + 1, y - 2, 8, 2, '#050505');
+  // Torso ancho con panza
+  px(ctx, x - 12, y - 33, 24, 22, OUT);
+  px(ctx, x - 11, y - 32, 22, 20, black);
+  // Panza redonda
+  px(ctx, x - 15, y - 26, 30, 13, OUT); px(ctx, x - 14, y - 25, 28, 11, black);
+  px(ctx, x - 16, y - 23, 32, 7, OUT); px(ctx, x - 15, y - 22, 30, 5, black);
+  px(ctx, x - 6, y - 22, 12, 1, '#2a2a33'); // brillo de la tela sobre la panza
+  px(ctx, x - 3, y - 32, 6, 12, black2); // remera negra bajo el saco
+  px(ctx, x - 10, y - 30, 1, 14, '#2e2e38'); px(ctx, x + 9, y - 30, 1, 14, '#2e2e38'); // solapas
+  // Brazos gruesos
+  px(ctx, x - 17, y - 32, 5, 15, OUT); px(ctx, x - 16, y - 31, 3, 13, black); px(ctx, x - 16, y - 18, 4, 3, skin);
+  if (armUp) { px(ctx, x + 12, y - 48, 5, 17, OUT); px(ctx, x + 13, y - 47, 3, 15, black); px(ctx, x + 12, y - 50, 4, 3, skin); }
+  else { px(ctx, x + 12, y - 32, 5, 15, OUT); px(ctx, x + 13, y - 31, 3, 13, black); px(ctx, x + 12, y - 18, 4, 3, skin); }
+  // Cabeza redonda, pelada, con papada
+  // Contorno redondeado
+  px(ctx, x - 7, y - 52, 14, 1, OUT); px(ctx, x - 9, y - 51, 18, 1, OUT);
+  px(ctx, x - 10, y - 50, 20, 17, OUT); px(ctx, x - 9, y - 33, 18, 1, OUT);
+  px(ctx, x - 7, y - 51, 14, 1, skin); px(ctx, x - 9, y - 50, 18, 2, skin);
+  px(ctx, x - 9, y - 48, 18, 15, skin);
+  px(ctx, x + 5, y - 48, 4, 15, skinD);
+  px(ctx, x - 10, y - 50, 1, 1, '#0b0d14'); px(ctx, x + 9, y - 50, 1, 1, '#0b0d14');
+  px(ctx, x - 5, y - 48, 3, 1, '#fff6ea'); px(ctx, x - 4, y - 47, 1, 1, '#fff6ea'); // brillo de la pelada
+  px(ctx, x - 11, y - 44, 2, 4, skinD); px(ctx, x + 9, y - 44, 2, 4, skinD); // orejas
+  px(ctx, x - 5, y - 43, 2, 2, '#1a120c'); px(ctx, x + 3, y - 43, 2, 2, '#1a120c'); // ojos chicos
+  px(ctx, x - 6, y - 45, 4, 1, '#8a6a52'); px(ctx, x + 2, y - 45, 4, 1, '#8a6a52'); // cejas
+  px(ctx, x - 1, y - 41, 2, 2, skinD); // nariz
+  px(ctx, x - 3, y - 37, 6, 1, '#8a4a3a'); // boca
+  px(ctx, x - 8, y - 35, 16, 1, skinD); px(ctx, x - 6, y - 34, 12, 1, skinD); // papada
+}
+
 export function drawPerson(ctx, x, y, tipo, { armUp = false, t = 0, face = null, shirt: shirtColor = null } = {}) {
+  if (tipo === 'dana') return drawDana(ctx, x, y, { t, armUp });
   const OUT = '#120c09';
   const skin = '#e9b896', skinD = '#c99372';
   const suit = shirtColor || (tipo === 'ref' ? '#151515' : '#16161c');
