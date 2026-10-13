@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d14">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Pixel MMA</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="bg-canvas" class="pixel" aria-hidden="true"></canvas>
+
+    <!-- MENÚ -->
+    <section id="screen-menu" class="screen" aria-labelledby="menu-title">
+      <h1 id="menu-title" class="visually-hidden">Pixel MMA</h1>
+      <div class="menu-logo"><img id="menu-logo" src="assets/logos/ufc.png" alt="UFC"></div>
+      <nav class="menu-buttons">
+        <button class="btn btn-primary" data-go="division"><span data-i18n="menu_classic">Pelea clásica</span></button>
+        <button class="btn" disabled aria-disabled="true"><span data-i18n="menu_career">Modo carrera</span><small data-i18n="menu_soon">Próximamente</small></button>
+        <button class="btn" data-go="settings"><span data-i18n="menu_settings">Configuración</span></button>
+      </nav>
+      <button id="install-btn" class="btn btn-small" hidden data-i18n="menu_install">Instalar app</button>
+    </section>
+
+    <!-- CONFIGURACIÓN -->
+    <section id="screen-settings" class="screen" hidden aria-labelledby="settings-title">
+      <header class="topbar">
+        <button class="btn btn-small btn-back" data-back data-i18n="back">Volver</button>
+        <h2 id="settings-title" data-i18n="settings_title">Configuración</h2>
+        <button class="btn btn-small" id="settings-reset" data-i18n="settings_reset">Restablecer</button>
+      </header>
+      <form id="settings-form" class="settings-grid" onsubmit="return false"></form>
+    </section>
+
+    <!-- DIVISIÓN -->
+    <section id="screen-division" class="screen" hidden aria-labelledby="division-title">
+      <header class="topbar">
+        <button class="btn btn-small btn-back" data-back data-i18n="back">Volver</button>
+        <h2 id="division-title" data-i18n="select_division">Elige división</h2>
+        <span></span>
+      </header>
+      <div id="division-grid" class="division-grid"></div>
+    </section>
+
+    <!-- SELECCIÓN -->
+    <section id="screen-select" class="screen" hidden aria-labelledby="select-title">
+      <header class="topbar">
+        <button class="btn btn-small btn-back" data-back data-i18n="back">Volver</button>
+        <h2 id="select-title"></h2>
+        <span></span>
+      </header>
+      <div class="select-layout">
+        <div class="fighter-card corner-red" id="card-0" role="button" tabindex="0"></div>
+        <div class="select-center">
+          <p class="hint" data-i18n="tap_to_assign"></p>
+          <ul id="fighter-list" class="fighter-list"></ul>
+          <div id="win-prob" class="win-prob" aria-live="polite"></div>
+          <div class="option-row">
+            <span data-i18n="rounds">Rounds</span>
+            <div class="seg" id="opt-rounds" role="radiogroup"></div>
+          </div>
+          <div class="option-row">
+            <span data-i18n="mode">Modo</span>
+            <div class="seg" id="opt-mode" role="radiogroup"></div>
+          </div>
+          <button class="btn btn-primary" id="fight-btn" data-i18n="fight_btn">¡A pelear!</button>
+        </div>
+        <div class="fighter-card corner-blue" id="card-1" role="button" tabindex="0"></div>
+      </div>
+    </section>
+
+    <!-- VS -->
+    <section id="screen-vs" class="screen" hidden>
+      <div class="vs-layout" id="vs-layout"></div>
+    </section>
+
+    <!-- PELEA -->
+    <section id="screen-fight" class="screen screen-fight" hidden>
+      <canvas id="fight-canvas" class="pixel"></canvas>
+      <div class="hud">
+        <div class="hud-side" id="hud-0"></div>
+        <div class="hud-clock"><div id="hud-round"></div><div id="hud-time"></div>
+          <button class="btn btn-icon" id="pause-btn" data-i18n-aria="pause" aria-label="Pausa">
+            <svg viewBox="0 0 8 8" width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="2" height="6" fill="currentColor"/><rect x="5" y="1" width="2" height="6" fill="currentColor"/></svg>
+          </button>
+        </div>
+        <div class="hud-side right" id="hud-1"></div>
+      </div>
+      <div id="banner" class="banner" aria-live="assertive"></div>
+      <div id="sub-meter" class="sub-meter" hidden>
+        <div class="sub-label" id="sub-label"></div>
+        <div class="sub-bar"><div class="sub-fill" id="sub-fill"></div></div>
+      </div>
+      <div class="controls" id="controls">
+        <div class="pad-left">
+          <div class="row">
+            <button class="cbtn cbtn-block" data-hold="blockHigh" data-i18n="block_high"></button>
+            <button class="cbtn cbtn-block" data-hold="blockLow" data-i18n="block_low"></button>
+          </div>
+          <div class="row">
+            <button class="cbtn cbtn-move" data-hold="left" data-i18n-aria="move_left"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M5 1h1v6H5V6H4V5H3V3h1V2h1z" fill="currentColor"/></svg></button>
+            <button class="cbtn cbtn-move" data-hold="right" data-i18n-aria="move_right"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M3 1h1v1h1v1h1v2H5v1H4v1H3z" fill="currentColor"/></svg></button>
+          </div>
+        </div>
+        <div class="pad-right" id="pad-right"></div>
+      </div>
+      <button id="tap-btn" class="tap-btn" hidden data-i18n="tap_here">¡TOCA!</button>
+      <div id="between" class="overlay" hidden></div>
+      <div id="pause-menu" class="overlay" hidden>
+        <div class="panel">
+          <h2 data-i18n="pause">Pausa</h2>
+          <button class="btn btn-primary" id="resume-btn" data-i18n="resume">Continuar</button>
+          <button class="btn" id="quit-btn" data-i18n="quit_fight">Abandonar pelea</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTADO -->
+    <section id="screen-result" class="screen" hidden aria-labelledby="result-title">
+      <div class="result-layout" id="result-layout"></div>
+    </section>
+  </div>
+
+  <div id="rotate-overlay" aria-live="polite">
+    <svg viewBox="0 0 16 16" width="64" height="64" aria-hidden="true"><path fill="currentColor" d="M4 2h6v1h1v10h-1v1H4v-1H3V3h1zm0 2v8h6V4zm8 1h1v1h1v4h-1v1h-1z"/></svg>
+    <p data-i18n="rotate_device">Gira el teléfono a horizontal</p>
+  </div>
+  <div id="loading" class="loading" data-i18n="loading">Cargando…</div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "_nota": "Fase 1: solo UFC se usa. El estado de actividad de las demás se verifica en la Fase 3; por eso llevan verificar: true.",
+  "promociones": [
+    { "id": "ufc", "nombre": "UFC", "pais": "US", "region": "global", "nivel": 5, "logo": "ufc.png" },
+    { "id": "pfl", "nombre": "PFL", "pais": "US", "region": "global", "nivel": 4, "logo": "pfl.png", "verificar": true },
+    { "id": "dwcs", "nombre": "Dana White's Contender Series", "pais": "US", "region": "global", "nivel": 3, "logo": "dwcs.png", "verificar": true },
+    { "id": "rtu", "nombre": "Road to UFC", "pais": "CN", "region": "asia", "nivel": 3, "logo": "rtu.png", "verificar": true },
+    { "id": "lfa", "nombre": "LFA", "pais": "US", "region": "norteamerica", "nivel": 2, "logo": "lfa.png", "verificar": true },
+    { "id": "cffc", "nombre": "CFFC", "pais": "US", "region": "norteamerica", "nivel": 2, "logo": "cffc.png", "verificar": true },
+    { "id": "furyfc", "nombre": "Fury FC", "pais": "US", "region": "norteamerica", "nivel": 2, "logo": "furyfc.png", "verificar": true },
+    { "id": "cagewarriors", "nombre": "Cage Warriors", "pais": "GB", "region": "europa", "nivel": 2, "logo": "cagewarriors.png", "verificar": true },
+    { "id": "ksw", "nombre": "KSW", "pais": "PL", "region": "europa", "nivel": 2, "logo": "ksw.png", "verificar": true },
+    { "id": "oktagon", "nombre": "Oktagon MMA", "pais": "CZ", "region": "europa", "nivel": 2, "logo": "oktagon.png", "verificar": true },
+    { "id": "fen", "nombre": "FEN", "pais": "PL", "region": "europa", "nivel": 2, "logo": "fen.png", "verificar": true },
+    { "id": "ares", "nombre": "ARES FC", "pais": "FR", "region": "europa", "nivel": 2, "logo": "ares.png", "verificar": true },
+    { "id": "junglefight", "nombre": "Jungle Fight", "pais": "BR", "region": "sudamerica", "nivel": 2, "logo": "junglefight.png", "verificar": true },
+    { "id": "samurai", "nombre": "Samurai Fight House", "pais": "AR", "region": "sudamerica", "nivel": 2, "logo": "samurai.png", "verificar": true },
+    { "id": "naciones", "nombre": "Naciones MMA", "pais": null, "region": "sudamerica", "nivel": 2, "logo": "naciones.png", "verificar": true },
+    { "id": "uaewarriors", "nombre": "UAE Warriors", "pais": "AE", "region": "medio_oriente", "nivel": 2, "logo": "uaewarriors.png", "verificar": true },
+    { "id": "brave", "nombre": "Brave CF", "pais": "BH", "region": "medio_oriente", "nivel": 2, "logo": "brave.png", "verificar": true },
+    { "id": "one", "nombre": "ONE Championship", "pais": "SG", "region": "asia", "nivel": 3, "logo": "one.png", "verificar": true },
+    { "id": "rizin", "nombre": "RIZIN", "pais": "JP", "region": "asia", "nivel": 3, "logo": "rizin.png", "verificar": true }
+  ]
+}

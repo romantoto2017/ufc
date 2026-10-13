@@ -1,0 +1,11 @@
+{
+  "idioma": "es",
+  "volumenMusica": 60,
+  "volumenEfectos": 80,
+  "dificultad": "normal",
+  "duracionRoundMin": 5,
+  "rounds": 3,
+  "tamanoBotones": "mediano",
+  "opacidadBotones": 75,
+  "vibracion": true
+}

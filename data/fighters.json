@@ -1,0 +1,155 @@
+{
+  "_nota": "Datos verificados el 2026-10-13. Rankings: Meta Rankings UFC del 2026-10-03 (tras UFC 332). Peso en kg, altura y alcance en cm. Las estrellas se recalculan desde los atributos al cargar.",
+  "actualizado": "2026-10-03",
+  "divisiones": [
+    {
+      "id": "mosca",
+      "pesoLb": 125,
+      "pesoKg": 56.7
+    },
+    {
+      "id": "gallo",
+      "pesoLb": 135,
+      "pesoKg": 61.2
+    },
+    {
+      "id": "pluma",
+      "pesoLb": 145,
+      "pesoKg": 65.8
+    },
+    {
+      "id": "ligero",
+      "pesoLb": 155,
+      "pesoKg": 70.3
+    },
+    {
+      "id": "welter",
+      "pesoLb": 170,
+      "pesoKg": 77.1
+    },
+    {
+      "id": "medio",
+      "pesoLb": 185,
+      "pesoKg": 83.9
+    },
+    {
+      "id": "semipesado",
+      "pesoLb": 205,
+      "pesoKg": 93
+    },
+    {
+      "id": "pesado",
+      "pesoLb": 265,
+      "pesoKg": 120.2
+    }
+  ],
+  "peleadores": [
+    {
+      "id": "justin-gaethje",
+      "nombre": "Justin Gaethje",
+      "apodo": "The Highlight",
+      "pais": "US",
+      "edad": 37,
+      "fechaNacimiento": "1988-11-14",
+      "division": "ligero",
+      "peso": 70.3,
+      "altura": 180,
+      "alcance": 178,
+      "postura": "ortodoxa",
+      "estilo": "kickboxing",
+      "record": "28-5-0",
+      "metodosVictoria": {
+        "ko": 21,
+        "sub": 1,
+        "dec": 6
+      },
+      "racha": 3,
+      "ranking": 0,
+      "fuente": "calculado",
+      "ajustesPerfil": {
+        "grappling": 3,
+        "menton": 8,
+        "defensa": -7,
+        "sumisiones": -16
+      },
+      "atributos": {
+        "golpeo": 97,
+        "patadas": 97,
+        "grappling": 89,
+        "sumisiones": 69,
+        "defensa": 89,
+        "cardio": 89,
+        "menton": 97,
+        "velocidad": 90
+      },
+      "cara": {
+        "piel": 1,
+        "pelo": "rapado",
+        "colorPelo": "castano",
+        "barba": "corta",
+        "cejas": "normales",
+        "cabeza": "cuadrada"
+      },
+      "verificar": false,
+      "fuentes": [
+        "https://en.wikipedia.org/wiki/Justin_Gaethje",
+        "https://en.wikipedia.org/wiki/UFC_rankings"
+      ],
+      "estrellas": 5
+    },
+    {
+      "id": "ilia-topuria",
+      "nombre": "Ilia Topuria",
+      "apodo": "El Matador",
+      "pais": "GE",
+      "paisSecundario": "ES",
+      "edad": 29,
+      "fechaNacimiento": "1997-01-21",
+      "division": "ligero",
+      "peso": 70.3,
+      "altura": 173,
+      "alcance": 175,
+      "postura": "ortodoxa",
+      "estilo": "boxeo",
+      "record": "17-1-0",
+      "metodosVictoria": {
+        "ko": 7,
+        "sub": 8,
+        "dec": 2
+      },
+      "racha": -1,
+      "ranking": 1,
+      "fuente": "calculado",
+      "ajustesPerfil": {
+        "sumisiones": 18,
+        "grappling": 10,
+        "patadas": -2,
+        "golpeo": 2
+      },
+      "atributos": {
+        "golpeo": 94,
+        "patadas": 70,
+        "grappling": 88,
+        "sumisiones": 94,
+        "defensa": 86,
+        "cardio": 82,
+        "menton": 84,
+        "velocidad": 86
+      },
+      "cara": {
+        "piel": 2,
+        "pelo": "fade",
+        "colorPelo": "negro",
+        "barba": "completa",
+        "cejas": "gruesas",
+        "cabeza": "ovalada"
+      },
+      "verificar": false,
+      "fuentes": [
+        "https://en.wikipedia.org/wiki/Ilia_Topuria",
+        "https://en.wikipedia.org/wiki/UFC_rankings"
+      ],
+      "estrellas": 4.5
+    }
+  ]
+}
