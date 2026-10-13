@@ -2,7 +2,11 @@
 // ofertas de pelea, contratos, entrenamiento, dinero y simulación del mundo UFC. Módulo puro (testeable en Node).
 import { ATTRS, STYLE_PROFILE, stars, starsExact, overall } from '../ratings.js';
 import { simulateFight, applyResult, winProbability } from '../sim.js';
-import { generateFighter, makeAttributes, starsToOverall, namesFor } from './generator.js';
+import { generateFighter, makeAttributes, starsToOverall, namesFor, orgStars } from './generator.js';
+
+// Nombres por país para los recién llegados a UFC (los carga la interfaz o los tests).
+let NAMES = null;
+export function setNames(n) { NAMES = n; }
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 export const START_DATE = '2026-10-13';
@@ -122,16 +126,19 @@ function eventName(c, org, promos) {
   return { key: 'event_org', org: org.nombre, n };
 }
 
-function genericOpponent(c, ctx, { level, country, archetype }) {
+export const MAX_VS_SAME = 4;
+const timesVs = (c, id) => (c.vs && c.vs[id]) || 0;
+
+function genericOpponent(c, ctx, { level, country, archetype, starsRange = null }) {
   const rng = rngOf(c);
-  const f = generateFighter(rng, { namesDb: ctx.names, country, division: c.player.division, level, archetype });
+  const f = generateFighter(rng, { namesDb: ctx.names, country, division: c.player.division, level, archetype, starsRange });
   c.generics[f.id] = f;
   return f;
 }
 
 // Revancha: rivales genéricos guardados que vuelven a aparecer.
 function rematchCandidate(c, level, rng) {
-  const pool = Object.values(c.generics).filter(g => g.nivel === level && g.division === c.player.division && g.vsPlayer);
+  const pool = Object.values(c.generics).filter(g => g.nivel === level && g.division === c.player.division && g.vsPlayer && timesVs(c, g.id) < MAX_VS_SAME && !g.retirado);
   if (!pool.length || rng() > 0.18) return null;
   const lostTo = pool.filter(g => g.vsPlayer.l > 0);
   return pick(rng, lostTo.length ? lostTo : pool);
@@ -155,14 +162,15 @@ export function makeOffer(c, ctx) {
   } else if (c.stage === 'regional') {
     const champId = c.regionalChamp[c.org];
     const isChamp = champId === 'player';
+    const range = orgStars(org.nivel || 2);
+    const orgCountries = (org.region && promos.regiones[org.region]) || regionCountries(promos, c);
     if (!isChamp && c.streakInStage >= REGIONAL_TITLE_STREAK) {
-      // Pelea por el título regional contra el campeón vigente
-      let champ = champId && c.generics[champId];
-      if (!champ) { champ = genericOpponent(c, ctx, { level: 'regional', country: pick(rng, regionCountries(promos, c)), archetype: rng() < 0.5 ? 'local' : 'prospecto' }); champ.atributos = makeAttributes(rng, { targetStars: 3, style: champ.estilo, age: champ.edad, archetype: 'local' }); c.regionalChamp[c.org] = champ.id; }
+      // Pelea por el título contra el campeón vigente de esa organización
+      let champ = champId && champId !== 'player' && c.generics[champId];
+      if (!champ || timesVs(c, champ.id) >= MAX_VS_SAME) { champ = genericOpponent(c, ctx, { level: 'regional', country: pick(rng, orgCountries), archetype: rng() < 0.5 ? 'local' : 'prospecto', starsRange: range }); champ.atributos = makeAttributes(rng, { targetStars: range[1], style: champ.estilo, age: champ.edad, archetype: 'local' }); c.regionalChamp[c.org] = champ.id; }
       opponent = champ; rounds = 5; title = true;
     } else {
-      opponent = rematchCandidate(c, 'regional', rng) || genericOpponent(c, ctx, { level: 'regional', country: pick(rng, regionCountries(promos, c)) });
-      if (org.nivel >= 3) opponent.atributos = makeAttributes(rng, { targetStars: 2.5 + rng() * 0.75, style: opponent.estilo, age: opponent.edad, archetype: opponent.arquetipo });
+      opponent = rematchCandidate(c, 'regional', rng) || genericOpponent(c, ctx, { level: 'regional', country: pick(rng, orgCountries), starsRange: range });
       if (isChamp && rng() < 0.6) { rounds = 5; title = true; kind = 'defense'; }
     }
   } else if (c.stage === 'dwcs') {
@@ -184,16 +192,35 @@ export function makeOffer(c, ctx) {
   c.offer = {
     opponentId: opponent.id, org: org.id, event: ev, rounds, title, kind,
     purse: { show, win: show },
-    fecha: addDays(c.date, 7 * (c.stage === 'ufc' ? 12 + Math.floor(rng() * 9) : c.stage === 'nacional' ? 6 + Math.floor(rng() * 5) : 8 + Math.floor(rng() * 6))),
+    fecha: nextFightDate(c, rng),
     country: c.stage === 'nacional' ? p.pais : org.pais,
   };
-  c.camp = { sessions: 0, max: 3 + p.gimnasio };
+  c.camp = { sessions: 0, max: 5 + 2 * p.gimnasio };
   return c.offer;
+}
+
+// Calendario realista: lo normal es ~1 pelea por año; nunca más de 3 en 12 meses.
+const MONTHS_GAP = { nacional: [3, 7], regional: [4, 9], pfl: [4, 8], ufc: [5, 11], rtu: [3, 5] };
+function nextFightDate(c, rng) {
+  let date;
+  if (c.stage === 'dwcs') {
+    // El Contender Series se hace entre agosto y octubre
+    const [Y, M] = c.date.split('-').map(Number);
+    date = M >= 8 && M <= 9 ? addDays(c.date, 21 + Math.floor(rng() * 21)) : `${M >= 10 ? Y + 1 : Y}-08-${String(5 + Math.floor(rng() * 20)).padStart(2, '0')}`;
+  } else {
+    const [lo, hi] = MONTHS_GAP[c.stage] || [4, 9];
+    date = addDays(c.date, Math.round((lo + rng() * (hi - lo)) * 30.4));
+  }
+  const recent = c.player.historial.map(h => h.fecha).filter(f => f > addDays(date, -365)).sort();
+  if (recent.length >= 3) date = addDays(recent[recent.length - 3], 366);
+  return date;
 }
 
 function ufcOpponent(c, rng) {
   const p = c.player;
-  const div = c.ufc.filter(f => f.division === p.division && f.id !== 'player' && !f.retirado);
+  const allDiv = c.ufc.filter(f => f.division === p.division && f.id !== 'player' && !f.retirado);
+  const fresh = allDiv.filter(f => timesVs(c, f.id) < MAX_VS_SAME);
+  const div = fresh.length >= 4 ? fresh : allDiv;
   const byRank = r => div.find(f => f.ranking === r);
   if (p.ranking === 0) {
     const contenders = [1, 2, 3].map(byRank).filter(Boolean);
@@ -261,7 +288,7 @@ export function upgradeGym(c) {
   const p = c.player, next = p.gimnasio + 1, cost = GYM_COST[next];
   if (!cost || p.dinero < cost) return false;
   p.dinero -= cost; p.gimnasio = next;
-  if (c.camp) c.camp.max = 3 + next;
+  if (c.camp) c.camp.max = 5 + 2 * next;
   return true;
 }
 
@@ -288,6 +315,9 @@ export function applyCareerFight(c, ctx, result) {
     else { rp.l++; ro.w++; p.racha = p.racha < 0 ? p.racha - 1 : -1; opp.racha = opp.racha > 0 ? opp.racha + 1 : 1; }
     setRec(p, rp); setRec(opp, ro);
   }
+  c.vs = c.vs || {};
+  c.vs[opp.id] = (c.vs[opp.id] || 0) + 1;
+  if (c.contract) { c.contract.left--; if (won) c.contract.w++; else if (!draw) c.contract.l++; }
   if (opp.generico) {
     opp.vsPlayer = opp.vsPlayer || { w: 0, l: 0 };
     if (won) opp.vsPlayer.l++; else if (!draw) opp.vsPlayer.w++;
@@ -343,11 +373,33 @@ export function applyCareerFight(c, ctx, result) {
   const after = stars(p.atributos);
   if (after > before) events.push({ type: 'stars', from: before, to: after });
   c.offer = null; c.camp = null;
+  // Retiro: a partir de los 36 se puede elegir; a los 40 es obligatorio.
+  if (p.edad >= 40) { c.retired = true; events.push({ type: 'retire_forced' }); news(c, 'news_player_retired', { name: p.nombre, record: p.record }); }
+  else if (p.edad >= 36 && !c.pendingContract) events.push({ type: 'retire_option' });
   return events;
 }
 
-function offerContract(c, org, type) {
-  c.pendingContract = { org, type, fights: org === 'ufc' ? 4 : 3, date: c.date };
+function offerContract(c, org, type, fights) {
+  c.pendingContract = { org, type, fights: fights || (org === 'ufc' ? 4 : 3), date: c.date };
+}
+
+// Ofertas de promotoras de mayor nivel (misma región o vidrieras internacionales).
+function higherOrg(c, promos, rng) {
+  const p = c.player;
+  const cur = c.stage === 'nacional' ? 0 : (promoById(promos, c.org)?.nivel || 0);
+  const region = regionOf(promos, p.pais);
+  const local = (promos.orgsPorRegion[region] || []).map(id => promoById(promos, id));
+  const showcase = (promos.vidrieras || []).map(id => promoById(promos, id));
+  const asia = isAsian(promos, p.pais) ? ['one', 'rizin'].map(id => promoById(promos, id)) : [];
+  // Del circuito nacional se pasa a una promotora de la propia región; después se abren las vidrieras.
+  const candidates = c.stage === 'nacional' ? local : [...local, ...showcase, ...asia];
+  const pool = [...new Set(candidates)].filter(o => o && o.activa && o.nivel > cur && o.id !== c.org);
+  if (!pool.length) return null;
+  // Más probable el salto chico que el grande
+  const weights = pool.map(o => [o, 1 / (1 + (o.nivel - cur) * 1.5) * (local.includes(o) ? 1.5 : 1)]);
+  let r = rng() * weights.reduce((a, [, w]) => a + w, 0);
+  for (const [o, w] of weights) { r -= w; if (r <= 0) return o; }
+  return pool[0];
 }
 
 function progression(c, ctx, { won, draw, result, opp, events, rng }) {
@@ -356,29 +408,43 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
   const r = rec(p);
   const winPct = r.w / Math.max(1, r.w + r.l);
   const st = starsExact(p.atributos);
+  const offer = (org, type, fights, ev = 'contract') => { offerContract(c, org, type, fights); events.push({ type: ev, org, fights: c.pendingContract.fights }); };
   switch (c.stage) {
     case 'nacional': {
-      if (c.stageFights >= 4 && r.w >= 3 && winPct >= 0.6 && p.racha >= 1 && st >= 1.9) {
-        const orgs = promos.orgsPorRegion[regionOf(promos, p.pais)].filter(id => promoById(promos, id)?.activa);
-        const org = pick(rng, orgs);
-        offerContract(c, org, 'regional');
-        events.push({ type: 'contract', org });
+      if (won && c.sameCountryFights >= NATIONAL_SAME_COUNTRY_FIGHTS && r.w >= 3 && winPct >= 0.6 && st >= 1.8 && rng() < 0.7) {
+        const org = higherOrg(c, promos, rng);
+        if (org) offer(org.id, 'regional', 3);
       }
       break;
     }
     case 'regional': {
+      const org = promoById(promos, c.org) || { nivel: 2 };
       const champ = c.regionalChamp[c.org] === 'player';
       if (won && c.cooldownWins > 0) c.cooldownWins--;
       const ready = !(c.cooldownWins > 0);
-      if (ready && ((champ && won) || p.racha >= 4 || (r.w >= 8 && st >= 3 && p.racha >= 2))) {
+      const hot = (champ && won) || c.streakInStage >= 3;
+      if (won && champ && org.nivel >= 2.5 && rng() < 0.4 + (org.nivel - 2.5) * 0.3) {
+        // Campeón de una promotora fuerte: UFC lo llama directo (contrato corto)
+        offer('ufc', 'ufc', 1 + Math.floor(rng() * 2)); news(c, 'news_ufc_contract', { name: p.nombre });
+      } else if (won && st >= 2.8 && c.streakInStage >= 3 && rng() < 0.07) {
+        offer('ufc', 'ufc', 1, 'short_notice'); news(c, 'news_short_notice', { name: p.nombre });
+      } else if (hot && rng() < 0.45 && higherOrg(c, promos, rng)) {
+        offer(higherOrg(c, promos, rng).id, 'regional', 3 + Math.floor(rng() * 2));
+      } else if (ready && ((champ && won) || p.racha >= 4 || (r.w >= 8 && st >= 3 && p.racha >= 2)) && rng() < 0.6) {
         // Asiáticos: Road to UFC; tras 2 torneos perdidos también pueden ir al Contender Series.
         const asian = isAsian(promos, p.pais) && (c.rtuFails || 0) < 2;
-        c.stage = asian ? 'rtu' : 'dwcs'; c.org = c.stage; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0; c.rtuRound = 0;
+        c.stage = asian ? 'rtu' : 'dwcs'; c.prevOrg = c.org; c.org = c.stage; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0; c.rtuRound = 0; c.contract = null;
         events.push({ type: 'invite', org: c.stage });
         news(c, asian ? 'news_rtu' : 'news_dwcs', { name: p.nombre });
+      } else if (won && champ && org.nivel >= 2.5 && rng() < 0.12) {
+        offer('pfl', 'pfl', 3);
       } else if (p.racha <= -3) {
         events.push({ type: 'released', org: c.org });
-        c.stage = 'nacional'; c.org = null; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0;
+        // Te cortan: bajás a una promotora más chica de tu región, o al circuito nacional.
+        const lower = (promos.orgsPorRegion[regionOf(promos, p.pais)] || []).map(id => promoById(promos, id)).filter(o => o && o.activa && o.nivel < org.nivel).sort((a, b) => b.nivel - a.nivel)[0];
+        if (lower) { c.org = lower.id; c.prevOrg = lower.id; c.contract = { org: lower.id, total: 3, left: 3, w: 0, l: 0 }; }
+        else { c.stage = 'nacional'; c.org = null; c.contract = null; }
+        c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0;
         news(c, 'news_released', { name: p.nombre });
       }
       break;
@@ -386,11 +452,11 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
     case 'dwcs': {
       if (won) {
         const chance = ['ko', 'tko', 'sub'].includes(result.method) ? 0.9 : result.method === 'dec_unanimous' ? 0.5 : 0.25;
-        if (rng() < chance) { offerContract(c, 'ufc', 'ufc'); events.push({ type: 'contract', org: 'ufc' }); news(c, 'news_ufc_contract', { name: p.nombre }); }
+        if (rng() < chance) { offer('ufc', 'ufc', 2 + Math.floor(rng() * 3)); news(c, 'news_ufc_contract', { name: p.nombre }); }
         else {
           events.push({ type: 'no_contract' });
           backToRegional(c, ctx);
-          if (rng() < 0.4) { offerContract(c, 'pfl', 'pfl'); events.push({ type: 'contract', org: 'pfl' }); }
+          if (rng() < 0.4) offer('pfl', 'pfl', 3);
         }
       } else { events.push({ type: 'no_contract' }); backToRegional(c, ctx); }
       break;
@@ -398,31 +464,50 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
     case 'rtu': {
       if (won) {
         c.rtuRound++;
-        if (c.rtuRound >= 3) { offerContract(c, 'ufc', 'ufc'); events.push({ type: 'contract', org: 'ufc' }); news(c, 'news_rtu_win', { name: p.nombre }); }
+        if (c.rtuRound >= 3) { offer('ufc', 'ufc', 4); news(c, 'news_rtu_win', { name: p.nombre }); }
         else events.push({ type: 'rtu_advance', round: c.rtuRound });
       } else { c.rtuFails = (c.rtuFails || 0) + 1; events.push({ type: 'no_contract' }); backToRegional(c, ctx); }
       break;
     }
     case 'pfl': {
-      if (won && (c.regionalChamp.pfl === 'player' ? rng() < 0.6 : rng() < 0.15) && st >= 3.3) { offerContract(c, 'ufc', 'ufc'); events.push({ type: 'contract', org: 'ufc' }); }
+      if (won && (c.regionalChamp.pfl === 'player' ? rng() < 0.5 : rng() < 0.12) && st >= 3.2) offer('ufc', 'ufc', 2 + Math.floor(rng() * 3));
       break;
     }
     case 'ufc': {
-      if (!won && !draw && p.ranking == null && p.racha <= -3) {
-        c.ufc = c.ufc.filter(f => f.id !== 'player');
-        c.stage = 'regional'; backToRegional(c, ctx); events.push({ type: 'released', org: 'ufc' }); news(c, 'news_ufc_cut', { name: p.nombre });
-        if (rng() < 0.5) { offerContract(c, 'pfl', 'pfl'); events.push({ type: 'contract', org: 'pfl' }); }
-      }
+      if (!won && !draw && p.ranking == null && p.racha <= -3) releaseFromUfc(c, ctx, events, rng);
       break;
     }
     default: break;
   }
+  // Fin de contrato: renovación según cómo te fue
+  const k = c.contract;
+  if (k && k.left <= 0 && !c.pendingContract && c.stage === k.org) {
+    if (k.org === 'ufc') {
+      if (k.w >= k.l || p.ranking != null) { c.contract = { org: 'ufc', total: 4, left: 4, w: 0, l: 0 }; events.push({ type: 'renewed', org: 'ufc' }); news(c, 'news_renewed', { name: p.nombre, org: 'UFC' }); }
+      else releaseFromUfc(c, ctx, events, rng);
+    } else {
+      c.contract = { org: k.org, total: 3, left: 3, w: 0, l: 0 };
+      events.push({ type: 'renewed', org: k.org });
+    }
+  }
+}
+
+function releaseFromUfc(c, ctx, events, rng) {
+  const p = c.player;
+  c.ufc = c.ufc.filter(f => f.id !== 'player');
+  p.ranking = null;
+  backToRegional(c, ctx);
+  events.push({ type: 'released', org: 'ufc' }); news(c, 'news_ufc_cut', { name: p.nombre });
+  if (rng() < 0.4) { offerContract(c, 'pfl', 'pfl', 3); events.push({ type: 'contract', org: 'pfl', fights: 3 }); }
 }
 
 function backToRegional(c, ctx) {
   const { promos } = ctx;
   const orgs = promos.orgsPorRegion[regionOf(promos, c.player.pais)];
-  c.stage = 'regional'; c.org = c.org && orgs.includes(c.org) ? c.org : orgs[0];
+  const best = [...orgs].sort((a, b) => (promoById(promos, b)?.nivel || 0) - (promoById(promos, a)?.nivel || 0))[0];
+  const back = c.prevOrg || best;
+  c.stage = 'regional'; c.org = back;
+  c.contract = { org: back, total: 3, left: 3, w: 0, l: 0 };
   c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0;
   c.cooldownWins = 3; // hay que volver a ganarse la oportunidad
 }
@@ -433,6 +518,8 @@ export function acceptContract(c) {
   const p = c.player;
   c.stage = k.type === 'regional' ? 'regional' : k.org; c.org = k.org;
   c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0;
+  c.contract = { org: k.org, total: k.fights, left: k.fights, w: 0, l: 0 };
+  if (k.type === 'regional') c.prevOrg = k.org;
   if (k.org === 'ufc') {
     p.ranking = null;
     if (!c.ufc.find(f => f.id === 'player')) c.ufc.push(p);
@@ -443,6 +530,11 @@ export function acceptContract(c) {
 }
 
 export function declineContract(c) { c.pendingContract = null; }
+
+export function retire(c) {
+  c.retired = true;
+  news(c, 'news_player_retired', { name: c.player.nombre, record: c.player.record });
+}
 
 // ---------- paso del tiempo y mundo UFC ----------
 function tick(c) {
@@ -487,10 +579,55 @@ export function simulateWorld(c, months) {
     }
     // Envejecimiento anual de la IA (cada 12 meses simulados)
     c.worldMonths = (c.worldMonths || 0) + 1;
-    if (c.worldMonths % 12 === 0) for (const f of c.ufc) if (f.id !== 'player') {
-      f.edad++;
-      if (f.edad >= 41 && f.racha < 0 && f.ranking == null) f.retirado = true;
+    if (c.worldMonths % 12 === 0) yearlyTurnover(c, rng);
+  }
+}
+
+// Cada año: los veteranos se retiran (la mayoría entre los 36 y los 40) y llegan prospectos nuevos.
+const RETIRE_BY_AGE = { 34: 0.05, 35: 0.1, 36: 0.2, 37: 0.32, 38: 0.48, 39: 0.65 };
+function yearlyTurnover(c, rng) {
+  const divisions = [...new Set(c.ufc.map(f => f.division))];
+  for (const f of c.ufc) {
+    if (f.id === 'player' || f.retirado) continue;
+    f.edad++;
+    let pr = f.edad >= 40 ? 0.85 : RETIRE_BY_AGE[f.edad] || 0;
+    if (f.racha <= -2) pr += 0.15;
+    if (f.ranking == null && f.racha <= -3) pr += 0.3;
+    if (rng() < pr) {
+      f.retirado = true;
+      if (f.ranking != null) news(c, f.ranking === 0 ? 'news_champ_retired' : 'news_retired', { name: f.nombre, record: f.record, div: f.division });
+      f.ranking = null;
     }
+  }
+  for (const div of divisions) {
+    rerank(c, div);
+    const active = c.ufc.filter(f => f.division === div && !f.retirado).length;
+    const newcomers = Math.max(0, 26 - active) + (rng() < 0.6 ? 1 : 0);
+    for (let i = 0; i < newcomers && NAMES; i++) {
+      const countries = Object.keys(NAMES).filter(k => /^[A-Z]{2,3}$/.test(k));
+      const nf = generateFighter(rng, { namesDb: NAMES, country: pick(rng, countries), division: div, level: 'ufc', archetype: 'prospecto', idPrefix: 'ufc' });
+      nf.generico = false; nf.nuevo = true;
+      c.ufc.push(nf);
+    }
+  }
+  // Los retirados viejos se borran para que el guardado no crezca sin límite
+  c.ufc = c.ufc.filter(f => !f.retirado || f.id === 'player');
+}
+
+// Reordena el ranking sin huecos; si el campeón se retiró, el #1 pasa a ser campeón.
+function rerank(c, div) {
+  const ranked = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking != null).sort((a, b) => a.ranking - b.ranking);
+  const hadChamp = ranked.some(f => f.ranking === 0);
+  ranked.forEach((f, i) => {
+    const r = i + (hadChamp ? 0 : 0);
+    if (!hadChamp && i === 0) news(c, 'news_new_champ', { name: f.nombre, div });
+    f.ranking = r <= 15 ? r : null;
+  });
+  // Completar el top 15 con los mejores no rankeados
+  const n = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking != null).length;
+  if (n < 16) {
+    const pool = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking == null && f.id !== 'player').sort((a, b) => b.racha - a.racha || starsExact(b.atributos) - starsExact(a.atributos));
+    pool.slice(0, 16 - n).forEach((f, i) => { f.ranking = n + i; });
   }
 }
 

@@ -7,5 +7,6 @@
   "rounds": 3,
   "tamanoBotones": "mediano",
   "opacidadBotones": 75,
-  "vibracion": true
+  "vibracion": true,
+  "esquemaControles": "simple"
 }

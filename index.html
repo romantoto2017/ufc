@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0b0d14">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Mrs+Saint+Delafield&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -29,6 +29,7 @@
         <button class="btn btn-primary" data-go="division"><span data-i18n="menu_classic">Pelea clásica</span></button>
         <button class="btn" data-go="career-start"><span data-i18n="menu_career">Modo carrera</span></button>
         <button class="btn" data-go="settings"><span data-i18n="menu_settings">Configuración</span></button>
+        <button class="btn" id="tutorial-btn"><span data-i18n="menu_tutorial">Tutorial</span></button>
       </nav>
       <button id="install-btn" class="btn btn-small" hidden data-i18n="menu_install">Instalar app</button>
     </section>
@@ -98,6 +99,8 @@
         <div class="hud-side right" id="hud-1"></div>
       </div>
       <div id="banner" class="banner" aria-live="assertive"></div>
+      <div id="chain-tag" class="chain-tag" aria-hidden="true"></div>
+      <div id="tutorial-box" class="tutorial-box" hidden aria-live="polite"></div>
       <div id="sub-meter" class="sub-meter" hidden>
         <div class="sub-label" id="sub-label"></div>
         <div class="sub-bar"><div class="sub-fill" id="sub-fill"></div></div>

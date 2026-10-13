@@ -175,3 +175,41 @@ export function drawBelt(ctx, cx, cy, scale, t, { label = 'CHAMPION', strap = '#
   ctx.globalAlpha = 0.35; px(ctx, sx, 3, 2, 34, '#ffffff'); px(ctx, sx + 3, 3, 1, 34, '#ffffff'); ctx.globalAlpha = 1;
   ctx.restore();
 }
+
+// Firma manuscrita con el nombre real (tipografía de firma), revelada de izquierda a derecha,
+// con una rúbrica debajo. progress 0..1.
+export const SIGNATURE_FONT = '"Mrs Saint Delafield", "Segoe Script", cursive';
+export function drawHandSignature(ctx, name, w, h, progress, color = '#10204a') {
+  const size = Math.round(h * 0.78);
+  ctx.save();
+  ctx.font = `${size}px ${SIGNATURE_FONT}`;
+  ctx.textBaseline = 'alphabetic';
+  const textW = Math.min(ctx.measureText(name).width, w * 0.86);
+  const x0 = w * 0.05, base = h * 0.72;
+  const total = textW + w * 0.25;              // el texto y después la rúbrica
+  const done = progress * total;
+  // Texto revelado con un recorte que avanza como la punta de la lapicera
+  ctx.beginPath(); ctx.rect(0, 0, x0 + Math.min(done, textW) + 2, h); ctx.clip();
+  ctx.fillStyle = color;
+  ctx.fillText(name, x0, base, w * 0.86);
+  ctx.restore();
+  // Rúbrica: lazo que vuelve por debajo del nombre
+  if (done > textW) {
+    const t = Math.min(1, (done - textW) / (w * 0.25));
+    ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    ctx.beginPath();
+    const steps = Math.round(40 * t);
+    for (let i = 0; i <= steps; i++) {
+      const u = i / 40;
+      const x = x0 + textW + 6 - u * (textW + 4) + Math.sin(u * Math.PI) * 10;
+      const y = base + 6 + Math.sin(u * Math.PI * 1.2) * 7 - u * 2;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke(); ctx.restore();
+  }
+  // Punta de la lapicera
+  if (progress > 0 && progress < 1) {
+    const px = done <= textW ? x0 + done : x0 + textW - (done - textW) / (w * 0.25) * textW;
+    ctx.fillStyle = '#c40d0d'; ctx.fillRect(Math.round(px), Math.round(base - size * 0.35), 2, 2);
+  }
+}

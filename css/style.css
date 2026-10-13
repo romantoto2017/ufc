@@ -344,3 +344,48 @@ table.stats td:nth-child(2) { text-align: center; color: var(--muted); }
 .tab-panel .seg button, .tabs button { font-size: 8px; min-height: 32px; padding: 4px 6px; min-width: 0; }
 .rank-table .star-num { color: var(--gold); font-family: var(--font-text) !important; font-size: 17px !important; }
 .org-row { flex-wrap: wrap; }
+
+/* Esquema de 2 botones */
+.pad-right.simple { grid-template-columns: repeat(2, calc(var(--btn) * 1.7)); }
+.pad-right.simple .cbtn.big { width: calc(var(--btn) * 1.7); height: calc(var(--btn) * 1.5); flex-direction: column; gap: 4px; font-size: calc(var(--btn) * 0.2); }
+.pad-right.simple .cbtn.big small { font-family: var(--font-text); font-size: calc(var(--btn) * 0.2); opacity: 0.85; line-height: 1; }
+.pad-right.simple [data-action="takedown"] { grid-column: 1 / -1; width: 100%; height: calc(var(--btn) * 0.8); }
+.chain-tag { position: absolute; right: 18px; bottom: calc(var(--btn) * 3.6); font-family: var(--font-pixel); font-size: 12px; color: #fff; text-shadow: 2px 2px 0 #000; opacity: 0; pointer-events: none; }
+.chain-tag.show { animation: chaintag 0.7s steps(5) both; }
+@keyframes chaintag { 0% { opacity: 1; transform: translateY(6px); } 70% { opacity: 1; } 100% { opacity: 0; transform: translateY(-6px); } }
+/* Tutorial */
+.tutorial-box { position: absolute; top: 58px; left: 50%; transform: translateX(-50%); width: min(70vw, 560px); background: rgba(10,12,20,0.92); box-shadow: 0 0 0 3px var(--gold); padding: 8px 12px; text-align: center; font-size: 19px; line-height: 1.2; z-index: 5; }
+.tutorial-box b { font-family: var(--font-pixel); font-size: 10px; color: var(--gold); display: block; margin-bottom: 4px; }
+.tutorial-box .btn { margin-top: 6px; }
+/* Evitar zoom con doble toque y permitir scroll en todo */
+button, .btn, .cbtn, a, input, select { touch-action: manipulation; }
+.screen { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.screen-fight { overflow: hidden; }
+
+/* Carrera en celular: todo con scroll */
+.hub-layout { min-height: 0; }
+.hub-card { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.tab-panel { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.tab-panel .scroll { overflow: visible; flex: none; }
+.tabs { flex: none; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tabs button { flex: none; }
+.tab-panel .seg { flex-wrap: nowrap; overflow-x: auto; flex: none; }
+.tab-panel .seg button { flex: none; }
+.tech-row { grid-template-columns: minmax(120px, 150px) 1fr; }
+.retired-card { grid-column: 1 / -1; align-items: center; text-align: center; justify-content: center; }
+.retired-card canvas.portrait { width: 112px; height: 112px; }
+@media (max-height: 430px) {
+  .hub-layout { grid-template-columns: 1fr 1fr 1.15fr; }
+}
+
+.banner.winner { top: 16%; font-size: 22px; color: var(--gold); }
+.tutorial-box { top: 52px; width: min(62vw, 520px); padding: 5px 10px; font-size: 16px; line-height: 1.1; }
+.tutorial-box b { font-size: 9px; margin-bottom: 2px; }
+.tutorial-box .row-actions { margin-top: 4px; }
+.tutorial-box .btn { margin-top: 0; min-height: 36px; padding: 6px 10px; }
+.hub-card > .row-actions { position: sticky; bottom: -8px; background: var(--card); padding: 6px 0 2px; margin-top: auto; z-index: 1; }
+@media (max-height: 430px) {
+  .fight-card .fc-top canvas.portrait { width: 44px; height: 44px; }
+  .fight-card .note { font-size: 15px; line-height: 1.05; }
+  .hub-card .btn { min-height: 40px; padding: 8px 10px; }
+}

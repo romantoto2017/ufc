@@ -81,7 +81,10 @@ export function randomFace(rng) {
 const HEIGHT_BY_DIV = { mosca: 165, gallo: 170, pluma: 173, ligero: 177, welter: 181, medio: 185, semipesado: 189, pesado: 193 };
 
 // Crea un rival genérico.
-export function generateFighter(rng, { namesDb, country, division, level, archetype, idPrefix = 'g' }) {
+// Estrellas de los rivales según el nivel de la organización (1.5 = Samurai ... 3.5 = ONE).
+export const orgStars = nivel => [Math.min(3.4, 0.6 * nivel + 0.5), Math.min(3.8, 0.6 * nivel + 1.5)];
+
+export function generateFighter(rng, { namesDb, country, division, level, archetype, idPrefix = 'g', starsRange = null }) {
   archetype = archetype || pick(rng, level === 'nacional' ? ['prospecto', 'veterano', 'relleno', 'relleno', 'local', 'local'] : ['prospecto', 'veterano', 'relleno', 'local', 'prospecto']);
   let age;
   switch (archetype) {
@@ -91,7 +94,7 @@ export function generateFighter(rng, { namesDb, country, division, level, archet
     default: age = randInt(rng, 22, 33);
   }
   const rec = makeRecord(rng, age, archetype, level);
-  const [lo, hi] = LEVEL_STARS[level] || [1.5, 3];
+  const [lo, hi] = starsRange || LEVEL_STARS[level] || [1.5, 3];
   const archShift = { prospecto: 0.15, veterano: 0, relleno: -0.35, local: 0.1 }[archetype];
   const targetStars = clamp(lo + (hi - lo) * rng() + archShift, lo, hi);
   const style = pick(rng, STYLES);

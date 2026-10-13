@@ -56,6 +56,11 @@ class AudioEngine {
       case 'bell': for (let i = 0; i < (opt.times || 1); i++) for (const [f, g] of [[1046, 0.3], [1568, 0.15], [2093, 0.08]]) this.tone(f, 1.2, { gain: g, when: i * 0.32 }); break;
       case 'ko': this.tone(70, 0.6, { gain: 0.9, slideTo: 30 }); this.noise(0.6, { freq: 500, gain: 0.8 }); this.roar(1); break;
       case 'knockdown': this.tone(80, 0.4, { gain: 0.8, slideTo: 40 }); this.noise(0.3, { freq: 700, gain: 0.6 }); this.roar(0.7); break;
+      case 'drumroll': { // redoble que va creciendo
+        const n = Math.round((opt.seconds || 2) * 14);
+        for (let i = 0; i < n; i++) this.noise(0.05, { type: 'bandpass', freq: 220 + (i % 2) * 40, q: 1.2, gain: 0.12 + 0.5 * (i / n), when: i / 14 });
+        break;
+      }
       case 'ui': this.tone(880, 0.05, { type: 'square', gain: 0.08 }); break;
       case 'uiBack': this.tone(440, 0.06, { type: 'square', gain: 0.07 }); break;
       case 'tap': this.tone(300 + Math.random() * 80, 0.03, { type: 'square', gain: 0.05 }); break;

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { createPlayer, newCareer, makeOffer, applyCareerFight, acceptContract, train, opponentOf, rankingTable, relink } from '../js/career/career.js';
+import { createPlayer, newCareer, makeOffer, applyCareerFight, acceptContract, train, opponentOf, rankingTable, relink, setNames } from '../js/career/career.js';
 import { generateFighter } from '../js/career/generator.js';
 import { simulateFight } from '../js/sim.js';
 import { stars } from '../js/ratings.js';
@@ -12,6 +12,7 @@ const promos = load('../data/promotions.json');
 const names = load('../data/names.json');
 const fighters = load('../data/fighters.json').peleadores;
 const ctx = { promos, names };
+setNames(names);
 
 test('rivales genéricos coherentes con edad, récord y nivel', () => {
   const rng = seeded(3);
@@ -66,4 +67,25 @@ test('carrera completa simulada: llega a UFC y el mundo UFC cambia', () => {
   const changed = c.ufc.filter(f => f.id !== 'player').some(f => { const o = fighters.find(x => x.id === f.id); return o && o.record !== f.record; });
   assert.ok(changed, 'el mundo UFC simuló peleas');
   console.log('campeón welter antes/después:', champBefore, '/', rankingTable(c, 'welter')[0]?.nombre);
+});
+
+test('realismo: ~1-2 peleas por año, máx. 3 en 12 meses, retiro antes de los 41, máx. 4 vs el mismo', () => {
+  const p = createPlayer({ nombre: 'Test', pais: 'BR', edad: 22, division: 'ligero', altura: 176, alcance: 180, estilo: 'muay_thai', postura: 'ortodoxa', cara: {} });
+  const c = newCareer({ player: p, promos, fighters, seed: 21 });
+  const rng = seeded(4);
+  for (let i = 0; i < 120 && !c.retired; i++) {
+    if (c.pendingContract) acceptContract(c);
+    makeOffer(c, ctx);
+    while (train(c, 'boxeo').ok);
+    applyCareerFight(c, ctx, simulateFight(c.player, opponentOf(c), { rounds: c.offer.rounds, rng }));
+  }
+  assert.ok(c.retired, 'se retira');
+  assert.ok(c.player.edad <= 40);
+  const dates = c.player.historial.map(h => h.fecha).sort();
+  for (let i = 3; i < dates.length; i++) assert.ok((new Date(dates[i]) - new Date(dates[i - 3])) / 864e5 > 365, 'máximo 3 peleas en 12 meses');
+  const years = (new Date(c.date) - new Date('2026-10-13')) / 3.156e10;
+  const perYear = c.player.historial.length / years;
+  assert.ok(perYear > 0.9 && perYear < 2.2, `peleas/año ${perYear}`);
+  assert.ok(Math.max(...Object.values(c.vs)) <= 4);
+  assert.ok(!c.ufc.some(f => f.id === 'joshua-van' && f.edad > 41), 'los veteranos se retiran');
 });

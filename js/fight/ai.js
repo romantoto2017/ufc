@@ -10,11 +10,11 @@ const DIFFICULTY = {
 };
 
 const STYLE_WEIGHTS = {
-  boxeo:       { jab: 3, cross: 3, hook: 2.5, lowKick: 0.5, bodyKick: 0.3, highKick: 0.2, takedown: 0.2 },
-  kickboxing:  { jab: 2.5, cross: 2, hook: 1.2, lowKick: 2, bodyKick: 1.5, highKick: 1, takedown: 0.2 },
-  muay_thai:   { jab: 1.5, cross: 1.8, hook: 1.5, lowKick: 2.2, bodyKick: 2, highKick: 1, takedown: 0.3 },
-  bjj:         { jab: 2, cross: 1.5, hook: 0.8, lowKick: 0.8, bodyKick: 0.4, highKick: 0.2, takedown: 1 },
-  lucha_libre: { jab: 2, cross: 1.5, hook: 1, lowKick: 0.6, bodyKick: 0.3, highKick: 0.2, takedown: 1.3 },
+  boxeo:       { jab: 3, cross: 3, hook: 2.5, elbow: 0.3, lowKick: 0.5, bodyKick: 0.3, highKick: 0.2, spinKick: 0.05, takedown: 0.2 },
+  kickboxing:  { jab: 2.5, cross: 2, hook: 1.2, elbow: 0.3, lowKick: 2, bodyKick: 1.5, highKick: 0.8, spinKick: 0.4, takedown: 0.2 },
+  muay_thai:   { jab: 1.5, cross: 1.8, hook: 1, elbow: 1.2, lowKick: 2.2, bodyKick: 2, highKick: 1, spinKick: 0.1, takedown: 0.3 },
+  bjj:         { jab: 2, cross: 1.5, hook: 0.8, elbow: 0.3, lowKick: 0.8, bodyKick: 0.4, highKick: 0.2, spinKick: 0.05, takedown: 1 },
+  lucha_libre: { jab: 2, cross: 1.5, hook: 1, elbow: 0.4, lowKick: 0.6, bodyKick: 0.3, highKick: 0.2, spinKick: 0.05, takedown: 1.3 },
 };
 const PREF_RANGE = { boxeo: 32, kickboxing: 36, muay_thai: 34, bjj: 29, lucha_libre: 29 };
 

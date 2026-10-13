@@ -8,7 +8,7 @@ import { simulateFight } from '../sim.js';
 import { portraitCanvas, drawPortrait } from '../gfx/face.js';
 import { flagCanvas } from '../gfx/flag.js';
 import { loadLogo, placeholderLogo } from '../gfx/logo.js';
-import { drawPressConference, signaturePath, drawSignature, drawBelt } from '../gfx/scenes.js';
+import { drawPressConference, drawHandSignature, SIGNATURE_FONT, drawBelt } from '../gfx/scenes.js';
 import { show, el, starsEl, rankLabel, fmtTime, segmented, resetHistory } from './common.js';
 import { showResult, showVS } from './screens.js';
 import { startFight } from './fightScreen.js';
@@ -54,6 +54,7 @@ function persist() { if (career) C.save(career); }
 const money = v => '$' + Math.round(v).toLocaleString(lang() === 'es' ? 'es-AR' : 'en-US');
 
 export function initCareer({ namesDb, logo }) {
+  C.setNames(namesDb);
   if (window.__pixelmma) { window.__pixelmma.career = () => career; window.__pixelmma.showBelt = org => showBelt({ org, first: true }, () => show('screen-career-hub', { push: false })); }
   names = namesDb; ufcLogo = logo;
   document.getElementById('screen-career-start').addEventListener('screen:show', renderStart);
@@ -185,6 +186,7 @@ function renderPick() {
 let hubTab = 'train';
 async function renderHub() {
   if (!career) { career = C.load(); if (!career) return show('screen-career-start'); }
+  if (career.retired) return renderRetired();
   if (career.pendingContract) return showContract();
   if (!career.offer) { C.makeOffer(career, ctx()); persist(); }
   const c = career, p = c.player, opp = C.opponentOf(c);
@@ -212,7 +214,8 @@ async function renderHub() {
       el('span', {}, `${t('money')}: `, el('b', { text: money(p.dinero) })),
       el('span', {}, `${t('gym')}: `, el('b', { text: '★'.repeat(p.gimnasio) })),
       el('span', {}, `${t('streak')}: `, el('b', { text: p.racha > 0 ? `+${p.racha}` : String(p.racha) })),
-      el('span', {}, `${t('belts')}: `, el('b', { text: p.cinturones.length ? p.cinturones.map(orgName).join(', ') : '—' }))),
+      el('span', {}, `${t('belts')}: `, el('b', { text: p.cinturones.length ? p.cinturones.map(orgName).join(', ') : '—' })),
+      c.contract ? el('span', {}, `${t('contract')}: `, el('b', { text: t('contract_left', { n: c.contract.left, total: c.contract.total }) })) : null),
     el('div', { class: 'row-actions' }, gymBtn, menuBtn));
 
   // Columna 2: próxima pelea
@@ -244,6 +247,27 @@ async function renderHub() {
   const col3 = el('div', { class: 'hub-card' }, tabBar, panel);
   hub.append(col1, col2, col3);
   renderTab(panel);
+}
+
+// Fin de carrera: resumen y opción de empezar otra.
+function renderRetired() {
+  show('screen-career-hub', { push: false });
+  const c = career, p = c.player;
+  const hub = document.getElementById('hub');
+  hub.innerHTML = '';
+  const pc = portraitCanvas(p.cara, 4); pc.classList.add('portrait');
+  const wins = p.historial.filter(h => h.resultado === 'W');
+  const finishes = wins.filter(h => ['ko', 'tko', 'sub'].includes(h.metodo)).length;
+  const again = el('button', { class: 'btn btn-primary', text: t('career_new_create') });
+  again.addEventListener('click', () => { C.clearSave(); career = null; show('screen-career-start', { push: false }); });
+  const menu = el('button', { class: 'btn', text: t('to_menu') });
+  menu.addEventListener('click', () => { resetHistory(); show('screen-menu', { push: false }); });
+  hub.append(el('div', { class: 'hub-card retired-card' },
+    el('h2', { text: t('career_over') }), pc,
+    el('div', { class: 'fc-name', text: p.nombre }),
+    el('div', { class: 'fc-meta' }, flagCanvas(p.pais, 2), starsEl(stars(p.atributos)), el('b', { text: p.record })),
+    el('p', { class: 'event-msg', text: t('career_summary', { age: p.edad, fights: p.historial.length, finishes, belts: p.cinturones.length ? p.cinturones.map(orgName).join(', ') : '—', money: money(p.dinero) }) }),
+    el('div', { class: 'row-actions' }, menu, again)));
 }
 
 function stageText() {
@@ -364,11 +388,24 @@ function showEvents(events) {
     switch (e.type) {
       case 'purse': text = t('ev_purse', { amount: money(e.amount) }) + (e.bonus ? ' ' + t('ev_bonus', { amount: money(e.bonus) }) : ''); break;
       case 'stars': text = t('ev_stars', { from: e.from, to: e.to }); break;
-      case 'contract': text = t('ev_contract', { org: orgName(e.org) }); break;
+      case 'contract': text = t('ev_contract', { org: orgName(e.org) }) + (e.fights ? ' ' + t('ev_contract_fights', { n: e.fights }) : ''); break;
       case 'invite': text = t(e.org === 'rtu' ? 'ev_invite_rtu' : 'ev_invite_dwcs'); break;
       case 'released': text = t('ev_released', { org: orgName(e.org) }); break;
       case 'no_contract': text = t('ev_no_contract'); break;
       case 'rtu_advance': text = t('ev_rtu_advance', { n: e.round }); break;
+      case 'short_notice': text = t('ev_short_notice'); break;
+      case 'renewed': text = t('ev_renewed', { org: orgName(e.org) }); break;
+      case 'retire_forced': text = t('ev_retire_forced'); break;
+      case 'retire_option': {
+        box.innerHTML = '';
+        const keep = el('button', { class: 'btn btn-primary', text: t('keep_fighting') });
+        const ret = el('button', { class: 'btn', text: t('retire_now') });
+        keep.addEventListener('click', () => { audio.play('ui'); next(); });
+        ret.addEventListener('click', () => { audio.play('ui'); C.retire(career); persist(); renderRetired(); });
+        box.append(el('div', { class: 'panel' }, el('p', { class: 'event-msg', text: t('ev_retire_option', { age: career.player.edad }) }), el('div', { class: 'row-actions' }, ret, keep)));
+        show('screen-career-events', { push: false });
+        return;
+      }
       default: text = '';
     }
     const btn = el('button', { class: 'btn btn-primary', text: t('continue') });
@@ -440,9 +477,9 @@ function contractPaper(k) {
   box.innerHTML = '';
   const p = career.player;
   const purse = { ufc: 14000, pfl: 30000, regional: 4000 }[k.type] || 4000;
-  const sigCanvas = el('canvas', { class: 'sig-canvas', width: 360, height: 70 });
+  const sigCanvas = el('canvas', { class: 'sig-canvas', width: 720, height: 140 });
   const g = sigCanvas.getContext('2d');
-  const pts = signaturePath(p.nombre, 360, 70);
+  document.fonts?.load(`40px ${SIGNATURE_FONT}`).catch(() => {});
   const hold = el('button', { class: 'btn btn-primary hold-btn', text: t('hold_to_sign') });
   const decline = el('button', { class: 'btn', text: t('decline') });
   const bar = el('div', { class: 'sub-bar' }, el('div', { class: 'sub-fill', style: 'width:0%' }));
@@ -455,9 +492,9 @@ function contractPaper(k) {
   let progress = 0, holding = false, last = 0, raf;
   const render = now => {
     raf = requestAnimationFrame(render);
-    if (holding) { progress = Math.min(1, progress + (now - last) / 2200); last = now; }
-    g.clearRect(0, 0, 360, 70);
-    drawSignature(g, pts, progress);
+    if (holding) { progress = Math.min(1, progress + (now - last) / 2600); last = now; }
+    g.clearRect(0, 0, 720, 140);
+    drawHandSignature(g, p.nombre, 720, 140, progress);
     bar.firstChild.style.width = `${progress * 100}%`;
     if (progress >= 1) {
       cancelAnimationFrame(raf); holding = false;

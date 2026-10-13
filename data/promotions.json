@@ -1,46 +1,354 @@
 {
  "_nota": "Estado verificado con búsqueda web el 2026-10-13: todas tienen eventos en 2026. Bellator no existe (PFL cerró la marca en enero de 2025). Naciones MMA es mexicana (Monterrey) y también organiza eventos en Colombia y Ecuador. El logo se carga desde assets/logos/<logo>; si falta, se dibuja uno provisional.",
  "promociones": [
-  { "id": "ufc", "nombre": "UFC", "pais": "US", "region": "global", "nivel": 5, "logo": "ufc.png", "activa": true },
-  { "id": "pfl", "nombre": "PFL", "pais": "US", "region": "global", "nivel": 4, "logo": "pfl.png", "activa": true },
-  { "id": "dwcs", "nombre": "Dana White's Contender Series", "pais": "US", "region": "global", "nivel": 3.5, "logo": "dwcs.png", "activa": true, "nota": "Temporada 10 (ago–oct 2026)" },
-  { "id": "rtu", "nombre": "Road to UFC", "pais": "CN", "region": "asia", "nivel": 3.5, "logo": "rtu.png", "activa": true, "nota": "Temporada 5 (2026), torneo para peleadores asiáticos" },
-  { "id": "lfa", "nombre": "LFA", "pais": "US", "region": "norteamerica", "nivel": 2, "logo": "lfa.png", "activa": true },
-  { "id": "cffc", "nombre": "CFFC", "pais": "US", "region": "norteamerica", "nivel": 2, "logo": "cffc.png", "activa": true },
-  { "id": "furyfc", "nombre": "Fury FC", "pais": "US", "region": "norteamerica", "nivel": 2, "logo": "furyfc.png", "activa": true },
-  { "id": "cagewarriors", "nombre": "Cage Warriors", "pais": "GB", "region": "europa", "nivel": 2.5, "logo": "cagewarriors.png", "activa": true },
-  { "id": "ksw", "nombre": "KSW", "pais": "PL", "region": "europa", "nivel": 2.5, "logo": "ksw.png", "activa": true },
-  { "id": "oktagon", "nombre": "Oktagon MMA", "pais": "CZ", "region": "europa", "nivel": 2.5, "logo": "oktagon.png", "activa": true },
-  { "id": "fen", "nombre": "FEN", "pais": "PL", "region": "europa", "nivel": 2, "logo": "fen.png", "activa": true },
-  { "id": "ares", "nombre": "ARES FC", "pais": "FR", "region": "europa", "nivel": 2, "logo": "ares.png", "activa": true },
-  { "id": "junglefight", "nombre": "Jungle Fight", "pais": "BR", "region": "brasil", "nivel": 2, "logo": "junglefight.png", "activa": true },
-  { "id": "samurai", "nombre": "Samurai Fight House", "pais": "AR", "region": "cono_sur", "nivel": 1.5, "logo": "samurai.png", "activa": true },
-  { "id": "naciones", "nombre": "Naciones MMA", "pais": "MX", "region": "latam_norte", "nivel": 1.5, "logo": "naciones.png", "activa": true },
-  { "id": "uaewarriors", "nombre": "UAE Warriors", "pais": "AE", "region": "medio_oriente", "nivel": 2, "logo": "uaewarriors.png", "activa": true },
-  { "id": "brave", "nombre": "Brave CF", "pais": "BH", "region": "medio_oriente", "nivel": 2, "logo": "brave.png", "activa": true },
-  { "id": "one", "nombre": "ONE Championship", "pais": "SG", "region": "asia", "nivel": 3, "logo": "one.png", "activa": true },
-  { "id": "rizin", "nombre": "RIZIN", "pais": "JP", "region": "asia", "nivel": 3, "logo": "rizin.png", "activa": true },
-  { "id": "bellator", "nombre": "Bellator", "pais": "US", "region": "global", "nivel": 0, "logo": null, "activa": false, "nota": "Cerrada por PFL en 2025: no se usa" }
+  {
+   "id": "ufc",
+   "nombre": "UFC",
+   "pais": "US",
+   "region": "global",
+   "nivel": 5,
+   "logo": "ufc.png",
+   "activa": true
+  },
+  {
+   "id": "pfl",
+   "nombre": "PFL",
+   "pais": "US",
+   "region": "global",
+   "nivel": 4,
+   "logo": "pfl.png",
+   "activa": true
+  },
+  {
+   "id": "dwcs",
+   "nombre": "Dana White's Contender Series",
+   "pais": "US",
+   "region": "global",
+   "nivel": 3.5,
+   "logo": "dwcs.png",
+   "activa": true,
+   "nota": "Temporada 10 (ago–oct 2026)"
+  },
+  {
+   "id": "rtu",
+   "nombre": "Road to UFC",
+   "pais": "CN",
+   "region": "asia",
+   "nivel": 3.5,
+   "logo": "rtu.png",
+   "activa": true,
+   "nota": "Temporada 5 (2026), torneo para peleadores asiáticos"
+  },
+  {
+   "id": "lfa",
+   "nombre": "LFA",
+   "pais": "US",
+   "region": "norteamerica",
+   "nivel": 3,
+   "logo": "lfa.png",
+   "activa": true
+  },
+  {
+   "id": "cffc",
+   "nombre": "CFFC",
+   "pais": "US",
+   "region": "norteamerica",
+   "nivel": 2.5,
+   "logo": "cffc.png",
+   "activa": true
+  },
+  {
+   "id": "furyfc",
+   "nombre": "Fury FC",
+   "pais": "US",
+   "region": "norteamerica",
+   "nivel": 2,
+   "logo": "furyfc.png",
+   "activa": true
+  },
+  {
+   "id": "cagewarriors",
+   "nombre": "Cage Warriors",
+   "pais": "GB",
+   "region": "europa",
+   "nivel": 3,
+   "logo": "cagewarriors.png",
+   "activa": true
+  },
+  {
+   "id": "ksw",
+   "nombre": "KSW",
+   "pais": "PL",
+   "region": "europa",
+   "nivel": 3,
+   "logo": "ksw.png",
+   "activa": true
+  },
+  {
+   "id": "oktagon",
+   "nombre": "Oktagon MMA",
+   "pais": "CZ",
+   "region": "europa",
+   "nivel": 2.5,
+   "logo": "oktagon.png",
+   "activa": true
+  },
+  {
+   "id": "fen",
+   "nombre": "FEN",
+   "pais": "PL",
+   "region": "europa",
+   "nivel": 2,
+   "logo": "fen.png",
+   "activa": true
+  },
+  {
+   "id": "ares",
+   "nombre": "ARES FC",
+   "pais": "FR",
+   "region": "europa",
+   "nivel": 2.5,
+   "logo": "ares.png",
+   "activa": true
+  },
+  {
+   "id": "junglefight",
+   "nombre": "Jungle Fight",
+   "pais": "BR",
+   "region": "brasil",
+   "nivel": 2,
+   "logo": "junglefight.png",
+   "activa": true
+  },
+  {
+   "id": "samurai",
+   "nombre": "Samurai Fight House",
+   "pais": "AR",
+   "region": "cono_sur",
+   "nivel": 1.5,
+   "logo": "samurai.png",
+   "activa": true
+  },
+  {
+   "id": "naciones",
+   "nombre": "Naciones MMA",
+   "pais": "MX",
+   "region": "latam_norte",
+   "nivel": 1.5,
+   "logo": "naciones.png",
+   "activa": true
+  },
+  {
+   "id": "uaewarriors",
+   "nombre": "UAE Warriors",
+   "pais": "AE",
+   "region": "medio_oriente",
+   "nivel": 2,
+   "logo": "uaewarriors.png",
+   "activa": true
+  },
+  {
+   "id": "brave",
+   "nombre": "Brave CF",
+   "pais": "BH",
+   "region": "medio_oriente",
+   "nivel": 2.5,
+   "logo": "brave.png",
+   "activa": true
+  },
+  {
+   "id": "one",
+   "nombre": "ONE Championship",
+   "pais": "SG",
+   "region": "asia",
+   "nivel": 3.5,
+   "logo": "one.png",
+   "activa": true
+  },
+  {
+   "id": "rizin",
+   "nombre": "RIZIN",
+   "pais": "JP",
+   "region": "asia",
+   "nivel": 3.5,
+   "logo": "rizin.png",
+   "activa": true
+  },
+  {
+   "id": "bellator",
+   "nombre": "Bellator",
+   "pais": "US",
+   "region": "global",
+   "nivel": 0,
+   "logo": null,
+   "activa": false,
+   "nota": "Cerrada por PFL en 2025: no se usa"
+  }
  ],
  "regiones": {
-  "norteamerica": ["US", "CA"],
-  "latam_norte": ["MX", "CO", "EC", "PE", "VE", "PA", "CR", "DO", "CU", "PR", "GT", "HN", "SV", "NI", "BO"],
-  "brasil": ["BR"],
-  "cono_sur": ["AR", "UY", "CL", "PY"],
-  "europa": ["ES", "GB", "ENG", "SCO", "WAL", "NIR", "IE", "FR", "PL", "CZ", "SK", "DE", "NL", "BE", "AT", "CH", "IT", "PT", "SE", "NO", "DK", "FI", "IS", "RU", "UA", "MD", "RO", "BG", "HR", "RS", "ME", "BA", "SI", "LT", "LV", "EE", "HU", "GR", "GE", "AM", "AZ", "TR", "BY", "MA", "NG", "CM", "UG", "AO", "ZA", "GH", "SN", "CD"],
-  "medio_oriente": ["AE", "BH", "SA", "IQ", "IR", "JO", "LB", "EG", "KW", "QA", "OM", "AF"],
-  "asia": ["JP", "KR", "CN", "TW", "MN", "PH", "TH", "ID", "VN", "MY", "SG", "IN", "MM", "KZ", "UZ", "KG", "TJ", "TM"],
-  "oceania": ["AU", "NZ"]
+  "norteamerica": [
+   "US",
+   "CA"
+  ],
+  "latam_norte": [
+   "MX",
+   "CO",
+   "EC",
+   "PE",
+   "VE",
+   "PA",
+   "CR",
+   "DO",
+   "CU",
+   "PR",
+   "GT",
+   "HN",
+   "SV",
+   "NI",
+   "BO"
+  ],
+  "brasil": [
+   "BR"
+  ],
+  "cono_sur": [
+   "AR",
+   "UY",
+   "CL",
+   "PY"
+  ],
+  "europa": [
+   "ES",
+   "GB",
+   "ENG",
+   "SCO",
+   "WAL",
+   "NIR",
+   "IE",
+   "FR",
+   "PL",
+   "CZ",
+   "SK",
+   "DE",
+   "NL",
+   "BE",
+   "AT",
+   "CH",
+   "IT",
+   "PT",
+   "SE",
+   "NO",
+   "DK",
+   "FI",
+   "IS",
+   "RU",
+   "UA",
+   "MD",
+   "RO",
+   "BG",
+   "HR",
+   "RS",
+   "ME",
+   "BA",
+   "SI",
+   "LT",
+   "LV",
+   "EE",
+   "HU",
+   "GR",
+   "GE",
+   "AM",
+   "AZ",
+   "TR",
+   "BY",
+   "MA",
+   "NG",
+   "CM",
+   "UG",
+   "AO",
+   "ZA",
+   "GH",
+   "SN",
+   "CD"
+  ],
+  "medio_oriente": [
+   "AE",
+   "BH",
+   "SA",
+   "IQ",
+   "IR",
+   "JO",
+   "LB",
+   "EG",
+   "KW",
+   "QA",
+   "OM",
+   "AF"
+  ],
+  "asia": [
+   "JP",
+   "KR",
+   "CN",
+   "TW",
+   "MN",
+   "PH",
+   "TH",
+   "ID",
+   "VN",
+   "MY",
+   "SG",
+   "IN",
+   "MM",
+   "KZ",
+   "UZ",
+   "KG",
+   "TJ",
+   "TM"
+  ],
+  "oceania": [
+   "AU",
+   "NZ"
+  ]
  },
  "_regionesNota": "África se agrupa con Europa (Cage Warriors, KSW, etc.) y Oceanía con Norteamérica (LFA, CFFC, Fury FC): ninguna de las dos tenía organizaciones en la lista pedida. Asia (incluida Asia Central) va a Road to UFC en lugar del Contender Series.",
  "orgsPorRegion": {
-  "norteamerica": ["lfa", "cffc", "furyfc"],
-  "oceania": ["lfa", "cffc", "furyfc"],
-  "latam_norte": ["naciones"],
-  "brasil": ["junglefight"],
-  "cono_sur": ["samurai"],
-  "europa": ["cagewarriors", "ksw", "oktagon", "fen", "ares"],
-  "medio_oriente": ["uaewarriors", "brave"],
-  "asia": ["one", "rizin"]
- }
+  "norteamerica": [
+   "lfa",
+   "cffc",
+   "furyfc"
+  ],
+  "oceania": [
+   "lfa",
+   "cffc",
+   "furyfc"
+  ],
+  "latam_norte": [
+   "naciones"
+  ],
+  "brasil": [
+   "junglefight"
+  ],
+  "cono_sur": [
+   "samurai"
+  ],
+  "europa": [
+   "cagewarriors",
+   "ksw",
+   "oktagon",
+   "fen",
+   "ares"
+  ],
+  "medio_oriente": [
+   "uaewarriors",
+   "brave"
+  ],
+  "asia": [
+   "one",
+   "rizin"
+  ]
+ },
+ "_nivelesNota": "nivel: 1.5 (Samurai, Naciones) a 3.5 (ONE, RIZIN). Ganando en una promotora te llegan ofertas de otras de nivel mayor; las de nivel 3 (LFA, Cage Warriors, KSW) son vidrieras directas a UFC.",
+ "vidrieras": [
+  "lfa",
+  "cagewarriors"
+ ]
 }

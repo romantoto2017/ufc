@@ -2,13 +2,15 @@
 // kd = multiplicador de poder de derribo/KO (solo golpes a la cabeza).
 
 export const BASE_MOVES = {
-  jab:      { key: 'jab',      type: 'punch', zone: 'head', dmg: 3,   stam: 2.5, startup: 0.09, active: 0.06, recovery: 0.14, range: 35, kd: 0.25, pose: 'jab' },
-  cross:    { key: 'cross',    type: 'punch', zone: 'head', dmg: 6.5, stam: 4.5, startup: 0.15, active: 0.07, recovery: 0.22, range: 37, kd: 0.65, pose: 'cross' },
-  hook:     { key: 'hook',     type: 'punch', zone: 'head', dmg: 8,   stam: 5.5, startup: 0.19, active: 0.07, recovery: 0.28, range: 30, kd: 1.0,  pose: 'hook' },
-  lowKick:  { key: 'lowKick',  type: 'kick',  zone: 'legs', dmg: 6,   stam: 5,   startup: 0.20, active: 0.08, recovery: 0.28, range: 39, kd: 0,    pose: 'lowKick' },
-  bodyKick: { key: 'bodyKick', type: 'kick',  zone: 'body', dmg: 8.5, stam: 7.5, startup: 0.26, active: 0.08, recovery: 0.34, range: 41, kd: 0,    pose: 'bodyKick' },
-  highKick: { key: 'highKick', type: 'kick',  zone: 'head', dmg: 15,  stam: 12,  startup: 0.36, active: 0.09, recovery: 0.46, range: 43, kd: 1.6,  pose: 'highKick' },
-  takedown: { key: 'takedown', type: 'grapple', zone: null, dmg: 0,   stam: 12,  startup: 0.28, active: 0.12, recovery: 0.6,  range: 33, kd: 0,    pose: 'shoot', tdBonus: 0 },
+  jab:      { key: 'jab',      type: 'punch', zone: 'head', dmg: 3,   stam: 1.5, startup: 0.09, active: 0.06, recovery: 0.14, range: 35, kd: 0.25, pose: 'jab' },
+  cross:    { key: 'cross',    type: 'punch', zone: 'head', dmg: 6.5, stam: 2.7, startup: 0.15, active: 0.07, recovery: 0.22, range: 37, kd: 0.65, pose: 'cross' },
+  hook:     { key: 'hook',     type: 'punch', zone: 'head', dmg: 8,   stam: 3.3, startup: 0.19, active: 0.07, recovery: 0.28, range: 30, kd: 1.0,  pose: 'hook' },
+  elbow:    { key: 'elbow',    type: 'punch', zone: 'head', dmg: 9,   stam: 3.5, startup: 0.17, active: 0.06, recovery: 0.26, range: 26, kd: 1.1,  pose: 'elbow' },
+  lowKick:  { key: 'lowKick',  type: 'kick',  zone: 'legs', dmg: 6,   stam: 3,   startup: 0.20, active: 0.08, recovery: 0.28, range: 39, kd: 0,    pose: 'lowKick' },
+  bodyKick: { key: 'bodyKick', type: 'kick',  zone: 'body', dmg: 8.5, stam: 4.5, startup: 0.26, active: 0.08, recovery: 0.34, range: 41, kd: 0,    pose: 'bodyKick' },
+  highKick: { key: 'highKick', type: 'kick',  zone: 'head', dmg: 15,  stam: 7,   startup: 0.36, active: 0.09, recovery: 0.46, range: 43, kd: 1.6,  pose: 'highKick' },
+  spinKick: { key: 'spinKick', type: 'kick',  zone: 'head', dmg: 17,  stam: 8.5, startup: 0.42, active: 0.09, recovery: 0.5,  range: 43, kd: 1.75, pose: 'highKick', spin: true },
+  takedown: { key: 'takedown', type: 'grapple', zone: null, dmg: 0,   stam: 7,   startup: 0.28, active: 0.12, recovery: 0.6,  range: 33, kd: 0,    pose: 'shoot', tdBonus: 0 },
 };
 
 // Golpes en el suelo.
@@ -23,16 +25,16 @@ const STYLE_VARIANTS = {
   boxeo: {
     jab: { dmg: 1.08, startup: 0.88 }, cross: { dmg: 1.08, startup: 0.92 },
     hook: { dmg: 1.1, kd: 1.1 },
-    lowKick: { dmg: 0.8, stam: 1.15, startup: 1.1 }, bodyKick: { dmg: 0.8, stam: 1.15, startup: 1.1 }, highKick: { dmg: 0.8, stam: 1.15, startup: 1.1 },
+    lowKick: { dmg: 0.8, stam: 1.15, startup: 1.1 }, bodyKick: { dmg: 0.8, stam: 1.15, startup: 1.1 }, highKick: { dmg: 0.8, stam: 1.15, startup: 1.1 }, spinKick: { dmg: 0.8, startup: 1.1 },
     takedown: { tdBonus: -0.08 },
   },
   kickboxing: {
-    lowKick: { dmg: 1.1, startup: 0.88 }, bodyKick: { startup: 0.88 },
-    highKick: { nameKey: 'move_spinKick', dmg: 1.15, startup: 1.05, spin: true },
+    lowKick: { dmg: 1.1, startup: 0.88 }, bodyKick: { startup: 0.88 }, highKick: { dmg: 1.05 },
+    spinKick: { dmg: 1.12, startup: 0.9 },
     takedown: { tdBonus: -0.05 },
   },
   muay_thai: {
-    hook: { nameKey: 'move_elbow', dmg: 1.15, range: 0.8, kd: 1.15, pose: 'elbow' },
+    elbow: { dmg: 1.2, kd: 1.15 },
     lowKick: { dmg: 1.25 }, bodyKick: { dmg: 1.25 }, highKick: { dmg: 1.05 },
   },
   bjj: {
@@ -40,7 +42,7 @@ const STYLE_VARIANTS = {
     takedown: { nameKey: 'move_singleLeg', tdBonus: 0.05 },
   },
   lucha_libre: {
-    lowKick: { dmg: 0.85 }, bodyKick: { dmg: 0.85 }, highKick: { dmg: 0.85 },
+    lowKick: { dmg: 0.85 }, bodyKick: { dmg: 0.85 }, highKick: { dmg: 0.85 }, spinKick: { dmg: 0.85 },
     takedown: { nameKey: 'move_doubleLeg', tdBonus: 0.1, startup: 0.9 },
   },
 };
@@ -49,8 +51,8 @@ const MULT_FIELDS = ['dmg', 'stam', 'startup', 'active', 'recovery', 'range', 'k
 
 // Técnicas aprendidas en el modo carrera (se aplican encima del estilo).
 const TECHNIQUE_VARIANTS = {
-  elbow: { hook: { nameKey: 'move_elbow', range: 0.8, kd: 1.15, dmg: 1.1, pose: 'elbow' } },
-  spinKick: { highKick: { nameKey: 'move_spinKick', dmg: 1.15, startup: 1.05, spin: true } },
+  elbow: { elbow: { dmg: 1.15, startup: 0.9 } },
+  spinKick: { spinKick: { dmg: 1.1, startup: 0.85 } },
   singleLeg: { takedown: { nameKey: 'move_singleLeg', tdBonus: 0.06 } },
   doubleLeg: { takedown: { nameKey: 'move_doubleLeg', tdBonus: 0.12, startup: 0.9 } },
 };
@@ -76,4 +78,6 @@ export function movesForStyle(style, learned = []) {
   return out;
 }
 
-export const STANDING_ACTIONS = ['jab', 'cross', 'hook', 'lowKick', 'bodyKick', 'highKick', 'takedown'];
+export const STANDING_ACTIONS = ['jab', 'cross', 'hook', 'elbow', 'lowKick', 'bodyKick', 'highKick', 'spinKick', 'takedown'];
+// Esquema de 2 botones: toques seguidos avanzan por la cadena.
+export const CHAINS = { punch: ['jab', 'cross', 'hook', 'elbow'], kick: ['lowKick', 'bodyKick', 'highKick', 'spinKick'] };

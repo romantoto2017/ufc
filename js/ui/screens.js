@@ -38,6 +38,7 @@ export function buildSettings() {
     range('volumenMusica', 'settings_music'),
     range('volumenEfectos', 'settings_sfx'),
     seg('duracionRoundMin', 'settings_round_length', [1, 2, 3, 5].map(v => ({ value: v, label: `${v} ${t('minutes_short')}` }))),
+    seg('esquemaControles', 'settings_scheme', [{ value: 'simple', label: t('scheme_simple') }, { value: 'clasico', label: t('scheme_clasico') }]),
     seg('tamanoBotones', 'settings_button_size', ['pequeno', 'mediano', 'grande'].map(v => ({ value: v, label: t('size_' + v) }))),
     range('opacidadBotones', 'settings_button_opacity'),
     seg('vibracion', 'settings_vibration', [{ value: true, label: t('on') }, { value: false, label: t('off') }]),

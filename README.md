@@ -11,7 +11,9 @@ npm test             # tests: simulación, motor IA vs IA, roster y carrera comp
 
 Para el celular: GitHub Pages (Settings → Pages → rama `claude/bold-wozniak-8a0tk5`, carpeta raíz). Después lo abrís en el teléfono y lo instalás ("Agregar a pantalla principal").
 
-En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J/K/L/U/I/O/H para los golpes y Espacio para tocar en las sumisiones.
+**Controles (2 botones, por defecto):** PUÑO (1 toque jab, 2 recto, 3 gancho, 4 codazo, siempre tocando seguido) y PATADA (baja, media, alta y giratoria). Se puede cambiar al esquema clásico en Configuración. Hay un **Tutorial** en el menú.
+
+En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J = puño, K = patada, H = derribo y Espacio para tocar en las sumisiones.
 
 ## Qué tiene
 
@@ -23,6 +25,14 @@ En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J/
   - Escalera: circuito nacional, después la organización regional, después el Contender Series (o Road to UFC si sos asiático) y por último UFC. PFL aparece como alternativa.
   - Rivales genéricos coherentes y guardados (puede haber revanchas), entrenamiento, técnicas, gimnasio y dinero.
   - El mundo UFC se simula mes a mes: cambian récords, rankings, valoraciones y campeones.
+- **Carrera realista**:
+  - Lo normal es ~1 pelea por año y nunca más de 3 en 12 meses.
+  - Retiro entre los 36 y los 40 (obligatorio a los 40).
+  - Máximo 4 peleas contra el mismo rival.
+  - Promotoras por nivel (Samurai/Naciones 1,5 → LFA/Cage Warriors/KSW 3 → ONE/RIZIN 3,5): ganando, te llegan ofertas de promotoras mejores.
+  - Caminos a UFC aleatorios: el campeón de una promotora fuerte puede recibir un contrato directo de 1 o 2 peleas, también hay llamados de último momento, el Contender Series o el Road to UFC, y PFL.
+  - Los contratos tienen una cantidad de peleas y se renuevan según tus resultados.
+  - En el mundo UFC los veteranos se retiran y llegan prospectos nuevos.
 - **Presentación**:
   - Intro con el presentador gritando "IT'S TIMEEE!".
   - Al terminar, el árbitro levanta el brazo del ganador, a veces con Dana White.

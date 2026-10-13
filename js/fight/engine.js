@@ -129,7 +129,8 @@ export class Fight {
     const o = this.opp(f);
     f.t += dt;
     if (f.subCooldown > 0) f.subCooldown -= dt;
-    const regenBase = 10 * (0.5 + f.a.cardio / 200) * (1 - f.dmg.body / 100 * 0.7);
+    // Recuperación de aguante: rápida al estar quieto o en guardia; el daño al cuerpo la reduce.
+    const regenBase = 18 * (0.6 + f.a.cardio / 250) * (1 - f.dmg.body / 100 * 0.6);
 
     switch (f.state) {
       case 'idle': case 'walk': case 'block': {
@@ -140,7 +141,7 @@ export class Fight {
         if (wantBlock && !(f.ground && wantBlock === 'low')) {
           if (f.state !== 'block' || f.blockZone !== wantBlock) { f.state = 'block'; f.t = 0; }
           f.blockZone = wantBlock;
-          f.stamina = Math.min(f.staminaMax, f.stamina + regenBase * 0.3 * dt);
+          f.stamina = Math.min(f.staminaMax, f.stamina + regenBase * dt); // la guardia no gasta aguante
           f.moving = 0;
           break;
         }
@@ -153,7 +154,7 @@ export class Fight {
           f.x = clamp(f.x + mv * speed * dt, EDGE, ARENA_W - EDGE);
           f.walkPhase += dt * speed * 0.12;
           f.moving = mv * f.dir; // +1 avanza, -1 retrocede
-          f.stamina = Math.min(f.staminaMax, f.stamina + regenBase * 0.7 * dt);
+          f.stamina = Math.min(f.staminaMax, f.stamina + regenBase * 0.85 * dt);
         } else {
           f.state = 'idle'; f.moving = 0;
           f.stamina = Math.min(f.staminaMax, f.stamina + regenBase * (f.ground === 'bottom' ? 0.5 : 1) * dt);
@@ -239,7 +240,7 @@ export class Fight {
 
     if (blocked) {
       dmg *= 0.25 - D.a.defensa / 1000;
-      D.spend(m.dmg * 0.6 * (1.2 - D.a.defensa / 200));
+      D.spend(m.dmg * 0.12 * (1.2 - D.a.defensa / 200)); // bloquear casi no cansa
       if (D.stamina <= 0) dmg *= 2; // guardia rota por cansancio
       // Chequeo de patada baja: el atacante se lastima la pierna
       if (D.checkKick && m.zone === 'legs') { dmg *= 0.5; A.dmg.legs = Math.min(100, A.dmg.legs + m.dmg * 0.6 * this.zoneScale); }

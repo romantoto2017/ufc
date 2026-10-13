@@ -2,13 +2,14 @@
 import { Fight } from '../fight/engine.js';
 import { AI } from '../fight/ai.js';
 import { Renderer } from '../fight/render.js';
-import { STANDING_ACTIONS } from '../fight/moves.js';
+import { STANDING_ACTIONS, CHAINS } from '../fight/moves.js';
 import { t } from '../i18n.js';
 import { state } from '../store.js';
 import { audio, vibrate } from '../audio.js';
 import { flagCanvas } from '../gfx/flag.js';
 import { show, el, fmtTime } from './common.js';
 import { drawPerson } from '../gfx/scenes.js';
+import { Tutorial } from './tutorial.js';
 
 const DT = 1 / 60;
 let current = null;
@@ -16,7 +17,7 @@ let current = null;
 const BTN_CLASS = { jab: 'punch', cross: 'punch', hook: 'punch', lowKick: 'kick', bodyKick: 'kick', highKick: 'kick', takedown: 'grapple',
   gnpPunch: 'punch', gnpElbow: 'punch', upStrike: 'punch', sub: 'special', escape: 'grapple', standUp: 'grapple' };
 
-export function startFight(a, b, { rounds, onEnd, ufcLogo, danaChance = 0.35, eventLabel = '' }) {
+export function startFight(a, b, { rounds, onEnd, ufcLogo, danaChance = 0.35, eventLabel = '', tutorial = false }) {
   stopFight();
   const s = state.settings;
   const fight = new Fight(a, b, { rounds, roundSeconds: s.duracionRoundMin * 60 });
@@ -42,7 +43,12 @@ export function startFight(a, b, { rounds, onEnd, ufcLogo, danaChance = 0.35, ev
   document.addEventListener('visibilitychange', onVis);
   ctx.cleanup.push(() => document.removeEventListener('visibilitychange', onVis));
 
-  startIntro(ctx, eventLabel);
+  if (tutorial) {
+    ctx.intro = false;
+    ctx.tutorial = new Tutorial(ctx, () => finish(ctx, null));
+    ctx.ai = { update: dt => ctx.tutorial.update(dt) };
+    ctx.cleanup.push(() => ctx.tutorial.destroy());
+  } else startIntro(ctx, eventLabel);
   const loop = now => {
     ctx.raf = requestAnimationFrame(loop);
     const elapsed = Math.min(0.1, (now - ctx.last) / 1000);
@@ -51,7 +57,7 @@ export function startFight(a, b, { rounds, onEnd, ufcLogo, danaChance = 0.35, ev
     if (!ctx.paused) {
       ctx.acc += elapsed;
       while (ctx.acc >= DT) { ctx.ai.update(DT); fight.update(DT); ctx.acc -= DT; }
-      for (const e of fight.drainEvents()) handleEvent(ctx, e);
+      for (const e of fight.drainEvents()) { ctx.tutorial?.onEvent(e); handleEvent(ctx, e); }
     }
     renderer.draw(ctx.paused ? 0 : elapsed);
     updateHud(ctx);
@@ -130,17 +136,42 @@ function setPadMode(ctx, mode) {
   const pad = document.getElementById('pad-right');
   pad.innerHTML = '';
   let actions;
-  if (mode === 'stand') actions = STANDING_ACTIONS;
+  const simple = (state.settings.esquemaControles || 'simple') === 'simple';
+  pad.classList.toggle('simple', simple && mode === 'stand');
+  if (mode === 'stand' && simple) actions = ['chain:punch', 'chain:kick', 'takedown'];
+  else if (mode === 'stand') actions = STANDING_ACTIONS;
   else if (mode === 'ground-top') actions = ['gnpPunch', 'gnpElbow', 'sub', 'standUp'];
   else actions = ['upStrike', 'sub', 'escape'];
   const moves = ctx.player.moves;
   for (const a of actions) {
+    if (a.startsWith('chain:')) {
+      const kind = a.slice(6);
+      const b = el('button', { class: 'cbtn big ' + (kind === 'punch' ? 'punch' : 'kick'), 'data-chain': kind, 'aria-label': t('btn_' + kind) },
+        el('span', { text: t('btn_' + kind) }), el('small', { text: CHAINS[kind].map(k => t(moves[k].nameKey)).join(' › ') }));
+      pad.append(b);
+      continue;
+    }
     const label = moves[a] ? t(moves[a].nameKey) : t('act_' + a);
     const b = el('button', { class: 'cbtn ' + (BTN_CLASS[a] || ''), 'data-action': a, text: label, 'aria-label': label });
     pad.append(b);
   }
   // Los bloqueos bajos y el movimiento no se usan en el suelo
   document.querySelectorAll('.pad-left [data-hold="blockLow"], .pad-left .cbtn-move').forEach(b => { b.disabled = mode !== 'stand'; });
+}
+
+// Cadena de 2 botones: 1 toque = jab / patada baja; tocando seguido avanza
+// (jab › recto › gancho › codazo) o (baja › media › alta › giratoria).
+const CHAIN_WINDOW = 700;
+function chainPress(ctx, kind) {
+  const now = performance.now();
+  const c = ctx.chain;
+  const i = c && c.kind === kind && now - c.t < CHAIN_WINDOW && c.i < 3 ? c.i + 1 : 0;
+  ctx.chain = { kind, i, t: now };
+  const action = CHAINS[kind][i];
+  ctx.player.ctl.press(action);
+  ctx.onAction?.(action);
+  const tag = document.getElementById('chain-tag');
+  if (tag) { tag.textContent = `${i + 1} · ${t(ctx.player.moves[action].nameKey)}`; tag.classList.remove('show'); void tag.offsetWidth; tag.classList.add('show'); }
 }
 
 function bindControls(ctx) {
@@ -159,6 +190,7 @@ function bindControls(ctx) {
     audio.unlock();
     if (b.dataset.hold) ctx.player.ctl[b.dataset.hold] = true;
     if (b.dataset.action) { ctx.player.ctl.press(b.dataset.action); vibrate(8, vib()); }
+    if (b.dataset.chain) { chainPress(ctx, b.dataset.chain); vibrate(8, vib()); }
   };
   const up = e => {
     const b = pointers.get(e.pointerId);
@@ -177,7 +209,7 @@ function bindControls(ctx) {
 
   // Teclado (para probar en ordenador)
   const KEYS = { KeyA: 'left', ArrowLeft: 'left', KeyD: 'right', ArrowRight: 'right', KeyW: 'blockHigh', KeyS: 'blockLow' };
-  const ACT = { KeyJ: 'jab', KeyK: 'cross', KeyL: 'hook', KeyU: 'lowKick', KeyI: 'bodyKick', KeyO: 'highKick', KeyH: 'takedown', Space: null };
+  const ACT = { KeyJ: 'chain:punch', KeyK: 'chain:kick', KeyL: 'hook', KeyU: 'lowKick', KeyI: 'bodyKick', KeyO: 'highKick', KeyH: 'takedown', Space: null };
   const kd = e => {
     if (e.repeat) return;
     if (KEYS[e.code]) { ctx.player.ctl[KEYS[e.code]] = true; return; }
@@ -188,7 +220,8 @@ function bindControls(ctx) {
       const g = ctx.player.ground;
       if (g === 'top') a = { KeyJ: 'gnpPunch', KeyK: 'gnpElbow', KeyH: 'sub', KeyL: 'standUp' }[e.code];
       if (g === 'bottom') a = { KeyJ: 'upStrike', KeyH: 'sub', KeyK: 'escape' }[e.code];
-      if (a) ctx.player.ctl.press(a);
+      if (a && a.startsWith('chain:')) chainPress(ctx, a.slice(6));
+      else if (a) ctx.player.ctl.press(a);
     }
   };
   const ku = e => { if (KEYS[e.code]) ctx.player.ctl[KEYS[e.code]] = false; };
@@ -305,13 +338,37 @@ function drawIntro(ctx, dt) {
 }
 
 // ---------- Ceremonia: el árbitro levanta el brazo del ganador ----------
+// Decisión con suspenso: tarjetas una por una, redoble y recién ahí el árbitro levanta la mano.
+function decisionSequence(ctx, result) {
+  const { fight, renderer } = ctx;
+  const [A, B] = fight.f;
+  const cards = result.scorecardsAB || [];
+  const steps = [];
+  steps.push([1800, () => { renderer.startDecision(); banner(t('dec_to_cards'), 'small'); audio.roar(0.4); }]);
+  cards.forEach(([a, b], i) => steps.push([1500, () => { banner(t('dec_judge', { n: i + 1, a, b, nameA: A.data.nombre.split(' ').pop(), nameB: B.data.nombre.split(' ').pop() }), 'small'); audio.play('block'); }]));
+  steps.push([2400, () => { banner(t('dec_and') + ' ' + t('method_' + result.method).toLowerCase() + '...', 'small'); audio.play('drumroll', { seconds: 2.3 }); }]);
+  let idx = 0, timer = 0;
+  const run = () => {
+    if (ctx.ended) return;
+    if (idx < steps.length) { const [ms, fn] = steps[idx++]; fn(); timer = setTimeout(run, ms); return; }
+    if (result.winnerIdx < 0) { banner(t('draw'), 'big'); audio.roar(0.7); timer = setTimeout(() => finish(ctx, result), 2500); return; }
+    renderer.startCeremony({ winnerIdx: result.winnerIdx, dana: Math.random() < ctx.danaChance });
+    banner(t('winner') + ': ' + fight.f[result.winnerIdx].data.nombre.split(' ').pop().toUpperCase(), 'winner');
+    audio.roar(1); audio.play('bell', { times: 2 });
+    timer = setTimeout(() => finish(ctx, result), 4200);
+  };
+  setTimeout(run, 700);
+  ctx.cleanup.push(() => clearTimeout(timer));
+}
+
 function startCeremony(ctx, result) {
   const isFinish = !(result.method.startsWith('dec') || result.method === 'draw');
+  if (!isFinish) return decisionSequence(ctx, result);
   if (result.winnerIdx < 0) { setTimeout(() => finish(ctx, result), 1200); return; }
   setTimeout(() => {
     if (ctx.ended) return;
     ctx.renderer.startCeremony({ winnerIdx: result.winnerIdx, dana: Math.random() < ctx.danaChance });
-    banner(t('winner') + ': ' + ctx.fight.f[result.winnerIdx].data.nombre.split(' ').pop().toUpperCase(), 'small');
+    banner(t('winner') + ': ' + ctx.fight.f[result.winnerIdx].data.nombre.split(' ').pop().toUpperCase(), 'winner');
     audio.roar(1);
     const done = () => finish(ctx, result);
     const timer = setTimeout(done, 4200);

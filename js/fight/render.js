@@ -234,9 +234,18 @@ export class Renderer {
     this.ceremony = { t: 0, refX: mid + 12, dana, danaX: mid + 150, danaTarget: mid + 30 };
   }
 
+  // Decisión: los dos peleadores en el centro, el árbitro en medio tomándolos de las muñecas.
+  startDecision() {
+    const [A, B] = this.fight.f;
+    const mid = Math.max(90, Math.min(ARENA_W - 90, (A.x + B.x) / 2));
+    for (const f of this.fight.f) { f.ground = null; f.state = 'idle'; f.move = null; }
+    A.x = mid - 18; A.dir = 1; B.x = mid + 18; B.dir = -1;
+    this.ceremony = { t: 0, refX: mid, waiting: true, dana: false, danaX: mid + 150, danaTarget: mid + 30 };
+  }
+
   drawCeremony(dt) {
     const c = this.ceremony; c.t += dt;
-    drawPerson(this.ctx, Math.round(c.refX), FLOOR_Y, 'ref', { armUp: true, t: c.t });
+    drawPerson(this.ctx, Math.round(c.refX), FLOOR_Y, 'ref', { armUp: !c.waiting, t: c.t });
     if (c.dana && c.t > 0.8) {
       c.danaX += (c.danaTarget - c.danaX) * Math.min(1, dt * 2.5);
       drawPerson(this.ctx, Math.round(c.danaX), FLOOR_Y, 'dana', { t: c.t * (Math.abs(c.danaX - c.danaTarget) > 2 ? 2 : 0.5) });

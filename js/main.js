@@ -43,6 +43,12 @@ async function boot() {
     if (menuish) { startDemo(); audio.startMusic(); } else stopDemo();
   }));
 
+  document.getElementById('tutorial-btn').addEventListener('click', startTutorial);
+  // Evitar el zoom por doble toque (iOS ignora user-scalable)
+  let lastTouch = 0;
+  document.addEventListener('touchend', e => { const now = Date.now(); if (now - lastTouch < 320 && !e.target.closest('input, select, textarea')) e.preventDefault(); lastTouch = now; }, { passive: false });
+  document.addEventListener('gesturestart', e => e.preventDefault());
+  document.addEventListener('dblclick', e => e.preventDefault());
   setupInstall();
   document.getElementById('loading').hidden = true;
   startDemo();
@@ -106,6 +112,16 @@ function onFight(a, b, { rounds, mode }) {
         showResult(a, b, result, { simulated: false, onRematch: () => onFight(a, b, { rounds, mode }), onMenu: toMenu });
       },
     });
+  });
+}
+
+function startTutorial() {
+  audio.unlock(); audio.stopMusic(); stopDemo();
+  const me = state.fighters.find(f => f.id === 'justin-gaethje') || state.fighters[0];
+  const sparring = { ...me, id: 'sparring', nombre: t('tut_partner'), apodo: null, pais: me.pais, cara: { piel: 3, pelo: 'rapado', colorPelo: 'negro', barba: 'ninguna', cejas: 'normales', cabeza: 'redonda' } };
+  startFight({ ...me, nombre: me.nombre }, sparring, {
+    rounds: 1, ufcLogo, tutorial: true,
+    onEnd: () => { resetHistory(); show('screen-menu', { push: false }); },
   });
 }
 
