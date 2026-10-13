@@ -120,7 +120,10 @@ function setupInstall() {
   window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; btn.hidden = false; });
   btn.addEventListener('click', async () => { if (!deferred) return; deferred.prompt(); await deferred.userChoice; deferred = null; btn.hidden = true; });
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-    navigator.serviceWorker.register('sw.js').catch(() => { /* sin SW: la app sigue funcionando */ });
+    navigator.serviceWorker.register('sw.js').then(reg => reg.update()).catch(() => { /* sin SW: la app sigue funcionando */ });
+    // Cuando se instala una versión nueva, recargar una vez para usarla.
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (!reloaded) { reloaded = true; location.reload(); } });
   }
 }
 

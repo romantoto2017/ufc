@@ -1,6 +1,6 @@
-// Service worker: funciona sin conexión. Los JSON de /data y /lang usan red primero
-// para que los cambios que edites se vean al recargar; el resto, caché primero.
-const VERSION = 'pixelmma-v3';
+// Service worker: red primero para todo el juego (siempre la última versión);
+// la caché queda como respaldo para jugar sin conexión.
+const VERSION = 'pixelmma-v4';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/main.js', 'js/store.js', 'js/i18n.js', 'js/audio.js', 'js/ratings.js', 'js/sim.js',
@@ -25,13 +25,17 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  const networkFirst = url.origin === location.origin && /\/(data|lang)\//.test(url.pathname);
-  if (networkFirst) {
-    e.respondWith(fetch(req).then(res => { const copy = res.clone(); caches.open(VERSION).then(c => c.put(req, copy)); return res; }).catch(() => caches.match(req)));
+  // Archivos del juego: red primero (siempre la última versión); la caché solo se usa sin conexión.
+  if (url.origin === location.origin) {
+    e.respondWith(fetch(req, { cache: 'no-cache' }).then(res => {
+      if (res.ok) { const copy = res.clone(); caches.open(VERSION).then(c => c.put(req, copy)); }
+      return res;
+    }).catch(() => caches.match(req).then(hit => hit || caches.match('index.html'))));
     return;
   }
+  // Fuentes externas: caché primero.
   e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(res => {
     if (res.ok || res.type === 'opaque') { const copy = res.clone(); caches.open(VERSION).then(c => c.put(req, copy)); }
     return res;
-  }).catch(() => caches.match('index.html'))));
+  })));
 });
