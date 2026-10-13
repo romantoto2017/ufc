@@ -1,0 +1,14 @@
+{
+  "_fuente": "https://en.wikipedia.org/wiki/UFC_rankings — Meta Rankings del 2026-10-03 (tras UFC 332); P4P de medios del 2026-10-06",
+  "p4p": ["Islam Makhachev", "Alexander Volkanovski", "Justin Gaethje", "Petr Yan", "Ilia Topuria", "Joshua Van", "Sean Strickland", "Tom Aspinall", "Merab Dvalishvili", "Alex Pereira", "Ciryl Gane", "Khamzat Chimaev", "Arman Tsarukyan", "Alexandre Pantoja", "Carlos Ulberg"],
+  "divisiones": {
+    "mosca": ["Joshua Van", "Manel Kape", "Alexandre Pantoja", "Brandon Royval", "Tatsuro Taira", "Asu Almabayev", "Lone'er Kavanagh", "Ramazan Temirov", "Kyoji Horiguchi", "Amir Albazi", "Brandon Moreno", "Su Mudaerji", "Mitch Raposo", "Imanol Rodríguez", "Rei Tsuruya", "Charles Johnson"],
+    "gallo": ["Petr Yan", "Merab Dvalishvili", "Song Yadong", "Sean O'Malley", "Mario Bautista", "Umar Nurmagomedov", "Cory Sandhagen", "David Martínez", "Raul Rosas Jr.", "Farid Basharat", "Marcus McGhee", "Payton Talbott", "Montel Jackson", "Aiemann Zahabi", "Marlon Vera", "Bryce Mitchell"],
+    "pluma": ["Alexander Volkanovski", "Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Jean Silva", "Arnold Allen", "Pat Sabatini", "Pavel Andrusca", "Youssef Zalal", "Kevin Vallejos", "Joanderson Brito", "Melquizael Costa", "Steve Garcia", "Aaron Pico", "Jamall Emmers"],
+    "ligero": ["Justin Gaethje", "Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Paddy Pimblett", "Quillan Salkilld", "Benoît Saint Denis", "Renato Moicano", "Mateusz Gamrot", "Maurício Ruffy", "Tom Nolan", "Rafael Fiziev", "Tofiq Musayev", "Grant Dawson", "Esteban Ribovics"],
+    "welter": ["Islam Makhachev", "Carlos Prates", "Jack Della Maddalena", "Ian Machado Garry", "Michael Morales", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Joaquin Buckley", "Uroš Medić", "Leon Edwards", "Mike Malott", "Kamaru Usman", "Yaroslav Amosov", "Kevin Holland", "Daniel Rodriguez"],
+    "medio": ["Sean Strickland", "Khamzat Chimaev", "Dricus du Plessis", "Nassourdine Imavov", "Joe Pyfer", "Brendan Allen", "Caio Borralho", "Gregory Rodrigues", "Anthony Hernandez", "Israel Adesanya", "Christian Leroy Duncan", "Ikram Aliskerov", "Bo Nickal", "Abusupiyan Magomedov", "Roman Kopylov", "Edmen Shahbazyan"],
+    "semipesado": ["Carlos Ulberg", "Alex Pereira", "Magomed Ankalaev", "Jiří Procházka", "Paulo Costa", "Khalil Rountree Jr.", "Navajo Stirling", "Dominick Reyes", "Reinier de Ridder", "Azamat Murzakanov", "Alonzo Menifield", "Bogdan Guskov", "Robert Whittaker", "Muhammad Saidov", "Modestas Bukauskas", "Abdul-Rakhman Yakhyaev"],
+    "pesado": ["Ciryl Gane", "Tom Aspinall", "Sergei Pavlovich", "Alex Pereira", "Alexander Volkov", "Rizvan Kuniev", "Josh Hokit", "Curtis Blaydes", "Waldo Cortes-Acosta", "Vitor Petrino", "Mario Pinto", "Valter Walker", "Johnny Walker", "Brando Peričić", "Serghei Spivac", "Anthony Wint"]
+  }
+}

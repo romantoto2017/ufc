@@ -28,7 +28,8 @@ export class FighterState {
     this.idx = idx;
     this.a = data.atributos;
     this.style = data.estilo;
-    this.moves = movesForStyle(data.estilo);
+    this.moves = movesForStyle(data.estilo, data.tecnicas);
+    this.checkKick = (data.tecnicas || []).includes('checkKick');
     this.ctl = new Controller();
     this.staminaMax = 70 + this.a.cardio * 0.3;
     this.stamina = this.staminaMax;
@@ -240,6 +241,8 @@ export class Fight {
       dmg *= 0.25 - D.a.defensa / 1000;
       D.spend(m.dmg * 0.6 * (1.2 - D.a.defensa / 200));
       if (D.stamina <= 0) dmg *= 2; // guardia rota por cansancio
+      // Chequeo de patada baja: el atacante se lastima la pierna
+      if (D.checkKick && m.zone === 'legs') { dmg *= 0.5; A.dmg.legs = Math.min(100, A.dmg.legs + m.dmg * 0.6 * this.zoneScale); }
       D.dmg[m.zone] = Math.min(100, D.dmg[m.zone] + dmg * this.zoneScale);
       A.stat('blocked'); A.stat('blockedDmg', dmg);
       D.state = 'block'; D.t = 0;

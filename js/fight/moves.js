@@ -47,15 +47,25 @@ const STYLE_VARIANTS = {
 
 const MULT_FIELDS = ['dmg', 'stam', 'startup', 'active', 'recovery', 'range', 'kd'];
 
-export function movesForStyle(style) {
+// Técnicas aprendidas en el modo carrera (se aplican encima del estilo).
+const TECHNIQUE_VARIANTS = {
+  elbow: { hook: { nameKey: 'move_elbow', range: 0.8, kd: 1.15, dmg: 1.1, pose: 'elbow' } },
+  spinKick: { highKick: { nameKey: 'move_spinKick', dmg: 1.15, startup: 1.05, spin: true } },
+  singleLeg: { takedown: { nameKey: 'move_singleLeg', tdBonus: 0.06 } },
+  doubleLeg: { takedown: { nameKey: 'move_doubleLeg', tdBonus: 0.12, startup: 0.9 } },
+};
+
+export function movesForStyle(style, learned = []) {
   const out = {};
-  const variants = STYLE_VARIANTS[style] || {};
+  const variants = { ...(STYLE_VARIANTS[style] || {}) };
+  for (const t of learned || []) for (const [k, v] of Object.entries(TECHNIQUE_VARIANTS[t] || {})) variants[k] = { ...(variants[k] || {}), ...v };
   for (const [k, base] of Object.entries(BASE_MOVES)) {
     const m = { ...base, nameKey: 'move_' + k };
     const v = variants[k];
     if (v) {
       for (const [f, val] of Object.entries(v)) {
         if (MULT_FIELDS.includes(f)) m[f] = base[f] * val;
+        else if (f === 'tdBonus') m[f] = (base.tdBonus || 0) + val;
         else m[f] = val;
       }
     }

@@ -50,13 +50,18 @@ function parseRecord(rec) {
 
 // Calcula atributos a partir de ranking, récord, racha y estilo.
 // `ajustes` son correcciones opcionales por perfil verificado (p. ej. récord de sumisiones).
-export function deriveAttributes({ ranking, record, streak, style, age, ajustes = {} }) {
+// Overall mínimo de la élite (campeón o top 15 libra por libra): 5 estrellas.
+export const ELITE_OVERALL = 90.5;
+
+export function deriveAttributes({ ranking, record, streak, style, age, ajustes = {}, elite = false }) {
   const { w, l } = parseRecord(record);
   let target = targetOverallFromRanking(ranking);
   if (streak > 0) target += Math.min(streak * 0.6, 2.4);
   if (streak < 0) target += Math.max(streak * 1.0, -3);
   const winPct = w + l > 0 ? w / (w + l) : 0.5;
   target += (winPct - 0.8) * 6;
+  if (elite) target = Math.max(target, ELITE_OVERALL);
+  else target = Math.min(target, ELITE_OVERALL - 1.5);
 
   const prof = STYLE_PROFILE[style] || {};
   const raw = {};

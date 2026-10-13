@@ -1,6 +1,7 @@
 // Dibujo pixel art de la pelea: arena, público, jaula y peleadores por poses articuladas.
 import { ARENA_W } from './engine.js';
 import { drawHeadSmall, skinOf } from '../gfx/face.js';
+import { drawPerson } from '../gfx/scenes.js';
 
 export const VIEW_H = 180;   // sistema de coordenadas de dibujo
 const CROP_TOP = 28;         // recorte superior: acerca la cámara
@@ -31,6 +32,7 @@ const POSES = {
   hitLegs:  P([[1, -53], [0, -46], [4, -45], [10, -38], [12, -45], [-4, -45], [0, -37], [5, -44], [-1, -25], [7, -12], [12, 0], [-6, -12], [-10, 0]]),
   down:     P([[-26, -5], [-20, -5], [-18, -6], [-12, -10], [-8, -6], [-19, -4], [-14, -2], [-8, -2], [0, -5], [8, -12], [16, -2], [7, -8], [15, 0]]),
   ko:       P([[-26, -3], [-20, -3], [-18, -4], [-14, -9], [-9, -12], [-19, -3], [-24, -1], [-29, -1], [0, -4], [9, -4], [18, -2], [8, -3], [17, 0]]),
+  raised:   P([[2, -56], [1, -49], [6, -48], [7, -60], [7, -71], [-4, -48], [-3, -38], [1, -32], [0, -28], [6, -14], [9, 0], [-6, -14], [-9, 0]]),
   victory:  P([[2, -57], [1, -49], [6, -48], [9, -58], [8, -68], [-4, -48], [-6, -58], [-4, -68], [0, -28], [6, -14], [9, 0], [-6, -14], [-9, 0]]),
   gBottom:  P([[-24, -5], [-18, -6], [-16, -7], [-10, -12], [-5, -16], [-17, -5], [-11, -8], [-6, -10], [-2, -6], [6, -16], [14, -10], [5, -12], [12, -4]]),
   gBottomHit:P([[-25, -4], [-19, -5], [-17, -6], [-12, -10], [-9, -13], [-18, -4], [-13, -7], [-9, -10], [-2, -6], [6, -15], [14, -9], [5, -11], [12, -3]]),
@@ -153,6 +155,7 @@ export class Renderer {
     // El que ataca se dibuja delante
     const order = [...fight.f].sort((a, b) => (a.state === 'attack' || a.ground === 'top' ? 1 : 0) - (b.state === 'attack' || b.ground === 'top' ? 1 : 0));
     for (const f of order) this.drawFighter(f);
+    if (this.ceremony) this.drawCeremony(dt);
     this.drawEffects(dt);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     if (this.flash > 0) {
@@ -220,6 +223,25 @@ export class Renderer {
     ctx.fillRect(10, 128, 6, 52); ctx.fillRect(ARENA_W - 16, 128, 6, 52);
   }
 
+  // Ceremonia final: el árbitro levanta el brazo del ganador; a veces entra Dana White.
+  startCeremony({ winnerIdx, dana }) {
+    const W = this.fight.f[winnerIdx], L = this.fight.f[1 - winnerIdx];
+    const mid = Math.max(90, Math.min(ARENA_W - 90, (W.x + L.x) / 2));
+    W.x = mid - 6; W.dir = 1; W.state = 'raised'; W.ground = null;
+    if (L.state !== 'ko' && L.state !== 'tapped') { L.state = 'idle'; L.x = mid + 44; L.dir = -1; } else L.x = mid + 52;
+    this.ceremony = { t: 0, refX: mid + 12, dana, danaX: mid + 150, danaTarget: mid + 30 };
+  }
+
+  drawCeremony(dt) {
+    const c = this.ceremony; c.t += dt;
+    drawPerson(this.ctx, Math.round(c.refX), FLOOR_Y, 'ref', { armUp: true, t: c.t });
+    if (c.dana && c.t > 0.8) {
+      c.danaX += (c.danaTarget - c.danaX) * Math.min(1, dt * 2.5);
+      drawPerson(this.ctx, Math.round(c.danaX), FLOOR_Y, 'dana', { t: c.t * (Math.abs(c.danaX - c.danaTarget) > 2 ? 2 : 0.5) });
+    }
+    this.excite = 1;
+  }
+
   poseFor(f) {
     const o = this.fight.opp(f);
     const t = f.t;
@@ -246,6 +268,7 @@ export class Renderer {
       case 'ko': return { p: POSES.ko };
       case 'tapped': return { p: POSES.gBottom };
       case 'victory': return { p: POSES.victory, lift: Math.round(Math.abs(Math.sin(this.time * 6)) * 2) };
+      case 'raised': return { p: POSES.raised };
       case 'sub': {
         const s = this.fight.sub;
         const shake = Math.round(Math.sin(this.time * 40) * 0.6);

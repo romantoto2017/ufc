@@ -9,7 +9,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Pixel MMA</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="assets/icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/icons/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +27,7 @@
       <div class="menu-logo"><img id="menu-logo" src="assets/logos/ufc.png" alt="UFC"></div>
       <nav class="menu-buttons">
         <button class="btn btn-primary" data-go="division"><span data-i18n="menu_classic">Pelea clásica</span></button>
-        <button class="btn" disabled aria-disabled="true"><span data-i18n="menu_career">Modo carrera</span><small data-i18n="menu_soon">Próximamente</small></button>
+        <button class="btn" data-go="career-start"><span data-i18n="menu_career">Modo carrera</span></button>
         <button class="btn" data-go="settings"><span data-i18n="menu_settings">Configuración</span></button>
       </nav>
       <button id="install-btn" class="btn btn-small" hidden data-i18n="menu_install">Instalar app</button>
@@ -115,6 +116,14 @@
         <div class="pad-right" id="pad-right"></div>
       </div>
       <button id="tap-btn" class="tap-btn" hidden data-i18n="tap_here">¡TOCA!</button>
+      <div id="intro" class="overlay intro" hidden>
+        <div class="intro-box">
+          <div id="intro-event" class="intro-event"></div>
+          <canvas id="intro-canvas" class="pixel" width="120" height="80" aria-hidden="true"></canvas>
+          <div class="intro-text">IT'S TIMEEE!</div>
+          <p class="note" data-i18n="tap_skip">Toca para saltar</p>
+        </div>
+      </div>
       <div id="between" class="overlay" hidden></div>
       <div id="pause-menu" class="overlay" hidden>
         <div class="panel">
@@ -123,6 +132,46 @@
           <button class="btn" id="quit-btn" data-i18n="quit_fight">Abandonar pelea</button>
         </div>
       </div>
+    </section>
+
+    <!-- CARRERA -->
+    <section id="screen-career-start" class="screen" hidden>
+      <header class="topbar">
+        <button class="btn btn-small btn-back" data-back data-i18n="back">Volver</button>
+        <h2 data-i18n="menu_career">Modo carrera</h2><span></span>
+      </header>
+      <div id="career-start" class="career-start"></div>
+    </section>
+    <section id="screen-career-create" class="screen" hidden>
+      <header class="topbar">
+        <button class="btn btn-small btn-back" data-back data-i18n="back">Volver</button>
+        <h2 data-i18n="career_create">Crear peleador</h2>
+        <button class="btn btn-small btn-primary" id="create-confirm" data-i18n="create_btn">Crear</button>
+      </header>
+      <div class="create-layout"><div id="create-preview" class="create-preview"></div><form id="create-form" class="create-form" onsubmit="return false"></form></div>
+    </section>
+    <section id="screen-career-pick" class="screen" hidden>
+      <header class="topbar">
+        <button class="btn btn-small btn-back" data-back data-i18n="back">Volver</button>
+        <h2 data-i18n="career_pick">Elegir peleador existente</h2><span></span>
+      </header>
+      <div class="pick-layout"><div class="seg" id="pick-div"></div><ul id="pick-list" class="fighter-list"></ul></div>
+    </section>
+    <section id="screen-career-hub" class="screen" hidden>
+      <div id="hub" class="hub-layout"></div>
+    </section>
+    <section id="screen-contract" class="screen" hidden>
+      <div id="contract" class="contract-layout"></div>
+    </section>
+    <section id="screen-belt" class="screen" hidden>
+      <div class="belt-layout">
+        <canvas id="belt-canvas" class="pixel" aria-hidden="true"></canvas>
+        <div id="belt-text" class="belt-text"></div>
+        <button class="btn btn-primary" id="belt-continue" data-i18n="continue">Continuar</button>
+      </div>
+    </section>
+    <section id="screen-career-events" class="screen" hidden>
+      <div id="career-events" class="events-layout"></div>
     </section>
 
     <!-- RESULTADO -->

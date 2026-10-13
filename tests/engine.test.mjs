@@ -24,7 +24,7 @@ function runFight(a, b, { rounds = 3, roundSeconds = 120, diff = 'normal', seed 
 const mk = (id, ranking, style, age = 29) => ({ id, nombre: id, estilo: style, edad: age, atributos: deriveAttributes({ ranking, record: '12-3-0', streak: 0, style, age }) });
 
 test('Gaethje vs Topuria termina con resultado válido', () => {
-  const [g, t] = db.peleadores;
+  const g = db.peleadores.find(f => f.id === 'justin-gaethje'), t = db.peleadores.find(f => f.id === 'ilia-topuria');
   const f = runFight(g, t, { seed: 7 });
   assert.equal(f.phase, 'over');
   assert.ok(['ko', 'tko', 'sub', 'dec_unanimous', 'dec_split', 'dec_majority', 'draw'].includes(f.result.method));

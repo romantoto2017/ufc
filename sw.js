@@ -1,15 +1,16 @@
 // Service worker: funciona sin conexión. Los JSON de /data y /lang usan red primero
 // para que los cambios que edites se vean al recargar; el resto, caché primero.
-const VERSION = 'pixelmma-v1';
+const VERSION = 'pixelmma-v2';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/main.js', 'js/store.js', 'js/i18n.js', 'js/audio.js', 'js/ratings.js', 'js/sim.js',
   'js/fight/engine.js', 'js/fight/ai.js', 'js/fight/moves.js', 'js/fight/render.js',
   'js/gfx/face.js', 'js/gfx/flag.js', 'js/gfx/logo.js',
-  'js/ui/common.js', 'js/ui/screens.js', 'js/ui/fightScreen.js',
+  'js/ui/common.js', 'js/ui/screens.js', 'js/ui/fightScreen.js', 'js/ui/careerScreens.js',
+  'js/career/career.js', 'js/career/generator.js', 'js/gfx/scenes.js',
   'data/fighters.json', 'data/promotions.json', 'data/names.json', 'data/settings.json',
   'lang/es.json', 'lang/en.json',
-  'assets/logos/ufc.png', 'assets/icons/icon-192.png', 'assets/icons/icon-512.png',
+  'assets/logos/ufc.png', 'assets/icons/icon-192.png', 'assets/icons/icon-512.png', 'assets/icons/favicon-32.png', 'assets/icons/favicon-64.png',
 ];
 
 self.addEventListener('install', e => {

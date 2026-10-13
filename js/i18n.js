@@ -12,7 +12,7 @@ export async function loadLang(lang) {
 
 export function t(key, vars) {
   let s = dict[key] ?? key;
-  if (vars) for (const [k, v] of Object.entries(vars)) s = s.replace(`{${k}}`, v);
+  if (vars) for (const [k, v] of Object.entries(vars)) s = s.split(`{${k}}`).join(v);
   return s;
 }
 

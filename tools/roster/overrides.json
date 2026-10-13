@@ -1,0 +1,153 @@
+{
+ "_nota": "Correcciones manuales sobre los datos de Wikipedia. Los estilos de esta lista son el estilo base públicamente conocido del peleador.",
+ "justin-gaethje": {
+  "estilo": "kickboxing",
+  "ajustesPerfil": {
+   "grappling": 3,
+   "menton": 8,
+   "defensa": -7,
+   "sumisiones": -16
+  },
+  "cara": {
+   "piel": 1,
+   "pelo": "rapado",
+   "colorPelo": "castano",
+   "barba": "corta",
+   "cejas": "normales",
+   "cabeza": "cuadrada"
+  }
+ },
+ "ilia-topuria": {
+  "pais": "GE",
+  "paisSecundario": "ES",
+  "estilo": "boxeo",
+  "ajustesPerfil": {
+   "sumisiones": 18,
+   "grappling": 10,
+   "patadas": -2,
+   "golpeo": 2
+  },
+  "cara": {
+   "piel": 2,
+   "pelo": "fade",
+   "colorPelo": "negro",
+   "barba": "completa",
+   "cejas": "gruesas",
+   "cabeza": "ovalada"
+  }
+ },
+ "islam-makhachev": {
+  "estilo": "lucha_libre"
+ },
+ "alexander-volkanovski": {
+  "estilo": "kickboxing"
+ },
+ "petr-yan": {
+  "estilo": "boxeo"
+ },
+ "joshua-van": {
+  "estilo": "boxeo"
+ },
+ "sean-strickland": {
+  "estilo": "boxeo"
+ },
+ "tom-aspinall": {
+  "estilo": "bjj"
+ },
+ "merab-dvalishvili": {
+  "estilo": "lucha_libre"
+ },
+ "alex-pereira": {
+  "estilo": "kickboxing"
+ },
+ "ciryl-gane": {
+  "estilo": "muay_thai"
+ },
+ "khamzat-chimaev": {
+  "estilo": "lucha_libre"
+ },
+ "arman-tsarukyan": {
+  "estilo": "lucha_libre"
+ },
+ "alexandre-pantoja": {
+  "estilo": "bjj"
+ },
+ "carlos-ulberg": {
+  "estilo": "kickboxing"
+ },
+ "movsar-evloev": {
+  "estilo": "lucha_libre"
+ },
+ "carlos-prates": {
+  "estilo": "muay_thai"
+ },
+ "max-holloway": {
+  "estilo": "boxeo"
+ },
+ "charles-oliveira": {
+  "estilo": "bjj"
+ },
+ "dricus-du-plessis": {
+  "estilo": "kickboxing"
+ },
+ "israel-adesanya": {
+  "estilo": "kickboxing"
+ },
+ "jiri-prochazka": {
+  "estilo": "kickboxing"
+ },
+ "magomed-ankalaev": {
+  "estilo": "lucha_libre"
+ },
+ "sean-o-malley": {
+  "estilo": "kickboxing"
+ },
+ "umar-nurmagomedov": {
+  "estilo": "lucha_libre"
+ },
+ "belal-muhammad": {
+  "estilo": "lucha_libre"
+ },
+ "kamaru-usman": {
+  "estilo": "lucha_libre"
+ },
+ "leon-edwards": {
+  "estilo": "kickboxing"
+ },
+ "jack-della-maddalena": {
+  "estilo": "boxeo"
+ },
+ "paddy-pimblett": {
+  "estilo": "bjj"
+ },
+ "brandon-moreno": {
+  "estilo": "bjj"
+ },
+ "sergei-pavlovich": {
+  "estilo": "boxeo"
+ },
+ "curtis-blaydes": {
+  "estilo": "lucha_libre"
+ },
+ "alexander-volkov": {
+  "estilo": "kickboxing"
+ },
+ "diego-lopes": {
+  "estilo": "bjj"
+ },
+ "aljamain-sterling": {
+  "estilo": "bjj"
+ },
+ "bo-nickal": {
+  "estilo": "lucha_libre"
+ },
+ "robert-whittaker": {
+  "estilo": "kickboxing"
+ },
+ "cory-sandhagen": {
+  "estilo": "kickboxing"
+ },
+ "farid-basharat": {
+  "pais": "AF"
+ }
+}

@@ -9,6 +9,12 @@ const SIMPLE = {
   UA: ['h', ['#0057b7', '#ffd700']], PL: ['h', [W, '#dc143c']], ID: ['h', ['#ff0000', W]], MC: ['h', ['#ce1126', W]],
   CO: ['h', ['#fcd116', '#fcd116', '#003893', '#ce1126']], VE: ['h', ['#ffcc00', '#00247d', '#cf142b']],
   BO: ['h', ['#d52b1e', '#f9e300', '#007934']], LU: ['h', ['#ed2939', W, '#00a1de']], YE: ['h', ['#ce1126', W, K]],
+  MM: ['h', ['#fecb00', '#34b233', '#ea2839']], EC: ['h', ['#ffdd00', '#ffdd00', '#034ea2', '#ed1c24']],
+  AF: ['v', ['#000000', '#be0000', '#009900']], CM: ['v', ['#007a5e', '#ce1126', '#fcd116']],
+  AZ: ['h', ['#00b5e2', '#ef3340', '#509e2f']], TJ: ['h', ['#cc0000', '#ffffff', '#006600']],
+  SK: ['h', ['#ffffff', '#0b4ea2', '#ee1c25']], RS: ['h', ['#c6363c', '#0c4076', '#ffffff']],
+  HR: ['h', ['#ff0000', '#ffffff', '#171796']], IQ: ['h', ['#ce1126', '#ffffff', '#000000']],
+  UY: ['h', ['#ffffff', '#0038a8', '#ffffff', '#0038a8', '#ffffff']], SE: ['h', ['#006aa7', '#fecc00', '#006aa7']],
   FR: ['v', ['#0055a4', W, '#ef4135']], IT: ['v', ['#009246', W, '#ce2b37']], IE: ['v', ['#169b62', W, '#ff883e']],
   BE: ['v', [K, '#fdda24', '#ef3340']], NG: ['v', ['#008751', W, '#008751']], PE: ['v', ['#d91023', W, '#d91023']],
   RO: ['v', ['#002b7f', '#fcd116', '#ce1126']], MD: ['v', ['#0046ae', '#ffd200', '#cc092f']], TD: ['v', ['#002664', '#fecb00', '#c60c30']],
@@ -33,6 +39,26 @@ function nordic(ctx, x, y, w, h, bg, cross, inner) {
 }
 
 const CUSTOM = {
+  KG(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#e8112d'); rect(ctx, x + (w >> 1) - 2, y + (h >> 1) - 2, 4, 4, '#ffef00'); rect(ctx, x + (w >> 1) - 1, y + (h >> 1) - 1, 2, 2, '#e8112d'); },
+  PH(ctx, x, y, w, h) { rect(ctx, x, y, w, h >> 1, '#0038a8'); rect(ctx, x, y + (h >> 1), w, h - (h >> 1), '#ce1126'); for (let i = 0; i < h; i++) { const len = Math.round((1 - Math.abs(i - (h - 1) / 2) / (h / 2)) * w * 0.45); rect(ctx, x, y + i, len, 1, W); } rect(ctx, x + 1, y + (h >> 1) - 1, 2, 2, '#fcd116'); },
+  TH(ctx, x, y, w, h) { for (let i = 0; i < 6; i++) { const y0 = Math.round(i * h / 6), y1 = Math.round((i + 1) * h / 6); rect(ctx, x, y + y0, w, y1 - y0, ['#a51931', W, '#2d2a4a', '#2d2a4a', W, '#a51931'][i]); } },
+  PY(ctx, x, y, w, h) { stripes(ctx, x, y, w, h, 'h', ['#d52b1e', W, '#0038a8']); rect(ctx, x + (w >> 1) - 1, y + (h >> 1) - 1, 2, 2, '#fcd116'); },
+  IN(ctx, x, y, w, h) { stripes(ctx, x, y, w, h, 'h', ['#ff9933', W, '#138808']); rect(ctx, x + (w >> 1) - 1, y + (h >> 1) - 1, 2, 2, '#000080'); },
+  MN(ctx, x, y, w, h) { stripes(ctx, x, y, w, h, 'v', ['#c4272f', '#015197', '#c4272f']); rect(ctx, x + 1, y + 2, 2, 4, '#f9cf02'); },
+
+  ENG(ctx, x, y, w, h) { rect(ctx, x, y, w, h, W); const t = Math.max(2, Math.round(h / 4)); rect(ctx, x + (w >> 1) - (t >> 1), y, t, h, '#ce1124'); rect(ctx, x, y + (h >> 1) - (t >> 1), w, t, '#ce1124'); },
+  SCO(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#0065bd'); for (let i = 0; i < w; i++) { const yy = Math.round(i * (h - 1) / (w - 1)); rect(ctx, x + i, y + yy, 1, 1, W); rect(ctx, x + i, y + h - 1 - yy, 1, 1, W); } },
+  WAL(ctx, x, y, w, h) { rect(ctx, x, y, w, h >> 1, W); rect(ctx, x, y + (h >> 1), w, h - (h >> 1), '#00b140'); rect(ctx, x + 3, y + 2, 5, 3, '#d30731'); rect(ctx, x + 7, y + 1, 2, 2, '#d30731'); rect(ctx, x + 3, y + 5, 1, 1, '#d30731'); rect(ctx, x + 6, y + 5, 1, 1, '#d30731'); },
+  NIR(ctx, x, y, w, h) { CUSTOM.ENG(ctx, x, y, w, h); },
+  UZ(ctx, x, y, w, h) { stripes(ctx, x, y, w, h, 'h', ['#0099b5', W, '#1eb53a']); rect(ctx, x, y + Math.round(h / 3), w, 1, '#ce1126'); rect(ctx, x, y + Math.round(2 * h / 3) - 1, w, 1, '#ce1126'); rect(ctx, x + 1, y + 1, 1, 1, W); },
+  AO(ctx, x, y, w, h) { rect(ctx, x, y, w, h >> 1, '#cc092f'); rect(ctx, x, y + (h >> 1), w, h - (h >> 1), K); rect(ctx, x + (w >> 1) - 1, y + (h >> 1) - 2, 3, 3, '#ffcb00'); },
+  MA(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#c1272d'); rect(ctx, x + (w >> 1) - 1, y + (h >> 1) - 1, 2, 2, '#006233'); rect(ctx, x + (w >> 1) - 2, y + (h >> 1) - 1, 1, 1, '#006233'); rect(ctx, x + (w >> 1) + 1, y + (h >> 1) - 1, 1, 1, '#006233'); },
+  UG(ctx, x, y, w, h) { for (let i = 0; i < 6; i++) { const y0 = Math.round(i * h / 6), y1 = Math.round((i + 1) * h / 6); rect(ctx, x, y + y0, w, y1 - y0, [K, '#fcdc04', '#d90000'][i % 3]); } rect(ctx, x + (w >> 1) - 2, y + (h >> 1) - 2, 4, 4, W); },
+  ME(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#d4af37'); rect(ctx, x + 1, y + 1, w - 2, h - 2, '#c40308'); rect(ctx, x + (w >> 1) - 1, y + (h >> 1) - 1, 2, 2, '#d4af37'); },
+  AW(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#418fde'); rect(ctx, x, y + h - 3, w, 1, '#ffd100'); rect(ctx, x, y + h - 2, w, 1, '#ffd100'); rect(ctx, x + 2, y + 2, 1, 1, '#ef3340'); },
+  DO(ctx, x, y, w, h) { rect(ctx, x, y, w, h, W); const cw = (w >> 1) - 1, ch = (h >> 1) - 1; rect(ctx, x, y, cw, ch, '#002d62'); rect(ctx, x + w - cw, y + h - ch, cw, ch, '#002d62'); rect(ctx, x + w - cw, y, cw, ch, '#ce1126'); rect(ctx, x, y + h - ch, cw, ch, '#ce1126'); },
+  PT(ctx, x, y, w, h) { rect(ctx, x, y, Math.round(w * 0.4), h, '#006600'); rect(ctx, x + Math.round(w * 0.4), y, w - Math.round(w * 0.4), h, '#ff0000'); rect(ctx, x + Math.round(w * 0.4) - 1, y + (h >> 1) - 1, 3, 3, '#ffcc00'); },
+
   US(ctx, x, y, w, h) {
     for (let i = 0; i < h; i++) rect(ctx, x, y + i, w, 1, i % 2 === 0 ? '#b22234' : W);
     const cw = Math.round(w * 0.45), ch = Math.round(h * 0.55);

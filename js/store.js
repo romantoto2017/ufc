@@ -2,7 +2,7 @@
 import { stars } from './ratings.js';
 
 const KEY = 'pixelmma.settings.v1';
-export const state = { settings: null, defaults: null, fighters: [], divisions: [], promotions: [] };
+export const state = { settings: null, defaults: null, fighters: [], divisions: [], promotions: [], promotionsDb: null, names: null };
 
 async function getJSON(path) {
   const r = await fetch(path);
@@ -11,9 +11,10 @@ async function getJSON(path) {
 }
 
 export async function loadAll() {
-  const [defaults, fdb, pdb] = await Promise.all([
-    getJSON('data/settings.json'), getJSON('data/fighters.json'), getJSON('data/promotions.json'),
+  const [defaults, fdb, pdb, names] = await Promise.all([
+    getJSON('data/settings.json'), getJSON('data/fighters.json'), getJSON('data/promotions.json'), getJSON('data/names.json'),
   ]);
+  state.names = names;
   state.defaults = defaults;
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { saved = {}; }
@@ -22,6 +23,7 @@ export async function loadAll() {
   // Las estrellas siempre se recalculan desde los atributos.
   state.fighters = fdb.peleadores.filter(f => f.atributos).map(f => ({ ...f, estrellas: stars(f.atributos) }));
   state.promotions = pdb.promociones;
+  state.promotionsDb = pdb;
   return state;
 }
 
@@ -34,7 +36,9 @@ export function resetSettings() {
   saveSettings();
 }
 
+// Peleadores de una división (incluye a los rankeados también en otra, p. ej. Pereira en pesado).
 export function fightersIn(divisionId) {
-  return state.fighters.filter(f => f.division === divisionId)
-    .sort((a, b) => (a.ranking ?? 99) - (b.ranking ?? 99));
+  const rankIn = f => (f.division === divisionId ? f.ranking : f.otrasDivisiones?.[divisionId]) ?? 99;
+  return state.fighters.filter(f => f.division === divisionId || f.otrasDivisiones?.[divisionId] != null)
+    .sort((a, b) => rankIn(a) - rankIn(b) || stars(b.atributos) - stars(a.atributos));
 }

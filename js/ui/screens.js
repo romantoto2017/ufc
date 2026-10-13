@@ -219,7 +219,7 @@ export function methodText(r) {
   return m;
 }
 
-export function showResult(a, b, result, { simulated, onRematch, onMenu }) {
+export function showResult(a, b, result, { simulated, onRematch, onMenu, career = false, onContinue }) {
   const box = document.getElementById('result-layout');
   box.innerHTML = '';
   const fighters = [a, b];
@@ -235,7 +235,7 @@ export function showResult(a, b, result, { simulated, onRematch, onMenu }) {
   main.append(el('div', { class: 'method', text: methodText(result) }),
     el('div', { text: t('round_time', { r: result.round, t: fmtTime(result.time) }) }));
   if (simulated) main.append(el('p', { class: 'note', text: t('simulated') }));
-  main.append(el('p', { class: 'note', text: t('exhibition_note') }));
+  if (!career) main.append(el('p', { class: 'note', text: t('exhibition_note') }));
 
   const side = el('div', { class: 'result-side' });
   if (result.scorecards) {
@@ -264,11 +264,17 @@ export function showResult(a, b, result, { simulated, onRematch, onMenu }) {
         row('win_prob'), row('factor_rating', f.rating), row('factor_style', f.style), row('factor_reach', f.reach), row('factor_chin', f.chin), row('factor_age', f.age)),
       el('p', { class: 'note', text: t('sim_factors_note') })));
   }
-  const rematch = el('button', { class: 'btn', text: t('rematch') });
-  const menu = el('button', { class: 'btn btn-primary', text: t('to_menu') });
-  rematch.addEventListener('click', () => { audio.play('ui'); onRematch(); });
-  menu.addEventListener('click', () => { audio.play('ui'); onMenu(); });
-  side.append(el('div', { class: 'result-actions' }, rematch, menu));
+  if (career) {
+    const cont = el('button', { class: 'btn btn-primary', text: t('continue') });
+    cont.addEventListener('click', () => { audio.play('ui'); onContinue(); });
+    side.append(el('div', { class: 'result-actions' }, cont));
+  } else {
+    const rematch = el('button', { class: 'btn', text: t('rematch') });
+    const menu = el('button', { class: 'btn btn-primary', text: t('to_menu') });
+    rematch.addEventListener('click', () => { audio.play('ui'); onRematch(); });
+    menu.addEventListener('click', () => { audio.play('ui'); onMenu(); });
+    side.append(el('div', { class: 'result-actions' }, rematch, menu));
+  }
   box.append(main, side);
   show('screen-result');
 }

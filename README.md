@@ -1,40 +1,59 @@
-# Pixel MMA — Fase 1 (menú + motor de pelea)
+# Pixel MMA
 
-Juego de MMA en pixel art para móvil, en horizontal: web app con HTML, JavaScript y canvas, instalable como PWA. Es para uso personal y no hace falta compilar nada.
+Juego de MMA en pixel art para el celular, en horizontal. Es una web app con HTML, JavaScript y canvas, instalable como PWA y pensada para uso personal. No hace falta compilar nada.
 
 ## Probar
 
 ```bash
-npm run serve        # http-server en http://localhost:8080
-npm test             # tests de simulación y de motor (IA vs IA sin gráficos)
-node tools/balance.mjs 300 60   # diagnóstico de equilibrio del motor
+npm run serve        # http://localhost:8080
+npm test             # tests: simulación, motor IA vs IA, roster y carrera completa
 ```
 
-Para el móvil: publica el repo con GitHub Pages (Settings → Pages → rama). Ábrelo en el teléfono y usa "Instalar app" o "Añadir a pantalla de inicio". El service worker necesita HTTPS, o `localhost` en el ordenador.
+Para el celular: GitHub Pages (Settings → Pages → rama `claude/bold-wozniak-8a0tk5`, carpeta raíz). Después lo abrís en el teléfono y lo instalás ("Agregar a pantalla principal").
 
 En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J/K/L/U/I/O/H para los golpes y Espacio para tocar en las sumisiones.
+
+## Qué tiene
+
+- **Pelea clásica**:
+  - 8 divisiones, 223 peleadores reales (campeón + 15 rankeados + 12 no rankeados por división) y todos se pueden usar.
+  - Modo jugado o simulado.
+- **Modo carrera**:
+  - Creás tu peleador (país, edad, división, altura, alcance, estilo, guardia y cara) o tomás uno real.
+  - Escalera: circuito nacional, después la organización regional, después el Contender Series (o Road to UFC si sos asiático) y por último UFC. PFL aparece como alternativa.
+  - Rivales genéricos coherentes y guardados (puede haber revanchas), entrenamiento, técnicas, gimnasio y dinero.
+  - El mundo UFC se simula mes a mes: cambian récords, rankings, valoraciones y campeones.
+- **Presentación**:
+  - Intro con el presentador gritando "IT'S TIMEEE!".
+  - Al terminar, el árbitro levanta el brazo del ganador, a veces con Dana White.
+  - Conferencia de prensa y contrato que se firma manteniendo presionado.
+  - Animación del cinturón cuando ganás un título.
+
+## Datos (`/data`)
+
+- `fighters.json` se genera con `python3 tools/roster/build.py <cache>`:
+  - Toma "List of current UFC fighters" y las fichas individuales de Wikipedia, junto con los Meta Rankings del 03/10/2026 y el P4P de medios del 06/10/2026 (`tools/roster/rankings.json`).
+  - **5 estrellas** = campeón o top 15 libra por libra, con un mínimo de 2 por división.
+  - Lo que Wikipedia no trae (alcance, guardia o estilo de varios no rankeados) queda con `"verificar": true` y la lista `camposVerificar`.
+  - Las caras son aproximadas (`"aproximada": true`).
+  - Las correcciones manuales van en `tools/roster/overrides.json`.
+- `promotions.json`:
+  - Organizaciones verificadas como activas en 2026, regiones y qué organización le toca a cada región.
+  - Bellator no aparece: PFL la cerró en 2025.
+  - Naciones MMA es mexicana.
+- `names.json`: nombres y apellidos por país, para los rivales genéricos.
+- `settings.json`: configuración por defecto.
+
+Los logos se cargan desde `assets/logos/<archivo>` (los nombres están en `promotions.json`). Si falta alguno, se dibuja uno provisional con el nombre.
 
 ## Estructura
 
 ```
-data/       fighters.json, promotions.json, names.json, settings.json (todo editable)
-lang/       es.json, en.json (textos de la interfaz)
-assets/logos/  PNG de las organizaciones (si falta uno, se dibuja un logo provisional)
-js/ratings.js  atributos → estrellas (0,5–5); cálculo de atributos desde ranking/récord/racha/estilo
-js/sim.js      simulación realista y actualización de récords/rankings/valoraciones
-js/fight/      motor (engine), golpes por estilo (moves), IA (ai), dibujo (render)
-js/gfx/        caras por partes, banderas por código, logos
-js/ui/         pantallas
-tools/         derive-attributes.mjs, balance.mjs, make-icons.py
+js/ratings.js        atributos → estrellas; cálculo de atributos (élite = 5★)
+js/sim.js            simulación (favorito máx. 92%) y actualización de récords/rankings
+js/fight/            motor, golpes por estilo y técnicas, IA, render (ceremonia incluida)
+js/career/           generator.js (rivales genéricos) y career.js (escalera, contratos, mundo UFC)
+js/gfx/              caras, banderas, logos y escenas (Dana, presentador, árbitro, cinturón)
+js/ui/               pantallas (clásica, pelea, carrera)
+tools/roster/        generación del roster desde Wikipedia
 ```
-
-### Datos de peleadores
-- Las estrellas se recalculan siempre desde los `atributos` al cargar. Si editas atributos, las estrellas cambian solas.
-- `fuente: "calculado"`: atributos generados con `node tools/derive-attributes.mjs --force`, a partir de ranking, récord, racha y estilo, más `ajustesPerfil` (por ejemplo, el récord de sumisiones).
-- `verificar: true` marca lo que no se pudo confirmar.
-- Datos verificados el 13/10/2026: Gaethje es campeón de ligero desde el 14/06/2026 (TKO a Topuria) y Topuria es el #1. Fuente: Meta Rankings del 03/10/2026.
-
-## Limitaciones conocidas de la Fase 1
-- Las peleas de exhibición no cambian récords. `applyResult` ya está hecho y probado, y se usará en la carrera (Fase 3).
-- En IA contra IA, un luchador de élite contra un striker con poca defensa de derribo gana casi siempre por sumisión. El modo **Simular** usa la fórmula calibrada (máximo 92 %), no este motor.
-- Solo hay 2 peleadores (ligero). El resto de divisiones aparece desactivado hasta la Fase 2.

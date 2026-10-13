@@ -58,3 +58,17 @@ test('applyResult: récord, racha, ranking y título', () => {
   assert.ok(stars(r3.atributos) >= before);
   assert.deepEqual(fighters.map(f => f.ranking).sort(), [0, 1, 2, 3]);
 });
+
+test('roster: 8 divisiones, campeón + 15 rankeados, 2-3 de 5 estrellas por división', async () => {
+  const { readFileSync } = await import('node:fs');
+  const db = JSON.parse(readFileSync(new URL('../data/fighters.json', import.meta.url)));
+  for (const d of db.divisiones) {
+    const fs = db.peleadores.filter(f => f.division === d.id || f.otrasDivisiones?.[d.id] != null);
+    const ranks = fs.map(f => (f.division === d.id ? f.ranking : f.otrasDivisiones[d.id])).filter(r => r != null).sort((a, b) => a - b);
+    assert.deepEqual(ranks, [...Array(16).keys()], d.id);
+    assert.ok(fs.length >= 26, `${d.id}: ${fs.length}`);
+    const five = fs.filter(f => f.division === d.id && stars(f.atributos) === 5).length;
+    assert.ok(five >= 2 && five <= 3, `${d.id}: ${five} de 5 estrellas`);
+  }
+  assert.equal(stars(db.peleadores.find(f => f.id === 'ilia-topuria').atributos), 5);
+});

@@ -1,26 +1,1558 @@
 {
-  "_nota": "Nombres y apellidos comunes por país (ISO 3166-1 alfa-2). Se usan en la Fase 3 para generar rivales.",
-  "US": { "nombres": ["James","Michael","Tyler","Brandon","Cody","Austin","Jake","Derek","Marcus","Darius","Jordan","Kyle","Trevor","Cole","Dustin","Nate"], "apellidos": ["Smith","Johnson","Williams","Brown","Miller","Davis","Wilson","Anderson","Taylor","Moore","Jackson","White","Harris","Clark","Lewis","Walker"] },
-  "CA": { "nombres": ["Liam","Ethan","Noah","Mathieu","Olivier","Connor","Ryan","Dylan","Gabriel","Samuel"], "apellidos": ["Tremblay","Gagnon","Roy","Côté","Bouchard","Martin","MacDonald","Campbell","Fraser","Gauthier"] },
-  "MX": { "nombres": ["José","Luis","Juan","Carlos","Jesús","Alejandro","Miguel","Diego","Fernando","Ricardo","Eduardo","Héctor"], "apellidos": ["Hernández","García","Martínez","López","González","Pérez","Rodríguez","Sánchez","Ramírez","Flores","Torres","Ruiz"] },
-  "BR": { "nombres": ["João","Pedro","Lucas","Gabriel","Rafael","Thiago","Bruno","Felipe","Matheus","Diego","Vinícius","Leandro"], "apellidos": ["Silva","Santos","Oliveira","Souza","Lima","Pereira","Ferreira","Almeida","Costa","Ribeiro","Carvalho","Gomes"] },
-  "AR": { "nombres": ["Santiago","Matías","Nicolás","Facundo","Agustín","Lucas","Franco","Tomás","Gonzalo","Martín","Ezequiel","Leandro"], "apellidos": ["González","Rodríguez","Gómez","Fernández","López","Díaz","Martínez","Pérez","Romero","Sosa","Álvarez","Benítez"] },
-  "CL": { "nombres": ["Benjamín","Vicente","Cristóbal","Felipe","Ignacio","Sebastián","Diego","Matías"], "apellidos": ["Muñoz","Rojas","Soto","Contreras","Silva","Sepúlveda","Morales","Araya"] },
-  "PE": { "nombres": ["Luis","Jorge","Renzo","Piero","Diego","Christian","Kevin","Jhon"], "apellidos": ["Quispe","Flores","Huamán","Mamani","Rojas","Vargas","Chávez","Ramos"] },
-  "CO": { "nombres": ["Andrés","Juan Pablo","Camilo","Sebastián","Julián","Santiago","Mauricio","Esteban"], "apellidos": ["Rodríguez","Gómez","Cardona","Restrepo","Moreno","Ospina","Castaño","Zapata"] },
-  "ES": { "nombres": ["Alejandro","Pablo","Daniel","Javier","Sergio","Adrián","Álvaro","Raúl","Iván","Rubén"], "apellidos": ["García","Fernández","González","Rodríguez","López","Martín","Sánchez","Jiménez","Ruiz","Navarro"] },
-  "GB": { "nombres": ["Oliver","Harry","George","Jack","Charlie","Thomas","Callum","Liam","Ryan","Lewis"], "apellidos": ["Smith","Jones","Taylor","Brown","Evans","Wright","Walker","Hughes","Edwards","Hall"] },
-  "IE": { "nombres": ["Seán","Conor","Cian","Darragh","Oisín","Patrick","Niall","Ciarán"], "apellidos": ["Murphy","Kelly","O'Sullivan","Walsh","Byrne","Ryan","O'Brien","Doyle"] },
-  "FR": { "nombres": ["Lucas","Hugo","Théo","Nathan","Mathis","Enzo","Karim","Yanis"], "apellidos": ["Martin","Bernard","Dubois","Thomas","Robert","Petit","Durand","Moreau"] },
-  "PL": { "nombres": ["Jakub","Kacper","Mateusz","Piotr","Michał","Paweł","Tomasz","Łukasz"], "apellidos": ["Nowak","Kowalski","Wiśniewski","Wójcik","Kamiński","Lewandowski","Zieliński","Szymański"] },
-  "CZ": { "nombres": ["Jakub","Jan","Tomáš","David","Petr","Lukáš","Ondřej","Martin"], "apellidos": ["Novák","Svoboda","Novotný","Dvořák","Černý","Procházka","Kučera","Veselý"] },
-  "RU": { "nombres": ["Aleksandr","Dmitry","Sergei","Andrei","Maksim","Ivan","Nikita","Artem"], "apellidos": ["Ivanov","Smirnov","Kuznetsov","Popov","Volkov","Sokolov","Morozov","Petrov"] },
-  "GE": { "nombres": ["Giorgi","Levan","Davit","Nika","Irakli","Zurab","Lasha","Tornike"], "apellidos": ["Beridze","Kapanadze","Gelashvili","Maisuradze","Lomidze","Tsiklauri","Kvaratskhelia","Japaridze"] },
-  "AE": { "nombres": ["Mohammed","Ahmed","Khalid","Saeed","Omar","Rashid","Hamdan","Saif"], "apellidos": ["Al Mansoori","Al Hammadi","Al Shamsi","Al Ketbi","Al Nuaimi","Al Mazrouei","Al Dhaheri","Al Falasi"] },
-  "JP": { "nombres": ["Haruto","Yuto","Sota","Ren","Takumi","Kenta","Daiki","Ryo"], "apellidos": ["Sato","Suzuki","Takahashi","Tanaka","Watanabe","Ito","Yamamoto","Nakamura"] },
-  "KR": { "nombres": ["Min-jun","Seo-jun","Ji-ho","Hyun-woo","Do-yun","Jae-won","Sung-min","Tae-yang"], "apellidos": ["Kim","Lee","Park","Choi","Jung","Kang","Cho","Yoon"] },
-  "CN": { "nombres": ["Wei","Hao","Jun","Lei","Peng","Yang","Bo","Tao"], "apellidos": ["Wang","Li","Zhang","Liu","Chen","Yang","Zhao","Huang"] },
-  "AU": { "nombres": ["Jack","Lachlan","Riley","Mitchell","Josh","Blake","Brodie","Kane"], "apellidos": ["Smith","Jones","Williams","Brown","Wilson","Taylor","Nguyen","Kelly"] },
-  "NZ": { "nombres": ["Tama","Nikau","Liam","Mason","Wiremu","Hunter","Jayden","Kauri"], "apellidos": ["Smith","Wilson","Ngata","Williams","Te Rangi","Brown","Parata","Walker"] },
-  "NG": { "nombres": ["Chinedu","Emeka","Oluwaseun","Tunde","Ifeanyi","Kelechi","Segun","Uche"], "apellidos": ["Okafor","Adeyemi","Okonkwo","Balogun","Eze","Nwosu","Adebayo","Obi"] }
+ "_nota": "Nombres y apellidos comunes por país (ISO 3166-1 alfa-2). Se usan en la Fase 3 para generar rivales.",
+ "US": {
+  "nombres": [
+   "James",
+   "Michael",
+   "Tyler",
+   "Brandon",
+   "Cody",
+   "Austin",
+   "Jake",
+   "Derek",
+   "Marcus",
+   "Darius",
+   "Jordan",
+   "Kyle",
+   "Trevor",
+   "Cole",
+   "Dustin",
+   "Nate"
+  ],
+  "apellidos": [
+   "Smith",
+   "Johnson",
+   "Williams",
+   "Brown",
+   "Miller",
+   "Davis",
+   "Wilson",
+   "Anderson",
+   "Taylor",
+   "Moore",
+   "Jackson",
+   "White",
+   "Harris",
+   "Clark",
+   "Lewis",
+   "Walker"
+  ]
+ },
+ "CA": {
+  "nombres": [
+   "Liam",
+   "Ethan",
+   "Noah",
+   "Mathieu",
+   "Olivier",
+   "Connor",
+   "Ryan",
+   "Dylan",
+   "Gabriel",
+   "Samuel"
+  ],
+  "apellidos": [
+   "Tremblay",
+   "Gagnon",
+   "Roy",
+   "Côté",
+   "Bouchard",
+   "Martin",
+   "MacDonald",
+   "Campbell",
+   "Fraser",
+   "Gauthier"
+  ]
+ },
+ "MX": {
+  "nombres": [
+   "José",
+   "Luis",
+   "Juan",
+   "Carlos",
+   "Jesús",
+   "Alejandro",
+   "Miguel",
+   "Diego",
+   "Fernando",
+   "Ricardo",
+   "Eduardo",
+   "Héctor"
+  ],
+  "apellidos": [
+   "Hernández",
+   "García",
+   "Martínez",
+   "López",
+   "González",
+   "Pérez",
+   "Rodríguez",
+   "Sánchez",
+   "Ramírez",
+   "Flores",
+   "Torres",
+   "Ruiz"
+  ]
+ },
+ "BR": {
+  "nombres": [
+   "João",
+   "Pedro",
+   "Lucas",
+   "Gabriel",
+   "Rafael",
+   "Thiago",
+   "Bruno",
+   "Felipe",
+   "Matheus",
+   "Diego",
+   "Vinícius",
+   "Leandro"
+  ],
+  "apellidos": [
+   "Silva",
+   "Santos",
+   "Oliveira",
+   "Souza",
+   "Lima",
+   "Pereira",
+   "Ferreira",
+   "Almeida",
+   "Costa",
+   "Ribeiro",
+   "Carvalho",
+   "Gomes"
+  ]
+ },
+ "AR": {
+  "nombres": [
+   "Santiago",
+   "Matías",
+   "Nicolás",
+   "Facundo",
+   "Agustín",
+   "Lucas",
+   "Franco",
+   "Tomás",
+   "Gonzalo",
+   "Martín",
+   "Ezequiel",
+   "Leandro"
+  ],
+  "apellidos": [
+   "González",
+   "Rodríguez",
+   "Gómez",
+   "Fernández",
+   "López",
+   "Díaz",
+   "Martínez",
+   "Pérez",
+   "Romero",
+   "Sosa",
+   "Álvarez",
+   "Benítez"
+  ]
+ },
+ "CL": {
+  "nombres": [
+   "Benjamín",
+   "Vicente",
+   "Cristóbal",
+   "Felipe",
+   "Ignacio",
+   "Sebastián",
+   "Diego",
+   "Matías"
+  ],
+  "apellidos": [
+   "Muñoz",
+   "Rojas",
+   "Soto",
+   "Contreras",
+   "Silva",
+   "Sepúlveda",
+   "Morales",
+   "Araya"
+  ]
+ },
+ "PE": {
+  "nombres": [
+   "Luis",
+   "Jorge",
+   "Renzo",
+   "Piero",
+   "Diego",
+   "Christian",
+   "Kevin",
+   "Jhon"
+  ],
+  "apellidos": [
+   "Quispe",
+   "Flores",
+   "Huamán",
+   "Mamani",
+   "Rojas",
+   "Vargas",
+   "Chávez",
+   "Ramos"
+  ]
+ },
+ "CO": {
+  "nombres": [
+   "Andrés",
+   "Juan Pablo",
+   "Camilo",
+   "Sebastián",
+   "Julián",
+   "Santiago",
+   "Mauricio",
+   "Esteban"
+  ],
+  "apellidos": [
+   "Rodríguez",
+   "Gómez",
+   "Cardona",
+   "Restrepo",
+   "Moreno",
+   "Ospina",
+   "Castaño",
+   "Zapata"
+  ]
+ },
+ "ES": {
+  "nombres": [
+   "Alejandro",
+   "Pablo",
+   "Daniel",
+   "Javier",
+   "Sergio",
+   "Adrián",
+   "Álvaro",
+   "Raúl",
+   "Iván",
+   "Rubén"
+  ],
+  "apellidos": [
+   "García",
+   "Fernández",
+   "González",
+   "Rodríguez",
+   "López",
+   "Martín",
+   "Sánchez",
+   "Jiménez",
+   "Ruiz",
+   "Navarro"
+  ]
+ },
+ "GB": {
+  "nombres": [
+   "Oliver",
+   "Harry",
+   "George",
+   "Jack",
+   "Charlie",
+   "Thomas",
+   "Callum",
+   "Liam",
+   "Ryan",
+   "Lewis"
+  ],
+  "apellidos": [
+   "Smith",
+   "Jones",
+   "Taylor",
+   "Brown",
+   "Evans",
+   "Wright",
+   "Walker",
+   "Hughes",
+   "Edwards",
+   "Hall"
+  ]
+ },
+ "IE": {
+  "nombres": [
+   "Seán",
+   "Conor",
+   "Cian",
+   "Darragh",
+   "Oisín",
+   "Patrick",
+   "Niall",
+   "Ciarán"
+  ],
+  "apellidos": [
+   "Murphy",
+   "Kelly",
+   "O'Sullivan",
+   "Walsh",
+   "Byrne",
+   "Ryan",
+   "O'Brien",
+   "Doyle"
+  ]
+ },
+ "FR": {
+  "nombres": [
+   "Lucas",
+   "Hugo",
+   "Théo",
+   "Nathan",
+   "Mathis",
+   "Enzo",
+   "Karim",
+   "Yanis"
+  ],
+  "apellidos": [
+   "Martin",
+   "Bernard",
+   "Dubois",
+   "Thomas",
+   "Robert",
+   "Petit",
+   "Durand",
+   "Moreau"
+  ]
+ },
+ "PL": {
+  "nombres": [
+   "Jakub",
+   "Kacper",
+   "Mateusz",
+   "Piotr",
+   "Michał",
+   "Paweł",
+   "Tomasz",
+   "Łukasz"
+  ],
+  "apellidos": [
+   "Nowak",
+   "Kowalski",
+   "Wiśniewski",
+   "Wójcik",
+   "Kamiński",
+   "Lewandowski",
+   "Zieliński",
+   "Szymański"
+  ]
+ },
+ "CZ": {
+  "nombres": [
+   "Jakub",
+   "Jan",
+   "Tomáš",
+   "David",
+   "Petr",
+   "Lukáš",
+   "Ondřej",
+   "Martin"
+  ],
+  "apellidos": [
+   "Novák",
+   "Svoboda",
+   "Novotný",
+   "Dvořák",
+   "Černý",
+   "Procházka",
+   "Kučera",
+   "Veselý"
+  ]
+ },
+ "RU": {
+  "nombres": [
+   "Aleksandr",
+   "Dmitry",
+   "Sergei",
+   "Andrei",
+   "Maksim",
+   "Ivan",
+   "Nikita",
+   "Artem"
+  ],
+  "apellidos": [
+   "Ivanov",
+   "Smirnov",
+   "Kuznetsov",
+   "Popov",
+   "Volkov",
+   "Sokolov",
+   "Morozov",
+   "Petrov"
+  ]
+ },
+ "GE": {
+  "nombres": [
+   "Giorgi",
+   "Levan",
+   "Davit",
+   "Nika",
+   "Irakli",
+   "Zurab",
+   "Lasha",
+   "Tornike"
+  ],
+  "apellidos": [
+   "Beridze",
+   "Kapanadze",
+   "Gelashvili",
+   "Maisuradze",
+   "Lomidze",
+   "Tsiklauri",
+   "Kvaratskhelia",
+   "Japaridze"
+  ]
+ },
+ "AE": {
+  "nombres": [
+   "Mohammed",
+   "Ahmed",
+   "Khalid",
+   "Saeed",
+   "Omar",
+   "Rashid",
+   "Hamdan",
+   "Saif"
+  ],
+  "apellidos": [
+   "Al Mansoori",
+   "Al Hammadi",
+   "Al Shamsi",
+   "Al Ketbi",
+   "Al Nuaimi",
+   "Al Mazrouei",
+   "Al Dhaheri",
+   "Al Falasi"
+  ]
+ },
+ "JP": {
+  "nombres": [
+   "Haruto",
+   "Yuto",
+   "Sota",
+   "Ren",
+   "Takumi",
+   "Kenta",
+   "Daiki",
+   "Ryo"
+  ],
+  "apellidos": [
+   "Sato",
+   "Suzuki",
+   "Takahashi",
+   "Tanaka",
+   "Watanabe",
+   "Ito",
+   "Yamamoto",
+   "Nakamura"
+  ]
+ },
+ "KR": {
+  "nombres": [
+   "Min-jun",
+   "Seo-jun",
+   "Ji-ho",
+   "Hyun-woo",
+   "Do-yun",
+   "Jae-won",
+   "Sung-min",
+   "Tae-yang"
+  ],
+  "apellidos": [
+   "Kim",
+   "Lee",
+   "Park",
+   "Choi",
+   "Jung",
+   "Kang",
+   "Cho",
+   "Yoon"
+  ]
+ },
+ "CN": {
+  "nombres": [
+   "Wei",
+   "Hao",
+   "Jun",
+   "Lei",
+   "Peng",
+   "Yang",
+   "Bo",
+   "Tao"
+  ],
+  "apellidos": [
+   "Wang",
+   "Li",
+   "Zhang",
+   "Liu",
+   "Chen",
+   "Yang",
+   "Zhao",
+   "Huang"
+  ]
+ },
+ "AU": {
+  "nombres": [
+   "Jack",
+   "Lachlan",
+   "Riley",
+   "Mitchell",
+   "Josh",
+   "Blake",
+   "Brodie",
+   "Kane"
+  ],
+  "apellidos": [
+   "Smith",
+   "Jones",
+   "Williams",
+   "Brown",
+   "Wilson",
+   "Taylor",
+   "Nguyen",
+   "Kelly"
+  ]
+ },
+ "NZ": {
+  "nombres": [
+   "Tama",
+   "Nikau",
+   "Liam",
+   "Mason",
+   "Wiremu",
+   "Hunter",
+   "Jayden",
+   "Kauri"
+  ],
+  "apellidos": [
+   "Smith",
+   "Wilson",
+   "Ngata",
+   "Williams",
+   "Te Rangi",
+   "Brown",
+   "Parata",
+   "Walker"
+  ]
+ },
+ "NG": {
+  "nombres": [
+   "Chinedu",
+   "Emeka",
+   "Oluwaseun",
+   "Tunde",
+   "Ifeanyi",
+   "Kelechi",
+   "Segun",
+   "Uche"
+  ],
+  "apellidos": [
+   "Okafor",
+   "Adeyemi",
+   "Okonkwo",
+   "Balogun",
+   "Eze",
+   "Nwosu",
+   "Adebayo",
+   "Obi"
+  ]
+ },
+ "KZ": {
+  "nombres": [
+   "Nurlan",
+   "Yerlan",
+   "Askar",
+   "Daniyar",
+   "Arman",
+   "Bauyrzhan",
+   "Zhandos",
+   "Timur"
+  ],
+  "apellidos": [
+   "Nurmagambetov",
+   "Abenov",
+   "Seitkali",
+   "Zhaksylykov",
+   "Kenzhebayev",
+   "Utegenov",
+   "Iskakov",
+   "Tulegenov"
+  ]
+ },
+ "UZ": {
+  "nombres": [
+   "Bekzod",
+   "Jasur",
+   "Otabek",
+   "Sardor",
+   "Ulugbek",
+   "Doston",
+   "Aziz",
+   "Shokhrukh"
+  ],
+  "apellidos": [
+   "Rakhimov",
+   "Karimov",
+   "Yusupov",
+   "Tursunov",
+   "Ergashev",
+   "Saidov",
+   "Khodjaev",
+   "Mirzaev"
+  ]
+ },
+ "AZ": {
+  "nombres": [
+   "Elvin",
+   "Rashad",
+   "Tofig",
+   "Murad",
+   "Orkhan",
+   "Farid",
+   "Nijat",
+   "Ramil"
+  ],
+  "apellidos": [
+   "Aliyev",
+   "Mammadov",
+   "Huseynov",
+   "Hasanov",
+   "Guliyev",
+   "Ismayilov",
+   "Abdullayev",
+   "Musayev"
+  ]
+ },
+ "AM": {
+  "nombres": [
+   "Armen",
+   "Tigran",
+   "Gor",
+   "Narek",
+   "Davit",
+   "Hayk",
+   "Levon",
+   "Aram"
+  ],
+  "apellidos": [
+   "Petrosyan",
+   "Harutyunyan",
+   "Sargsyan",
+   "Grigoryan",
+   "Hakobyan",
+   "Avetisyan",
+   "Karapetyan",
+   "Gevorgyan"
+  ]
+ },
+ "TJ": {
+  "nombres": [
+   "Firdavs",
+   "Muhammad",
+   "Rustam",
+   "Daler",
+   "Saidjon",
+   "Bakhtiyor",
+   "Farrukh",
+   "Jamshed"
+  ],
+  "apellidos": [
+   "Rahimov",
+   "Nazarov",
+   "Sharipov",
+   "Davlatov",
+   "Saidov",
+   "Karimov",
+   "Mirzoev",
+   "Odinaev"
+  ]
+ },
+ "KG": {
+  "nombres": [
+   "Azamat",
+   "Bakyt",
+   "Ermek",
+   "Nurbek",
+   "Talant",
+   "Aibek",
+   "Kanat",
+   "Ruslan"
+  ],
+  "apellidos": [
+   "Abdyldaev",
+   "Asanov",
+   "Bekov",
+   "Duishenov",
+   "Omurov",
+   "Toktogulov",
+   "Usenov",
+   "Mamatov"
+  ]
+ },
+ "UA": {
+  "nombres": [
+   "Oleksandr",
+   "Andriy",
+   "Dmytro",
+   "Mykola",
+   "Serhiy",
+   "Vitaliy",
+   "Yaroslav",
+   "Bohdan"
+  ],
+  "apellidos": [
+   "Shevchenko",
+   "Kovalenko",
+   "Bondarenko",
+   "Tkachenko",
+   "Kravchenko",
+   "Melnyk",
+   "Boyko",
+   "Oliynyk"
+  ]
+ },
+ "DE": {
+  "nombres": [
+   "Lukas",
+   "Leon",
+   "Jonas",
+   "Felix",
+   "Tim",
+   "Max",
+   "Niklas",
+   "Dennis"
+  ],
+  "apellidos": [
+   "Müller",
+   "Schmidt",
+   "Schneider",
+   "Fischer",
+   "Weber",
+   "Meyer",
+   "Wagner",
+   "Becker"
+  ]
+ },
+ "NL": {
+  "nombres": [
+   "Daan",
+   "Sem",
+   "Thijs",
+   "Bram",
+   "Lars",
+   "Ruben",
+   "Jesse",
+   "Milan"
+  ],
+  "apellidos": [
+   "de Jong",
+   "Jansen",
+   "de Vries",
+   "van den Berg",
+   "Bakker",
+   "Visser",
+   "Smit",
+   "Mulder"
+  ]
+ },
+ "AT": {
+  "nombres": [
+   "Lukas",
+   "David",
+   "Florian",
+   "Stefan",
+   "Michael",
+   "Fabian",
+   "Patrick",
+   "Dominik"
+  ],
+  "apellidos": [
+   "Gruber",
+   "Huber",
+   "Bauer",
+   "Wagner",
+   "Pichler",
+   "Steiner",
+   "Moser",
+   "Mayer"
+  ]
+ },
+ "CH": {
+  "nombres": [
+   "Luca",
+   "Noah",
+   "Nico",
+   "Fabio",
+   "Marco",
+   "Jan",
+   "Simon",
+   "Yannick"
+  ],
+  "apellidos": [
+   "Müller",
+   "Meier",
+   "Schmid",
+   "Keller",
+   "Weber",
+   "Huber",
+   "Brunner",
+   "Baumann"
+  ]
+ },
+ "BE": {
+  "nombres": [
+   "Arthur",
+   "Louis",
+   "Lucas",
+   "Noah",
+   "Mathis",
+   "Wout",
+   "Jens",
+   "Bilal"
+  ],
+  "apellidos": [
+   "Peeters",
+   "Janssens",
+   "Maes",
+   "Jacobs",
+   "Mertens",
+   "Willems",
+   "Claes",
+   "Dubois"
+  ]
+ },
+ "DK": {
+  "nombres": [
+   "Mads",
+   "Frederik",
+   "Mikkel",
+   "Rasmus",
+   "Kasper",
+   "Jonas",
+   "Nikolaj",
+   "Emil"
+  ],
+  "apellidos": [
+   "Nielsen",
+   "Jensen",
+   "Hansen",
+   "Pedersen",
+   "Andersen",
+   "Christensen",
+   "Larsen",
+   "Sørensen"
+  ]
+ },
+ "SE": {
+  "nombres": [
+   "Erik",
+   "Oscar",
+   "Viktor",
+   "Filip",
+   "Anton",
+   "Elias",
+   "Gustav",
+   "Linus"
+  ],
+  "apellidos": [
+   "Andersson",
+   "Johansson",
+   "Karlsson",
+   "Nilsson",
+   "Eriksson",
+   "Larsson",
+   "Olsson",
+   "Persson"
+  ]
+ },
+ "NO": {
+  "nombres": [
+   "Magnus",
+   "Henrik",
+   "Sander",
+   "Martin",
+   "Kristian",
+   "Even",
+   "Tobias",
+   "Jonas"
+  ],
+  "apellidos": [
+   "Hansen",
+   "Johansen",
+   "Olsen",
+   "Larsen",
+   "Andersen",
+   "Pedersen",
+   "Nilsen",
+   "Berg"
+  ]
+ },
+ "TR": {
+  "nombres": [
+   "Mehmet",
+   "Mustafa",
+   "Emre",
+   "Burak",
+   "Can",
+   "Murat",
+   "Kerem",
+   "Ahmet"
+  ],
+  "apellidos": [
+   "Yılmaz",
+   "Kaya",
+   "Demir",
+   "Şahin",
+   "Çelik",
+   "Yıldız",
+   "Aydın",
+   "Öztürk"
+  ]
+ },
+ "IQ": {
+  "nombres": [
+   "Ali",
+   "Hussein",
+   "Ahmed",
+   "Mustafa",
+   "Haidar",
+   "Omar",
+   "Karrar",
+   "Zaid"
+  ],
+  "apellidos": [
+   "Al-Jubouri",
+   "Al-Obaidi",
+   "Al-Saadi",
+   "Al-Rubaie",
+   "Al-Tamimi",
+   "Kadhim",
+   "Hassan",
+   "Jasim"
+  ]
+ },
+ "AF": {
+  "nombres": [
+   "Ahmad",
+   "Farid",
+   "Javid",
+   "Sohail",
+   "Wahid",
+   "Hamid",
+   "Nasir",
+   "Baktash"
+  ],
+  "apellidos": [
+   "Rahimi",
+   "Ahmadi",
+   "Karimi",
+   "Popal",
+   "Hakimi",
+   "Stanikzai",
+   "Noori",
+   "Sultani"
+  ]
+ },
+ "MA": {
+  "nombres": [
+   "Youssef",
+   "Mohamed",
+   "Hamza",
+   "Anas",
+   "Ayoub",
+   "Mehdi",
+   "Ilias",
+   "Othmane"
+  ],
+  "apellidos": [
+   "El Amrani",
+   "Benali",
+   "Alaoui",
+   "Bennani",
+   "Tazi",
+   "El Idrissi",
+   "Chraibi",
+   "Lahlou"
+  ]
+ },
+ "EC": {
+  "nombres": [
+   "Kevin",
+   "Bryan",
+   "Jefferson",
+   "Andrés",
+   "Luis",
+   "Michael",
+   "Steven",
+   "Jonathan"
+  ],
+  "apellidos": [
+   "Zambrano",
+   "Mendoza",
+   "Vera",
+   "Cedeño",
+   "Morales",
+   "Castillo",
+   "Rivas",
+   "Quiñónez"
+  ]
+ },
+ "CU": {
+  "nombres": [
+   "Yoel",
+   "Yordenis",
+   "Robelis",
+   "Osniel",
+   "Yasmany",
+   "Lázaro",
+   "Reinier",
+   "Yunior"
+  ],
+  "apellidos": [
+   "Rodríguez",
+   "Pérez",
+   "Despaigne",
+   "Romero",
+   "Castillo",
+   "Cruz",
+   "Sánchez",
+   "Hernández"
+  ]
+ },
+ "DO": {
+  "nombres": [
+   "Waldo",
+   "Juan Carlos",
+   "Yeison",
+   "Starlin",
+   "Ramón",
+   "Wilmer",
+   "Darwin",
+   "Eury"
+  ],
+  "apellidos": [
+   "Cortes",
+   "Pérez",
+   "Batista",
+   "Peña",
+   "Reyes",
+   "Santana",
+   "Féliz",
+   "Mejía"
+  ]
+ },
+ "PT": {
+  "nombres": [
+   "João",
+   "Tiago",
+   "Rui",
+   "Diogo",
+   "Ricardo",
+   "Miguel",
+   "André",
+   "Pedro"
+  ],
+  "apellidos": [
+   "Silva",
+   "Santos",
+   "Ferreira",
+   "Pereira",
+   "Costa",
+   "Rodrigues",
+   "Martins",
+   "Sousa"
+  ]
+ },
+ "IT": {
+  "nombres": [
+   "Marco",
+   "Luca",
+   "Alessandro",
+   "Andrea",
+   "Matteo",
+   "Davide",
+   "Simone",
+   "Federico"
+  ],
+  "apellidos": [
+   "Rossi",
+   "Russo",
+   "Ferrari",
+   "Esposito",
+   "Bianchi",
+   "Romano",
+   "Colombo",
+   "Ricci"
+  ]
+ },
+ "ZA": {
+  "nombres": [
+   "Thabo",
+   "Sipho",
+   "Dricus",
+   "Pieter",
+   "Lwazi",
+   "Johan",
+   "Bongani",
+   "Ruan"
+  ],
+  "apellidos": [
+   "Nkosi",
+   "Dlamini",
+   "du Plessis",
+   "van der Merwe",
+   "Botha",
+   "Mokoena",
+   "Khumalo",
+   "Pretorius"
+  ]
+ },
+ "CM": {
+  "nombres": [
+   "Francis",
+   "Patrick",
+   "Samuel",
+   "Yannick",
+   "Junior",
+   "Christian",
+   "Arnaud",
+   "Serge"
+  ],
+  "apellidos": [
+   "Ngannou",
+   "Mbarga",
+   "Etoundi",
+   "Nkoulou",
+   "Fotso",
+   "Kamga",
+   "Tchoumi",
+   "Biyiha"
+  ]
+ },
+ "UG": {
+  "nombres": [
+   "Joseph",
+   "Ronald",
+   "Brian",
+   "Isaac",
+   "Moses",
+   "Emmanuel",
+   "Denis",
+   "Ivan"
+  ],
+  "apellidos": [
+   "Okello",
+   "Mukasa",
+   "Ssali",
+   "Kato",
+   "Namanda",
+   "Opio",
+   "Lubega",
+   "Wasswa"
+  ]
+ },
+ "AO": {
+  "nombres": [
+   "Manuel",
+   "António",
+   "Edson",
+   "Mauro",
+   "Paulo",
+   "Hélder",
+   "Nelson",
+   "Adilson"
+  ],
+  "apellidos": [
+   "dos Santos",
+   "Kape",
+   "Mendes",
+   "Lopes",
+   "Neto",
+   "Quintas",
+   "Bento",
+   "Tavares"
+  ]
+ },
+ "MM": {
+  "nombres": [
+   "Aung",
+   "Kyaw",
+   "Zaw",
+   "Thura",
+   "Min",
+   "Htet",
+   "Naing",
+   "Ye"
+  ],
+  "apellidos": [
+   "Win",
+   "Htun",
+   "Oo",
+   "Lwin",
+   "Myint",
+   "Aung",
+   "Naing",
+   "Tun"
+  ]
+ },
+ "PH": {
+  "nombres": [
+   "Mark",
+   "John",
+   "Rolando",
+   "Eduard",
+   "Jeremy",
+   "Joshua",
+   "Carlo",
+   "Rey"
+  ],
+  "apellidos": [
+   "Santos",
+   "Reyes",
+   "Cruz",
+   "Bautista",
+   "Garcia",
+   "Mendoza",
+   "Dela Cruz",
+   "Villanueva"
+  ]
+ },
+ "TH": {
+  "nombres": [
+   "Somchai",
+   "Anan",
+   "Kittisak",
+   "Prasert",
+   "Nattapong",
+   "Rodtang",
+   "Sitthichai",
+   "Chanin"
+  ],
+  "apellidos": [
+   "Saetang",
+   "Srisuk",
+   "Chaiyaphum",
+   "Kaewkla",
+   "Boonmee",
+   "Wongsa",
+   "Thongchai",
+   "Phetkasem"
+  ]
+ },
+ "RS": {
+  "nombres": [
+   "Nikola",
+   "Stefan",
+   "Marko",
+   "Luka",
+   "Miloš",
+   "Aleksandar",
+   "Uroš",
+   "Filip"
+  ],
+  "apellidos": [
+   "Jovanović",
+   "Petrović",
+   "Nikolić",
+   "Marković",
+   "Đorđević",
+   "Stojanović",
+   "Ilić",
+   "Medić"
+  ]
+ },
+ "HR": {
+  "nombres": [
+   "Ivan",
+   "Luka",
+   "Ante",
+   "Marko",
+   "Josip",
+   "Mateo",
+   "Filip",
+   "Toni"
+  ],
+  "apellidos": [
+   "Horvat",
+   "Kovačević",
+   "Babić",
+   "Marić",
+   "Jurić",
+   "Novak",
+   "Delija",
+   "Knežević"
+  ]
+ },
+ "ME": {
+  "nombres": [
+   "Miloš",
+   "Nikola",
+   "Stefan",
+   "Marko",
+   "Vuk",
+   "Petar",
+   "Luka",
+   "Danilo"
+  ],
+  "apellidos": [
+   "Janičić",
+   "Vujović",
+   "Radović",
+   "Popović",
+   "Bulatović",
+   "Đukanović",
+   "Šćekić",
+   "Mugoša"
+  ]
+ },
+ "SK": {
+  "nombres": [
+   "Ľudovít",
+   "Martin",
+   "Tomáš",
+   "Peter",
+   "Michal",
+   "Marek",
+   "Jakub",
+   "Lukáš"
+  ],
+  "apellidos": [
+   "Horváth",
+   "Kováč",
+   "Varga",
+   "Tóth",
+   "Nagy",
+   "Baláž",
+   "Klein",
+   "Molnár"
+  ]
+ },
+ "LT": {
+  "nombres": [
+   "Lukas",
+   "Mantas",
+   "Tomas",
+   "Paulius",
+   "Modestas",
+   "Darius",
+   "Karolis",
+   "Justinas"
+  ],
+  "apellidos": [
+   "Kazlauskas",
+   "Jankauskas",
+   "Petrauskas",
+   "Stankevičius",
+   "Bukauskas",
+   "Vasiliauskas",
+   "Žukauskas",
+   "Butkus"
+  ]
+ },
+ "BH": {
+  "nombres": [
+   "Hamza",
+   "Ali",
+   "Ahmed",
+   "Abdulla",
+   "Salman",
+   "Isa",
+   "Yusuf",
+   "Khalid"
+  ],
+  "apellidos": [
+   "Al Khalifa",
+   "Kooheji",
+   "Al Mannai",
+   "Bucheeri",
+   "Al Doseri",
+   "Kanoo",
+   "Al Shaikh",
+   "Juma"
+  ]
+ },
+ "MD": {
+  "nombres": [
+   "Ion",
+   "Serghei",
+   "Andrei",
+   "Vasile",
+   "Alexandru",
+   "Mihai",
+   "Pavel",
+   "Dumitru"
+  ],
+  "apellidos": [
+   "Rusu",
+   "Ceban",
+   "Ciobanu",
+   "Popa",
+   "Munteanu",
+   "Spivac",
+   "Lungu",
+   "Cojocaru"
+  ]
+ },
+ "VE": {
+  "nombres": [
+   "José",
+   "Luis",
+   "Carlos",
+   "Jesús",
+   "Daniel",
+   "Omar",
+   "Yorman",
+   "Gabriel"
+  ],
+  "apellidos": [
+   "González",
+   "Rodríguez",
+   "Pérez",
+   "Hernández",
+   "Díaz",
+   "Martínez",
+   "Ramírez",
+   "Gil"
+  ]
+ },
+ "UY": {
+  "nombres": [
+   "Facundo",
+   "Agustín",
+   "Nicolás",
+   "Martín",
+   "Matías",
+   "Bruno",
+   "Gonzalo",
+   "Santiago"
+  ],
+  "apellidos": [
+   "Rodríguez",
+   "González",
+   "Fernández",
+   "Pereira",
+   "Silva",
+   "Martínez",
+   "Sosa",
+   "Suárez"
+  ]
+ },
+ "PY": {
+  "nombres": [
+   "Juan",
+   "Carlos",
+   "Luis",
+   "Derlis",
+   "Óscar",
+   "Richard",
+   "Miguel",
+   "Hugo"
+  ],
+  "apellidos": [
+   "González",
+   "Benítez",
+   "Martínez",
+   "López",
+   "Giménez",
+   "Vera",
+   "Duarte",
+   "Ayala"
+  ]
+ },
+ "BO": {
+  "nombres": [
+   "Juan",
+   "Luis",
+   "Carlos",
+   "Marcelo",
+   "Diego",
+   "José",
+   "Rodrigo",
+   "Erwin"
+  ],
+  "apellidos": [
+   "Mamani",
+   "Quispe",
+   "Choque",
+   "Flores",
+   "Vargas",
+   "Rojas",
+   "Gutiérrez",
+   "Condori"
+  ]
+ },
+ "IN": {
+  "nombres": [
+   "Arjun",
+   "Rohit",
+   "Vikram",
+   "Sangram",
+   "Rahul",
+   "Aman",
+   "Karan",
+   "Anshul"
+  ],
+  "apellidos": [
+   "Singh",
+   "Kumar",
+   "Sharma",
+   "Yadav",
+   "Patel",
+   "Gill",
+   "Rana",
+   "Jubli"
+  ]
+ },
+ "ID": {
+  "nombres": [
+   "Adi",
+   "Budi",
+   "Rizky",
+   "Fajar",
+   "Dimas",
+   "Agus",
+   "Eko",
+   "Yohan"
+  ],
+  "apellidos": [
+   "Santoso",
+   "Wijaya",
+   "Pratama",
+   "Saputra",
+   "Hidayat",
+   "Siregar",
+   "Nugroho",
+   "Mairuhu"
+  ]
+ },
+ "MN": {
+  "nombres": [
+   "Bat-Erdene",
+   "Ganbold",
+   "Temuulen",
+   "Enkhbayar",
+   "Batbayar",
+   "Namsrai",
+   "Tsogtbayar",
+   "Erdenebileg"
+  ],
+  "apellidos": [
+   "Batbayar",
+   "Ganbaatar",
+   "Dorj",
+   "Tumur",
+   "Enkhjargal",
+   "Bold",
+   "Sukhbaatar",
+   "Munkhbat"
+  ]
+ },
+ "_alias": {
+  "ENG": "GB",
+  "SCO": "GB",
+  "WAL": "GB",
+  "NIR": "GB",
+  "AW": "NL"
+ }
 }

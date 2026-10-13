@@ -8,6 +8,7 @@ import { state } from '../store.js';
 import { audio, vibrate } from '../audio.js';
 import { flagCanvas } from '../gfx/flag.js';
 import { show, el, fmtTime } from './common.js';
+import { drawPerson } from '../gfx/scenes.js';
 
 const DT = 1 / 60;
 let current = null;
@@ -15,7 +16,7 @@ let current = null;
 const BTN_CLASS = { jab: 'punch', cross: 'punch', hook: 'punch', lowKick: 'kick', bodyKick: 'kick', highKick: 'kick', takedown: 'grapple',
   gnpPunch: 'punch', gnpElbow: 'punch', upStrike: 'punch', sub: 'special', escape: 'grapple', standUp: 'grapple' };
 
-export function startFight(a, b, { rounds, onEnd, ufcLogo }) {
+export function startFight(a, b, { rounds, onEnd, ufcLogo, danaChance = 0.35, eventLabel = '' }) {
   stopFight();
   const s = state.settings;
   const fight = new Fight(a, b, { rounds, roundSeconds: s.duracionRoundMin * 60 });
@@ -24,7 +25,7 @@ export function startFight(a, b, { rounds, onEnd, ufcLogo }) {
   const canvas = document.getElementById('fight-canvas');
   show('screen-fight');
   const renderer = new Renderer(canvas, fight, { ufcLogo });
-  const ctx = { fight, player, ai, renderer, paused: false, raf: 0, acc: 0, last: performance.now(), onEnd, groundMode: null, ended: false, cleanup: [] };
+  const ctx = { fight, player, ai, renderer, paused: false, raf: 0, acc: 0, last: performance.now(), onEnd, groundMode: null, ended: false, cleanup: [], intro: true, danaChance };
   current = ctx;
   if (window.__pixelmma) window.__pixelmma.fight = fight; // para pruebas automáticas
 
@@ -41,11 +42,12 @@ export function startFight(a, b, { rounds, onEnd, ufcLogo }) {
   document.addEventListener('visibilitychange', onVis);
   ctx.cleanup.push(() => document.removeEventListener('visibilitychange', onVis));
 
-  banner(t('round_n', { n: 1 }), 'small');
+  startIntro(ctx, eventLabel);
   const loop = now => {
     ctx.raf = requestAnimationFrame(loop);
     const elapsed = Math.min(0.1, (now - ctx.last) / 1000);
     ctx.last = now;
+    if (ctx.intro) { drawIntro(ctx, elapsed); renderer.draw(elapsed); updateHud(ctx); return; }
     if (!ctx.paused) {
       ctx.acc += elapsed;
       while (ctx.acc >= DT) { ctx.ai.update(DT); fight.update(DT); ctx.acc -= DT; }
@@ -242,7 +244,7 @@ function handleEvent(ctx, e) {
     case 'bell': audio.play('bell', { times: fight.phase === 'fight' ? 1 : 2 }); break;
     case 'round_start': banner(fight.round === fight.rounds ? t('final_round') : t('round_n', { n: fight.round }), 'small'); document.getElementById('between').hidden = true; break;
     case 'round_end': if (fight.phase === 'between') showBetween(ctx); break;
-    case 'fight_end': setTimeout(() => finish(ctx, fight.result), e.result.method.startsWith('dec') || e.result.method === 'draw' ? 600 : 2600); break;
+    case 'fight_end': startCeremony(ctx, e.result); break;
     default: break;
   }
 }
@@ -266,6 +268,56 @@ function showBetween(ctx) {
     el('p', { class: 'note', text: t('next_round_in') }), skip));
   box.hidden = false;
   const c = ctx.player.ctl; c.left = c.right = c.blockHigh = c.blockLow = false;
+}
+
+// ---------- Intro: el presentador grita "IT'S TIMEEE!" ----------
+function startIntro(ctx, eventLabel) {
+  const box = document.getElementById('intro');
+  document.getElementById('intro-event').textContent = eventLabel || '';
+  box.hidden = false;
+  ctx.introT = 0;
+  const end = () => {
+    if (!ctx.intro) return;
+    ctx.intro = false; box.hidden = true; ctx.last = performance.now();
+    banner(t('round_n', { n: 1 }), 'small');
+  };
+  ctx.endIntro = end;
+  box.onclick = end;
+  audio.roar(0.8);
+  try {
+    if (window.speechSynthesis && state.settings.volumenEfectos > 0) {
+      const u = new SpeechSynthesisUtterance("It's tiiime!");
+      u.lang = 'en-US'; u.rate = 0.62; u.pitch = 0.75; u.volume = state.settings.volumenEfectos / 100;
+      window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+    }
+  } catch { /* sin voz sintetizada */ }
+  ctx.cleanup.push(() => { box.hidden = true; try { window.speechSynthesis?.cancel(); } catch { /* nada */ } });
+}
+
+function drawIntro(ctx, dt) {
+  ctx.introT += dt;
+  const c = document.getElementById('intro-canvas'), g = c.getContext('2d');
+  if (c.width !== 120) { c.width = 120; c.height = 80; g.imageSmoothingEnabled = false; }
+  g.clearRect(0, 0, 120, 80);
+  g.fillStyle = 'rgba(255,240,180,0.15)'; g.fillRect(40, 0, 40, 80);
+  drawPerson(g, 60, 76, 'announcer', { armUp: ctx.introT > 0.6, t: ctx.introT });
+  if (ctx.introT > 3) ctx.endIntro();
+}
+
+// ---------- Ceremonia: el árbitro levanta el brazo del ganador ----------
+function startCeremony(ctx, result) {
+  const isFinish = !(result.method.startsWith('dec') || result.method === 'draw');
+  if (result.winnerIdx < 0) { setTimeout(() => finish(ctx, result), 1200); return; }
+  setTimeout(() => {
+    if (ctx.ended) return;
+    ctx.renderer.startCeremony({ winnerIdx: result.winnerIdx, dana: Math.random() < ctx.danaChance });
+    banner(t('winner') + ': ' + ctx.fight.f[result.winnerIdx].data.nombre.split(' ').pop().toUpperCase(), 'small');
+    audio.roar(1);
+    const done = () => finish(ctx, result);
+    const timer = setTimeout(done, 4200);
+    const skip = () => { clearTimeout(timer); done(); };
+    document.getElementById('fight-canvas').addEventListener('pointerdown', skip, { once: true });
+  }, isFinish ? 1800 : 400);
 }
 
 function finish(ctx, result) {

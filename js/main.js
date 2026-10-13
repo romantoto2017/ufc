@@ -5,6 +5,7 @@ import { audio } from './audio.js';
 import { show, back, resetHistory } from './ui/common.js';
 import { initSettingsScreen, initDivisionScreen, initSelectScreen, applyControlSettings, showVS, showResult, runSimulation } from './ui/screens.js';
 import { startFight } from './ui/fightScreen.js';
+import { initCareer } from './ui/careerScreens.js';
 import { loadLogo, placeholderLogo } from './gfx/logo.js';
 import { Fight } from './fight/engine.js';
 import { AI } from './fight/ai.js';
@@ -30,6 +31,7 @@ async function boot() {
   initSettingsScreen();
   initDivisionScreen();
   initSelectScreen(onFight);
+  initCareer({ namesDb: state.names, logo: ufcLogo });
 
   // La música arranca con el primer gesto (requisito de los navegadores).
   const firstGesture = () => { audio.unlock(); audio.setVolumes(state.settings.volumenMusica, state.settings.volumenEfectos); if (isMenuish()) audio.startMusic(); };
@@ -48,7 +50,7 @@ async function boot() {
 
 function isMenuish(id) {
   id = id || document.querySelector('.screen:not([hidden])')?.id;
-  return ['screen-menu', 'screen-settings', 'screen-division', 'screen-select'].includes(id);
+  return ['screen-menu', 'screen-settings', 'screen-division', 'screen-select', 'screen-career-start', 'screen-career-create', 'screen-career-pick', 'screen-career-hub', 'screen-career-events'].includes(id);
 }
 
 // Pelea de exhibición IA vs IA de fondo en el menú.
@@ -56,7 +58,8 @@ function startDemo() {
   if (demo || state.fighters.length < 2) return;
   const canvas = document.getElementById('bg-canvas');
   canvas.hidden = false;
-  const [a, b] = state.fighters;
+  const a = state.fighters.find(f => f.id === 'justin-gaethje') || state.fighters[0];
+  const b = state.fighters.find(f => f.id === 'ilia-topuria') || state.fighters[1];
   const fight = new Fight(a, b, { rounds: 99, roundSeconds: 9999 });
   fight.phase = 'fight';
   const ais = [new AI(fight, 0, 'normal'), new AI(fight, 1, 'normal')];
@@ -97,7 +100,7 @@ function onFight(a, b, { rounds, mode }) {
   audio.stopMusic();
   showVS(a, b, () => {
     startFight(a, b, {
-      rounds, ufcLogo,
+      rounds, ufcLogo, eventLabel: 'UFC',
       onEnd: result => {
         if (!result) { resetHistory(['screen-menu', 'screen-division']); show('screen-select', { push: false }); return; }
         showResult(a, b, result, { simulated: false, onRematch: () => onFight(a, b, { rounds, mode }), onMenu: toMenu });

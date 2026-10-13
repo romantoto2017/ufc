@@ -7,13 +7,14 @@ import { deriveAttributes, stars, overall } from '../js/ratings.js';
 const path = new URL('../data/fighters.json', import.meta.url);
 const db = JSON.parse(readFileSync(path, 'utf8'));
 const force = process.argv.includes('--force');
+const quiet = process.argv.includes('--quiet');
 for (const f of db.peleadores) {
   if (f.fuente !== 'calculado' || (f.atributos && !force)) continue;
   f.atributos = deriveAttributes({
     ranking: f.ranking, record: f.record, streak: f.racha,
-    style: f.estilo, age: f.edad, ajustes: f.ajustesPerfil,
+    style: f.estilo, age: f.edad, ajustes: f.ajustesPerfil, elite: !!f.elite,
   });
   f.estrellas = stars(f.atributos);
-  console.log(f.nombre.padEnd(20), f.estrellas, overall(f.atributos).toFixed(1), JSON.stringify(f.atributos));
+  if (!quiet) console.log(f.nombre.padEnd(20), f.estrellas, overall(f.atributos).toFixed(1), JSON.stringify(f.atributos));
 }
-writeFileSync(path, JSON.stringify(db, null, 2) + '\n');
+writeFileSync(path, JSON.stringify(db, null, 1) + '\n');
