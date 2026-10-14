@@ -1,6 +1,6 @@
 // Service worker: red primero para todo el juego (siempre la última versión);
 // la caché queda como respaldo para jugar sin conexión.
-const VERSION = 'pixelmma-v6';
+const VERSION = 'pixelmma-v7';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/main.js', 'js/store.js', 'js/i18n.js', 'js/audio.js', 'js/ratings.js', 'js/sim.js',

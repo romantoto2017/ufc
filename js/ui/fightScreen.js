@@ -265,24 +265,24 @@ function handleEvent(ctx, e) {
     case 'hit': {
       audio.play(e.dmg > 9 ? 'heavy' : e.move.toLowerCase().includes('kick') ? 'kick' : 'punch');
       if (e.who === player.idx) vibrate(e.dmg > 9 ? 40 : 15, vib);
-      if (e.bigCounter) {
-        banner(t(e.by === player.idx ? 'counter_big' : 'countered'), 'big');
-        if (e.who === player.idx) vibrate([50, 30, 50], vib);
-      } else if (e.counter && e.by === player.idx) banner(t('counter'), 'small');
+      if (e.bigCounter || e.dmg > 9) hitFlash(e.bigCounter ? 1 : Math.min(0.85, 0.45 + (e.dmg - 9) * 0.06));
+      if (e.bigCounter && e.by === player.idx) banner(t('counter_big'), 'big');
+      else if (e.counter && e.by === player.idx) banner(t('counter'), 'small');
+      if (e.bigCounter && e.who === player.idx) vibrate([50, 30, 50], vib);
       audio.setCrowd(Math.min(1, renderer.excite));
       break;
     }
     case 'block': audio.play('block'); break;
-    case 'knockdown': audio.play('knockdown'); banner(t('knockdown'), 'big'); vibrate([60, 40, 60], vib); break;
+    case 'knockdown': hitFlash(1); audio.play('knockdown'); banner(t('knockdown'), 'big'); vibrate([60, 40, 60], vib); break;
     case 'pounce':
       audio.play('takedown'); audio.roar(0.9);
-      banner(t(e.who === player.idx ? 'pounce_go' : 'pounce_def'), 'big');
+      if (e.on === player.idx) banner(t('pounce_def'), 'big');
       break;
     case 'gnp_start': if (e.on === player.idx) { banner(t('rocked_hint'), 'small'); vibrate(40, vib); } break;
     case 'takedown': audio.play('takedown'); banner(t('takedown_banner'), 'small'); vibrate(30, vib); break;
     case 'standup': if (e.reason === 'ref_standup') banner(t('stood_up'), 'small'); break;
     case 'sub_escape': banner(t('sub_escaped'), 'small'); break;
-    case 'ko': audio.play('ko'); audio.play('bell', { times: 3 }); banner(fight.result?.method === 'tko' ? t('tko_banner') : t('ko_banner'), 'big'); vibrate([100, 50, 200], vib); break;
+    case 'ko': hitFlash(1); audio.play('ko'); audio.play('bell', { times: 3 }); banner(fight.result?.method === 'tko' ? t('tko_banner') : t('ko_banner'), 'big'); vibrate([100, 50, 200], vib); break;
     case 'tapout': audio.play('bell', { times: 3 }); audio.roar(1); banner(t('sub_banner'), 'big'); vibrate([80, 40, 80], vib); break;
     case 'fight': banner(t('fight_go'), 'big'); break;
     case 'bell': audio.play('bell', { times: fight.phase === 'fight' ? 1 : 2 }); break;
@@ -291,6 +291,14 @@ function handleEvent(ctx, e) {
     case 'fight_end': startCeremony(ctx, e.result); break;
     default: break;
   }
+}
+
+// Destello rojo en los bordes (golpe potente, knockdown o nocaut); power 0..1.
+function hitFlash(power) {
+  const f = document.getElementById('hit-flash');
+  if (!f) return;
+  f.style.setProperty('--hf', String(power));
+  f.classList.remove('on'); void f.offsetWidth; f.classList.add('on');
 }
 
 function showBetween(ctx) {
