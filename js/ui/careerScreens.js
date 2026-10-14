@@ -27,8 +27,9 @@ export function countryName(code) {
   try { return new Intl.DisplayNames([lang()], { type: 'region' }).of(code) || code; } catch { return code; }
 }
 
-function orgName(id) {
-  if (id === 'nacional' || !id) return t('national_circuit', { country: countryName(career.player.pais) });
+// pais: necesario cuando todavía no hay carrera activa (pantalla de inicio recién abierta la app).
+function orgName(id, pais = career?.player?.pais) {
+  if (id === 'nacional' || !id) return t('national_circuit', { country: countryName(pais) });
   return C.promoById(state.promotionsDb, id)?.nombre || id;
 }
 
@@ -68,23 +69,26 @@ export function initCareer({ namesDb, logo }) {
 function renderStart() {
   const box = document.getElementById('career-start');
   box.innerHTML = '';
-  const saved = C.load();
-  if (saved) {
-    const p = saved.player;
-    const pc = portraitCanvas(p.cara, 3); pc.classList.add('portrait');
-    const cont = el('button', { class: 'btn btn-primary' }, el('span', { text: t('career_continue') }));
-    cont.addEventListener('click', () => { career = saved; audio.play('ui'); show('screen-career-hub'); });
-    box.append(el('div', { class: 'card-row' }, pc, el('div', {},
-      el('div', { class: 'fc-name', text: p.nombre }),
-      el('div', { class: 'fc-meta' }, flagCanvas(p.pais, 2), el('span', { text: p.record }), starsEl(stars(p.atributos))),
-      el('div', { class: 'note', text: `${orgName(saved.stage === 'nacional' ? 'nacional' : saved.org)} · ${saved.date}` }))), cont);
-  }
+  let saved = C.load();
+  // Una partida guardada que no se puede mostrar no debe dejar la pantalla vacía.
+  if (saved) try { renderSavedCard(box, saved); } catch (err) { console.warn('partida guardada ilegible', err); box.innerHTML = ''; saved = null; }
   const create = el('button', { class: 'btn' + (saved ? '' : ' btn-primary') }, el('span', { text: t('career_new_create') }), el('small', { text: t('career_new_create_sub') }));
   const pick = el('button', { class: 'btn' }, el('span', { text: t('career_new_pick') }), el('small', { text: t('career_new_pick_sub') }));
-  const guard = fn => () => { if (saved && !confirm(t('career_overwrite'))) return; audio.play('ui'); fn(); };
+  const guard = fn => () => { if (C.load() && !confirm(t('career_overwrite'))) return; audio.play('ui'); fn(); };
   create.addEventListener('click', guard(() => show('screen-career-create')));
   pick.addEventListener('click', guard(() => show('screen-career-pick')));
   box.append(el('div', { class: 'start-actions' }, create, pick));
+}
+
+function renderSavedCard(box, saved) {
+  const p = saved.player;
+  const pc = portraitCanvas(p.cara, 3); pc.classList.add('portrait');
+  const cont = el('button', { class: 'btn btn-primary' }, el('span', { text: t('career_continue') }));
+  cont.addEventListener('click', () => { career = saved; audio.play('ui'); show('screen-career-hub'); });
+  box.append(el('div', { class: 'card-row' }, pc, el('div', {},
+    el('div', { class: 'fc-name', text: p.nombre }),
+    el('div', { class: 'fc-meta' }, flagCanvas(p.pais, 2), el('span', { text: p.record }), starsEl(stars(p.atributos))),
+    el('div', { class: 'note', text: `${orgName(saved.stage === 'nacional' ? 'nacional' : saved.org, p.pais)} · ${saved.date}` }))), cont);
 }
 
 // ---------- CREACIÓN ----------
