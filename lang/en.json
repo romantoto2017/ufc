@@ -380,5 +380,6 @@
  "tut_low_c": "Tap LOW KICK: hurts the legs and slows him down.",
  "tut_body_c": "Tap BODY KICK: goes to the body and takes his breath away.",
  "tut_high_c": "Tap HIGH KICK: slow, but can knock out.",
- "tut_spin_c": "Tap SPIN KICK: spinning kick!"
+ "tut_spin_c": "Tap SPIN KICK: spinning kick!",
+ "news_released_org": "{org} releases {name}."
 }

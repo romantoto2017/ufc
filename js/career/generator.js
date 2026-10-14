@@ -21,27 +21,51 @@ export function namesFor(namesDb, country) {
   return namesDb[key] || namesDb.US;
 }
 
-// Récord coherente con la edad y el arquetipo.
-export function makeRecord(rng, age, archetype, level) {
+// Nivel numérico de cada etapa (para el regional se usa el nivel real de la promotora).
+export const LEVEL_TIER = { nacional: 1, regional: 2, dwcs: 3.5, rtu: 3.5, pfl: 4, ufc: 5 };
+// Desde este nivel (Ares, Brave, Oktagon, LFA, Cage Warriors, KSW, ONE, PFL, UFC...) nadie tiene récord negativo.
+export const ADVANCED_TIER = 2.5;
+
+// Tope de peleas: en el circuito nacional son pocas (nadie llega con 15); más arriba, según la edad.
+function maxFights(rng, archetype, tier) {
+  if (tier < 2) return { prospecto: randInt(rng, 1, 5), local: randInt(rng, 2, 8), relleno: randInt(rng, 3, 10), veterano: randInt(rng, 4, 10) }[archetype];
+  if (tier < ADVANCED_TIER) return randInt(rng, 6, 16);
+  return randInt(rng, 12, 30);
+}
+
+// Récord coherente con la edad, el arquetipo y el nivel de la organización.
+export function makeRecord(rng, age, archetype, level, tier = LEVEL_TIER[level] || 2) {
   const startAge = archetype === 'veterano' ? randInt(rng, 18, 23) : randInt(rng, 19, 25);
   const years = Math.max(0.5, age - startAge);
-  const perYear = archetype === 'relleno' || archetype === 'veterano' ? 2.2 + rng() * 1.6 : 1.4 + rng() * 1.4;
-  let fights = Math.max(2, Math.round(years * perYear * (level === 'nacional' ? 0.8 : 1)));
+  const perYear = archetype === 'relleno' || archetype === 'veterano' ? 1.8 + rng() * 1.2 : 1.2 + rng() * 1.2;
+  let fights = Math.max(1, Math.min(maxFights(rng, archetype, tier), Math.round(years * perYear)));
   if (archetype === 'prospecto') fights = Math.min(fights, randInt(rng, 3, 12));
   let winPct;
   switch (archetype) {
     case 'prospecto': winPct = 0.8 + rng() * 0.2; break;
     case 'veterano': winPct = 0.45 + rng() * 0.25; break;
-    case 'relleno': winPct = 0.25 + rng() * 0.25; break;
+    case 'relleno': winPct = tier < 2 ? 0.25 + rng() * 0.25 : 0.4 + rng() * 0.2; break;
     default: winPct = 0.6 + rng() * 0.25; // local favorito
   }
-  if (level === 'dwcs' || level === 'rtu' || level === 'pfl') winPct = Math.max(winPct, 0.72 + rng() * 0.2);
+  if (tier >= ADVANCED_TIER) winPct = Math.max(winPct, 0.6 + rng() * 0.12);
+  if (level === 'dwcs' || level === 'rtu' || level === 'pfl' || level === 'ufc') winPct = Math.max(winPct, 0.72 + rng() * 0.2);
   let w = Math.round(fights * winPct);
   let l = fights - w;
   const d = rng() < 0.12 ? 1 : 0;
   if (archetype === 'prospecto' && l > 1) { w += l - 1; l = 1; }
   if (rng() < 0.25 && archetype === 'prospecto') { w += l; l = 0; }
+  // En promotoras de nivel alto, siempre récord ganador (al menos 2 victorias más que derrotas).
+  if (tier >= ADVANCED_TIER && w < l + 2) { const move = Math.ceil((l + 2 - w) / 2); w += move; l = Math.max(0, l - move); }
   return { w, l, d, record: `${w}-${l}-${d}` };
+}
+
+// ¿Este récord es creíble para ese nivel? (sirve para descartar rivales guardados de versiones viejas)
+export function plausibleRecord(f) {
+  const [w, l] = String(f.record).split('-').map(Number);
+  const tier = f.tier ?? LEVEL_TIER[f.nivel] ?? 2;
+  if (f.nivel === 'nacional') return w + l <= 12;
+  if (tier >= ADVANCED_TIER || f.nivel !== 'regional') return w > l;
+  return w >= l;
 }
 
 // Atributos a partir de un objetivo de estrellas, estilo, edad y arquetipo.
@@ -84,7 +108,8 @@ const HEIGHT_BY_DIV = { mosca: 165, gallo: 170, pluma: 173, ligero: 177, welter:
 // Estrellas de los rivales según el nivel de la organización (1.5 = Samurai ... 3.5 = ONE).
 export const orgStars = nivel => [Math.min(3.4, 0.6 * nivel + 0.5), Math.min(3.8, 0.6 * nivel + 1.5)];
 
-export function generateFighter(rng, { namesDb, country, division, level, archetype, idPrefix = 'g', starsRange = null }) {
+export function generateFighter(rng, { namesDb, country, division, level, archetype, idPrefix = 'g', starsRange = null, tier = null }) {
+  tier = tier ?? LEVEL_TIER[level] ?? 2;
   archetype = archetype || pick(rng, level === 'nacional' ? ['prospecto', 'veterano', 'relleno', 'relleno', 'local', 'local'] : ['prospecto', 'veterano', 'relleno', 'local', 'prospecto']);
   let age;
   switch (archetype) {
@@ -93,7 +118,7 @@ export function generateFighter(rng, { namesDb, country, division, level, archet
     case 'relleno': age = randInt(rng, 24, 38); break;
     default: age = randInt(rng, 22, 33);
   }
-  const rec = makeRecord(rng, age, archetype, level);
+  const rec = makeRecord(rng, age, archetype, level, tier);
   const [lo, hi] = starsRange || LEVEL_STARS[level] || [1.5, 3];
   const archShift = { prospecto: 0.15, veterano: 0, relleno: -0.35, local: 0.1 }[archetype];
   const targetStars = clamp(lo + (hi - lo) * rng() + archShift, lo, hi);
@@ -105,7 +130,7 @@ export function generateFighter(rng, { namesDb, country, division, level, archet
   const streak = archetype === 'relleno' ? -randInt(rng, 0, 3) : archetype === 'prospecto' ? randInt(rng, 1, Math.max(1, rec.w)) : randInt(rng, -2, 3);
   return {
     id: `${idPrefix}-${Math.floor(rng() * 1e9).toString(36)}`,
-    generico: true, arquetipo: archetype, nivel: level,
+    generico: true, arquetipo: archetype, nivel: level, tier,
     nombre, apodo: null, pais: country, edad: age, division,
     altura: h, alcance: reach, postura: rng() < 0.2 ? 'zurda' : 'ortodoxa', estilo: style,
     record: rec.record, racha: Math.min(streak, rec.w), ranking: null,

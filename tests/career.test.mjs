@@ -89,3 +89,27 @@ test('realismo: ~1-2 peleas por año, máx. 3 en 12 meses, retiro antes de los 4
   assert.ok(Math.max(...Object.values(c.vs)) <= 4);
   assert.ok(!c.ufc.some(f => f.id === 'joshua-van' && f.edad > 41), 'los veteranos se retiran');
 });
+
+test('récords creíbles: nada de récord perdedor en UFC ni en promotoras fuertes, y pocas peleas en el circuito nacional', () => {
+  const rec = r => r.split('-').map(Number);
+  const rng = seeded(31);
+  for (let i = 0; i < 400; i++) {
+    const level = ['nacional', 'regional', 'regional', 'dwcs', 'pfl', 'ufc'][i % 6];
+    const tier = level === 'regional' ? [1.5, 2, 2.5, 3, 3.5][i % 5] : undefined;
+    const f = generateFighter(rng, { namesDb: names, country: 'BR', division: 'pluma', level, tier });
+    const [w, l] = rec(f.record);
+    if (level === 'nacional') assert.ok(w + l <= 10, `nacional ${f.record}`);
+    if (level !== 'nacional' && (tier ?? 5) >= 2.5) assert.ok(w > l, `${level} ${tier} ${f.record}`);
+  }
+  // Muchos años de mundo UFC simulado: nadie queda con récord no ganador
+  const p = createPlayer({ nombre: 'Test', pais: 'US', edad: 20, division: 'welter', altura: 183, alcance: 188, estilo: 'boxeo', postura: 'ortodoxa', cara: {} });
+  const c = newCareer({ player: p, promos, fighters, seed: 77 });
+  const r2 = seeded(5);
+  for (let i = 0; i < 50 && !c.retired; i++) {
+    if (c.pendingContract) acceptContract(c);
+    makeOffer(c, ctx);
+    applyCareerFight(c, ctx, simulateFight(c.player, opponentOf(c), { rounds: c.offer.rounds, rng: r2 }));
+    const bad = c.ufc.filter(f => f.id !== 'player' && !f.retirado && (() => { const [w, l] = rec(f.record); return l >= w; })());
+    assert.equal(bad.length, 0, bad.map(f => `${f.nombre} ${f.record}`).join(', '));
+  }
+});

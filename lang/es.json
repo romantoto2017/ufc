@@ -380,5 +380,6 @@
  "tut_low_c": "Tocá PATADA BAJA: daña las piernas y lo vuelve lento.",
  "tut_body_c": "Tocá PATADA MEDIA: va al cuerpo y le quita aire.",
  "tut_high_c": "Tocá PATADA ALTA: lenta, pero puede noquear.",
- "tut_spin_c": "Tocá PATADA GIRO: ¡patada giratoria!"
+ "tut_spin_c": "Tocá PATADA GIRO: ¡patada giratoria!",
+ "news_released_org": "{org} deja ir a {name}."
 }

@@ -2,7 +2,7 @@
 // ofertas de pelea, contratos, entrenamiento, dinero y simulación del mundo UFC. Módulo puro (testeable en Node).
 import { ATTRS, STYLE_PROFILE, stars, starsExact, overall } from '../ratings.js';
 import { simulateFight, applyResult, winProbability } from '../sim.js';
-import { generateFighter, makeAttributes, starsToOverall, namesFor, orgStars } from './generator.js';
+import { generateFighter, makeAttributes, starsToOverall, namesFor, orgStars, plausibleRecord, ADVANCED_TIER } from './generator.js';
 
 // Nombres por país para los recién llegados a UFC (los carga la interfaz o los tests).
 let NAMES = null;
@@ -129,16 +129,16 @@ function eventName(c, org, promos) {
 export const MAX_VS_SAME = 4;
 const timesVs = (c, id) => (c.vs && c.vs[id]) || 0;
 
-function genericOpponent(c, ctx, { level, country, archetype, starsRange = null }) {
+function genericOpponent(c, ctx, { level, country, archetype, starsRange = null, tier = null }) {
   const rng = rngOf(c);
-  const f = generateFighter(rng, { namesDb: ctx.names, country, division: c.player.division, level, archetype, starsRange });
+  const f = generateFighter(rng, { namesDb: ctx.names, country, division: c.player.division, level, archetype, starsRange, tier });
   c.generics[f.id] = f;
   return f;
 }
 
 // Revancha: rivales genéricos guardados que vuelven a aparecer.
 function rematchCandidate(c, level, rng) {
-  const pool = Object.values(c.generics).filter(g => g.nivel === level && g.division === c.player.division && g.vsPlayer && timesVs(c, g.id) < MAX_VS_SAME && !g.retirado);
+  const pool = Object.values(c.generics).filter(g => g.nivel === level && g.division === c.player.division && g.vsPlayer && timesVs(c, g.id) < MAX_VS_SAME && !g.retirado && plausibleRecord(g));
   if (!pool.length || rng() > 0.18) return null;
   const lostTo = pool.filter(g => g.vsPlayer.l > 0);
   return pick(rng, lostTo.length ? lostTo : pool);
@@ -167,10 +167,11 @@ export function makeOffer(c, ctx) {
     if (!isChamp && c.streakInStage >= REGIONAL_TITLE_STREAK) {
       // Pelea por el título contra el campeón vigente de esa organización
       let champ = champId && champId !== 'player' && c.generics[champId];
-      if (!champ || timesVs(c, champ.id) >= MAX_VS_SAME) { champ = genericOpponent(c, ctx, { level: 'regional', country: pick(rng, orgCountries), archetype: rng() < 0.5 ? 'local' : 'prospecto', starsRange: range }); champ.atributos = makeAttributes(rng, { targetStars: range[1], style: champ.estilo, age: champ.edad, archetype: 'local' }); c.regionalChamp[c.org] = champ.id; }
+      if (!champ || timesVs(c, champ.id) >= MAX_VS_SAME || !plausibleRecord(champ)) { champ = genericOpponent(c, ctx, { level: 'regional', country: pick(rng, orgCountries), archetype: rng() < 0.5 ? 'local' : 'prospecto', starsRange: range, tier: org.nivel }); champ.atributos = makeAttributes(rng, { targetStars: range[1], style: champ.estilo, age: champ.edad, archetype: 'local' }); c.regionalChamp[c.org] = champ.id; }
       opponent = champ; rounds = 5; title = true;
     } else {
-      opponent = rematchCandidate(c, 'regional', rng) || genericOpponent(c, ctx, { level: 'regional', country: pick(rng, orgCountries), starsRange: range });
+      const again = rematchCandidate(c, 'regional', rng);
+      opponent = again && (again.tier ?? 2) <= (org.nivel || 2) + 0.5 ? again : genericOpponent(c, ctx, { level: 'regional', country: pick(rng, orgCountries), starsRange: range, tier: org.nivel || 2 });
       if (isChamp && rng() < 0.6) { rounds = 5; title = true; kind = 'defense'; }
     }
   } else if (c.stage === 'dwcs') {
@@ -373,6 +374,8 @@ export function applyCareerFight(c, ctx, result) {
   const after = stars(p.atributos);
   if (after > before) events.push({ type: 'stars', from: before, to: after });
   c.offer = null; c.camp = null;
+  // Si el rival de UFC quedó con récord perdedor después de pelear con vos, lo cortan.
+  if (!opp.generico && c.ufc.includes(opp)) cutLosers(c, opp.division, rng);
   // Retiro: a partir de los 36 se puede elegir; a los 40 es obligatorio.
   if (p.edad >= 40) { c.retired = true; events.push({ type: 'retire_forced' }); news(c, 'news_player_retired', { name: p.nombre, record: p.record }); }
   else if (p.edad >= 36 && !c.pendingContract) events.push({ type: 'retire_option' });
@@ -422,23 +425,24 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
       const champ = c.regionalChamp[c.org] === 'player';
       if (won && c.cooldownWins > 0) c.cooldownWins--;
       const ready = !(c.cooldownWins > 0);
-      const hot = (champ && won) || c.streakInStage >= 3;
-      if (won && champ && org.nivel >= 2.5 && rng() < 0.4 + (org.nivel - 2.5) * 0.3) {
+      const hot = ((champ && won) || c.streakInStage >= 3) && r.w > r.l; // con récord perdedor no te llaman de arriba
+      if (r.w > r.l && won && champ && org.nivel >= 2.5 && rng() < 0.4 + (org.nivel - 2.5) * 0.3) {
         // Campeón de una promotora fuerte: UFC lo llama directo (contrato corto)
         offer('ufc', 'ufc', 1 + Math.floor(rng() * 2)); news(c, 'news_ufc_contract', { name: p.nombre });
-      } else if (won && st >= 2.8 && c.streakInStage >= 3 && rng() < 0.07) {
+      } else if (r.w > r.l && won && st >= 2.8 && c.streakInStage >= 3 && rng() < 0.07) {
         offer('ufc', 'ufc', 1, 'short_notice'); news(c, 'news_short_notice', { name: p.nombre });
       } else if (hot && rng() < 0.45 && higherOrg(c, promos, rng)) {
         offer(higherOrg(c, promos, rng).id, 'regional', 3 + Math.floor(rng() * 2));
-      } else if (ready && ((champ && won) || p.racha >= 4 || (r.w >= 8 && st >= 3 && p.racha >= 2)) && rng() < 0.6) {
+      } else if (ready && r.w > r.l && ((champ && won) || p.racha >= 4 || (r.w >= 8 && st >= 3 && p.racha >= 2)) && rng() < 0.6) {
         // Asiáticos: Road to UFC; tras 2 torneos perdidos también pueden ir al Contender Series.
         const asian = isAsian(promos, p.pais) && (c.rtuFails || 0) < 2;
         c.stage = asian ? 'rtu' : 'dwcs'; c.prevOrg = c.org; c.org = c.stage; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0; c.rtuRound = 0; c.contract = null;
         events.push({ type: 'invite', org: c.stage });
         news(c, asian ? 'news_rtu' : 'news_dwcs', { name: p.nombre });
-      } else if (won && champ && org.nivel >= 2.5 && rng() < 0.12) {
+      } else if (r.w > r.l && won && champ && org.nivel >= 2.5 && rng() < 0.12) {
         offer('pfl', 'pfl', 3);
-      } else if (p.racha <= -3) {
+      } else if (p.racha <= -3 || (org.nivel >= ADVANCED_TIER && r.l > r.w)) {
+        // Rachas malas o récord perdedor en una promotora fuerte: te cortan.
         events.push({ type: 'released', org: c.org });
         // Te cortan: bajás a una promotora más chica de tu región, o al circuito nacional.
         const lower = (promos.orgsPorRegion[regionOf(promos, p.pais)] || []).map(id => promoById(promos, id)).filter(o => o && o.activa && o.nivel < org.nivel).sort((a, b) => b.nivel - a.nivel)[0];
@@ -471,10 +475,15 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
     }
     case 'pfl': {
       if (won && (c.regionalChamp.pfl === 'player' ? rng() < 0.5 : rng() < 0.12) && st >= 3.2) offer('ufc', 'ufc', 2 + Math.floor(rng() * 3));
+      else if (!won && !draw && (p.racha <= -3 || r.l > r.w)) {
+        events.push({ type: 'released', org: 'pfl' }); news(c, 'news_released_org', { name: p.nombre, org: 'PFL' });
+        backToRegional(c, ctx);
+      }
       break;
     }
     case 'ufc': {
-      if (!won && !draw && p.ranking == null && p.racha <= -3) releaseFromUfc(c, ctx, events, rng);
+      // Con récord perdedor UFC te corta aunque estés rankeado.
+      if (!won && !draw && ((p.ranking == null && p.racha <= -3) || r.l > r.w)) releaseFromUfc(c, ctx, events, rng);
       break;
     }
     default: break;
@@ -505,7 +514,13 @@ function backToRegional(c, ctx) {
   const { promos } = ctx;
   const orgs = promos.orgsPorRegion[regionOf(promos, c.player.pais)];
   const best = [...orgs].sort((a, b) => (promoById(promos, b)?.nivel || 0) - (promoById(promos, a)?.nivel || 0))[0];
-  const back = c.prevOrg || best;
+  let back = c.prevOrg || best;
+  // Con récord perdedor no podés volver a una promotora fuerte: bajás a una más chica o al circuito nacional.
+  const r = rec(c.player);
+  if (r.l >= r.w && (promoById(promos, back)?.nivel ?? 5) >= ADVANCED_TIER) {
+    back = [...orgs].map(id => promoById(promos, id)).filter(o => o && o.activa && o.nivel < ADVANCED_TIER).sort((a, b) => b.nivel - a.nivel)[0]?.id;
+    if (!back) { c.stage = 'nacional'; c.org = null; c.contract = null; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0; return; }
+  }
   c.stage = 'regional'; c.org = back;
   c.contract = { org: back, total: 3, left: 3, w: 0, l: 0 };
   c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0;
@@ -575,12 +590,33 @@ export function simulateWorld(c, months) {
         fightAI(c, a, b, 3, rng);
         used.add(a.id); used.add(b.id);
       }
+      cutLosers(c, div, rng);
       maintainRankings(c, div);
     }
     // Envejecimiento anual de la IA (cada 12 meses simulados)
     c.worldMonths = (c.worldMonths || 0) + 1;
     if (c.worldMonths % 12 === 0) yearlyTurnover(c, rng);
   }
+}
+
+// UFC corta a quien queda con récord no ganador o encadena 3 derrotas sin ranking, y firma a un prospecto.
+function cutLosers(c, div, rng) {
+  for (const f of c.ufc) {
+    if (f.division !== div || f.id === 'player' || f.retirado || f.id === c.offer?.opponentId) continue;
+    const r = rec(f);
+    if (!(r.l >= r.w || (f.ranking == null && f.racha <= -3))) continue;
+    f.retirado = true; f.cortado = true;
+    if (f.ranking != null) news(c, 'news_ufc_cut', { name: f.nombre });
+    f.ranking = null;
+    if (NAMES) c.ufc.push(newUfcProspect(c, div, rng));
+  }
+}
+
+function newUfcProspect(c, div, rng) {
+  const countries = Object.keys(NAMES).filter(k => /^[A-Z]{2,3}$/.test(k));
+  const nf = generateFighter(rng, { namesDb: NAMES, country: pick(rng, countries), division: div, level: 'ufc', archetype: 'prospecto', idPrefix: 'ufc' });
+  nf.generico = false; nf.nuevo = true;
+  return nf;
 }
 
 // Cada año: los veteranos se retiran (la mayoría entre los 36 y los 40) y llegan prospectos nuevos.
@@ -590,6 +626,7 @@ function yearlyTurnover(c, rng) {
   for (const f of c.ufc) {
     if (f.id === 'player' || f.retirado) continue;
     f.edad++;
+    if (f.id === c.offer?.opponentId) continue; // ya tiene pelea pactada con el jugador
     let pr = f.edad >= 40 ? 0.85 : RETIRE_BY_AGE[f.edad] || 0;
     if (f.racha <= -2) pr += 0.15;
     if (f.ranking == null && f.racha <= -3) pr += 0.3;
@@ -603,12 +640,7 @@ function yearlyTurnover(c, rng) {
     rerank(c, div);
     const active = c.ufc.filter(f => f.division === div && !f.retirado).length;
     const newcomers = Math.max(0, 26 - active) + (rng() < 0.6 ? 1 : 0);
-    for (let i = 0; i < newcomers && NAMES; i++) {
-      const countries = Object.keys(NAMES).filter(k => /^[A-Z]{2,3}$/.test(k));
-      const nf = generateFighter(rng, { namesDb: NAMES, country: pick(rng, countries), division: div, level: 'ufc', archetype: 'prospecto', idPrefix: 'ufc' });
-      nf.generico = false; nf.nuevo = true;
-      c.ufc.push(nf);
-    }
+    for (let i = 0; i < newcomers && NAMES; i++) c.ufc.push(newUfcProspect(c, div, rng));
   }
   // Los retirados viejos se borran para que el guardado no crezca sin límite
   c.ufc = c.ufc.filter(f => !f.retirado || f.id === 'player');
