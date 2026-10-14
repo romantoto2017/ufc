@@ -13,6 +13,8 @@ Para el celular: GitHub Pages (Settings → Pages → rama `claude/bold-wozniak-
 
 **Controles (2 botones, por defecto):** PUÑO (1 toque jab, 2 recto, 3 gancho, 4 codazo, siempre tocando seguido) y PATADA (baja, media, alta y giratoria). Se puede cambiar al esquema clásico en Configuración. Hay un **Tutorial** en el menú.
 
+**Pelea:** spamear golpes no sirve. Cada golpe suma "carga" y, si tirás sin pausa, el rival te esquiva y te contragolpea con el doble de daño (con buena pegada te puede noquear). Además pegás más flojo, te cansás más y tardás más en recuperarte. Los puños noquean más que antes y la pegada (golpeo) pesa en el knockdown. Cuando tirás a alguien, te le tirás encima solo para rematarlo con ground and pound: si no se cubre, el árbitro para la pelea por TKO.
+
 En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J = puño, K = patada, H = derribo y Espacio para tocar en las sumisiones.
 
 ## Qué tiene

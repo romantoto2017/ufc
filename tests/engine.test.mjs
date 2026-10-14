@@ -57,3 +57,46 @@ test('Peleadores parejos: resultados repartidos', () => {
   console.log('a wins', aw, '/', N, methods);
   assert.ok(aw > 5 && aw < 25, `aw=${aw}`);
 });
+
+test('Knockdown: el que derriba se tira encima y el ground and pound termina en TKO', () => {
+  const a = mk('a', 3, 'boxeo'), b = mk('b', 3, 'boxeo');
+  const fight = new Fight(a, b, { rounds: 3, roundSeconds: 120, rng: seeded(9) });
+  fight.phase = 'fight';
+  const [A, B] = fight.f;
+  A.x = 220; B.x = 250; B.dmg.head = 50;
+  fight.knockdown(A, B, 'head');
+  assert.equal(A.state, 'pounce');
+  for (let i = 0; i < 50; i++) fight.update(1 / 60); // salto (0,5 s) + pausa del impacto
+  assert.equal(A.ground, 'top'); assert.equal(B.ground, 'bottom'); assert.ok(B.rocked);
+  B.ctl.press('escape'); fight.update(1 / 60);
+  assert.notEqual(B.state, 'escape_try', 'aturdido no puede escapar');
+  for (let i = 0; i < 600 && !fight.result; i++) { if (A.canAct) A.ctl.press('gnpPunch'); fight.update(1 / 60); }
+  assert.equal(fight.result?.method, 'tko');
+  assert.equal(fight.result.winnerId, 'a');
+});
+
+test('Spamear golpes no gana: la IA contragolpea al que tira sin parar', () => {
+  const N = 8; let wins = 0, bigCounters = 0;
+  for (let k = 0; k < N; k++) {
+    const fight = new Fight(mk('p', 5, 'boxeo'), mk('c', 5, 'boxeo'), { rounds: 3, roundSeconds: 120, rng: seeded(700 + k) });
+    fight.betweenSeconds = 0.1;
+    const ai = new AI(fight, 1, 'normal'), [P, C] = fight.f;
+    const chain = ['jab', 'cross', 'hook', 'elbow'];
+    let t = 0, i = 0, steps = 0;
+    while (fight.phase !== 'over' && steps++ < 60 * 400) {
+      const c = P.ctl; t += 1 / 60; c.left = c.right = false;
+      if (fight.sub) c.tap();
+      else if (P.ground === 'top') c.press('gnpPunch');
+      else if (!P.ground) {
+        if (Math.abs(C.x - P.x) > 33) c[C.x > P.x ? 'right' : 'left'] = true;
+        else if (t > 0.12) { c.press(chain[i++ % 4]); t = 0; }
+      }
+      ai.update(1 / 60); fight.update(1 / 60);
+      for (const e of fight.drainEvents()) if (e.type === 'hit' && e.who === 0 && e.bigCounter) bigCounters++;
+    }
+    if (fight.result?.winnerId === 'p') wins++;
+  }
+  console.log('spammer gana', wins, '/', N, 'contras fuertes', bigCounters);
+  assert.ok(wins <= 2, `spammer wins=${wins}`);
+  assert.ok(bigCounters > N * 3);
+});

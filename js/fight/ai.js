@@ -2,11 +2,13 @@
 // Pelea mejor según la dificultad elegida y la valoración (estrellas) del peleador.
 import { starsExact } from '../ratings.js';
 
+// counter = ganas de contragolpear cuando el rival tira golpes de más o pega al aire;
+// auto = reflejo del contragolpe automático del motor al esquivar o bloquear una ráfaga.
 const DIFFICULTY = {
-  facil:   { react: 0.55, guard: 0.2,  block: 0.3,  aggr: 0.3,  taps: 3.5 },
-  normal:  { react: 0.36, guard: 0.13, block: 0.5,  aggr: 0.4,  taps: 5.5 },
-  dificil: { react: 0.22, guard: 0.09, block: 0.65, aggr: 0.5,  taps: 7.5 },
-  leyenda: { react: 0.14, guard: 0.06, block: 0.78, aggr: 0.6,  taps: 9.5 },
+  facil:   { react: 0.5,  guard: 0.18, block: 0.35, aggr: 0.32, taps: 4,   counter: 0.25, auto: 0.35 },
+  normal:  { react: 0.26, guard: 0.095, block: 0.65, aggr: 0.45, taps: 7,   counter: 0.65, auto: 0.85 },
+  dificil: { react: 0.19, guard: 0.075, block: 0.72, aggr: 0.55, taps: 8.5, counter: 0.75, auto: 1 },
+  leyenda: { react: 0.12, guard: 0.05, block: 0.84, aggr: 0.65, taps: 10.5, counter: 0.9, auto: 1.15 },
 };
 
 const STYLE_WEIGHTS = {
@@ -31,6 +33,9 @@ export class AI {
     this.blockP = Math.min(0.92, d.block * (0.6 + this.skill * 0.5) * (0.6 + this.me.a.defensa / 250));
     this.aggr = d.aggr * (0.55 + this.skill * 0.45);
     this.tapRate = d.taps * (0.8 + this.skill * 0.3);
+    this.counterP = Math.min(0.95, d.counter * (0.6 + this.skill * 0.5) * this.me.boxing);
+    this.punishId = null;
+    this.me.counterSkill = d.auto; // reflejo de contragolpe automático en el motor
     this.thinkT = 0.3; this.tapAcc = 0; this.reactingTo = null; this.reactT = 0; this.holdBlockT = 0;
     this.plan = []; this.moveT = 0;
     this.weights = STYLE_WEIGHTS[this.me.style] || STYLE_WEIGHTS.boxeo;
@@ -56,6 +61,7 @@ export class AI {
       if (this.plan[0].t <= 0) c.press(this.plan.shift().a);
     }
 
+    if (this.punish()) return;
     this.defend(dt);
     if (this.holdBlockT > 0) return;
 
@@ -68,6 +74,26 @@ export class AI {
     if (!me.canAct && me.state !== 'attack') return;
     if (me.ground) return this.groundThink();
     this.standThink();
+  }
+
+  // Castiga al rival que pegó al aire o que está tirando golpes sin pausa.
+  punish() {
+    const { me, op } = this, c = me.ctl;
+    if (me.ground || !me.canAct || op.state !== 'attack' || !op.hitDone || this.punishId === op.attackId) return false;
+    const blocked = me.state === 'block' && me.t < 0.2; // acaba de parar el golpe: devolver
+    if (!op.whiffed && op.spam < 1.5 && !blocked) return false;
+    this.punishId = op.attackId;
+    const dist = Math.abs(op.x - me.x);
+    const ex = op.spamExcess;
+    // Tras bloquear, la respuesta más rápida (recto); al aire o ante una ráfaga, el gancho.
+    const k = dist <= me.moves.hook.range && !blocked ? 'hook' : dist <= me.moves.cross.range ? 'cross' : null;
+    const p = ex > 0 ? Math.min(1, 0.5 + ex * 0.2) : op.whiffed ? 0.45 : blocked ? 0.35 : 0.2;
+    if (!k || this.rng() > this.counterP * p) return false;
+    c.blockHigh = c.blockLow = false; this.holdBlockT = 0;
+    c.press(k);
+    if (this.rng() < 0.4 + this.skill * 0.3) this.plan.push({ a: k === 'hook' ? 'cross' : 'hook', t: 0.22 });
+    this.cooldown = 0.5;
+    return true;
   }
 
   defend(dt) {
@@ -86,9 +112,17 @@ export class AI {
     if (this.reactT > 0) return;
     this.decided = true;
     const m = op.move;
-    if (!me.canAct || this.rng() > this.blockP) return;
+    if (!me.canAct) return;
     const dist = Math.abs(op.x - me.x);
-    if (me.ground) { if (m.zone === 'head') { c.blockHigh = true; this.holdBlockT = 0.35; } return; }
+    // Ante una ráfaga: leer el golpe, esquivarlo y contragolpear (o al menos cubrirse más).
+    const ex = op.spamExcess;
+    if (!me.ground && m.type === 'punch' && m.zone === 'head') {
+      const pRead = this.counterP * Math.min(1, Math.max(0.04, (op.spam - 1) * 0.25));
+      if (this.rng() < pRead) { c.press('slip'); return; }
+    }
+    const blockP = Math.min(0.95, (me.rocked ? this.blockP * 0.6 : this.blockP) + ex * 0.08);
+    if (this.rng() > blockP) return;
+    if (me.ground) { if (m.zone === 'head') { c.blockHigh = true; this.holdBlockT = me.rocked ? 0.5 : 0.35; } return; }
     if (m.type === 'grapple') { c.blockLow = true; this.holdBlockT = 0.45; return; }
     if (m.type === 'kick' && dist > 31 && this.rng() < 0.35) { this.step(-1, 0.25); return; }
     if (m.zone === 'head') c.blockHigh = true; else c.blockLow = true;
@@ -111,6 +145,8 @@ export class AI {
       if (this.rng() < 0.7) c.press(this.rng() < 0.5 ? 'cross' : 'hook');
       return;
     }
+    // Rival tocado: ir a buscar el nocaut.
+    const hurt = op.dmg.head > 55 || op.stamFrac < 0.25;
     // Sin aguante: recuperar distancia.
     if (me.stamFrac < 0.22 && this.rng() < 0.75) {
       if (dist < 45) return this.step(-1, 0.4);
@@ -119,7 +155,7 @@ export class AI {
     if (dist > this.pref + 8) return this.step(1, 0.2 + this.rng() * 0.2);
     if (dist < this.pref - 8 && this.weights.takedown < 1 && this.rng() < 0.4) return this.step(-1, 0.15);
 
-    if (this.rng() > this.aggr) {
+    if (this.rng() > Math.min(0.9, this.aggr * (hurt ? 1.35 : 1))) {
       if (this.rng() < 0.4) this.step(this.rng() < 0.5 ? 1 : -1, 0.15);
       return;
     }
@@ -172,6 +208,12 @@ export class AI {
     c.blockHigh = false;
     if (me.state !== 'idle') return;
     const r = this.rng();
+    if (me.ground === 'top' && op.rocked) {
+      // Rival aturdido después del knockdown: lluvia de golpes hasta que pare el árbitro.
+      if (r < 0.9) c.press(this.rng() < 0.7 ? 'gnpPunch' : 'gnpElbow');
+      return;
+    }
+    if (me.rocked) return;
     if (me.ground === 'top') {
       const edge = me.a.sumisiones - op.a.grappling;
       const subChance = Math.max(0, me.a.sumisiones - 55) / 3000 * (edge > 5 ? 1 : 0.4) + (1 - op.stamFrac) * 0.02;

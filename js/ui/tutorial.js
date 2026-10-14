@@ -16,6 +16,8 @@ const STEPS = [
   { key: 'tut_block_high', dummy: 'jab', block: 'high', count: 2 },
   { key: 'tut_block_low', dummy: 'lowKick', block: 'low', count: 2 },
   { key: 'tut_stamina', info: true },
+  { key: 'tut_spam', info: true },
+  { key: 'tut_gnp', info: true },
   { key: 'tut_takedown', event: 'takedown' },
   { key: 'tut_sub', event: 'sub_start' },
   { key: 'tut_tap', event: 'sub_done' },
@@ -29,6 +31,7 @@ export class Tutorial {
     const fight = ctx.fight;
     this.dummy = fight.f[1];
     this.dummy.a = { ...this.dummy.a, grappling: 15, defensa: 20 }; // el sparring se deja derribar
+    this.dummy.counterSkill = 0; fight.noPounce = true; // en el tutorial no hay contras ni remates
     // En el tutorial nadie gana: las finalizaciones solo cuentan como paso cumplido.
     fight.finish = (W, L, method) => {
       fight.emit(method === 'sub' ? 'sub_done' : 'tut_reset');

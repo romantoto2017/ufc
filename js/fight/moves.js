@@ -2,14 +2,14 @@
 // kd = multiplicador de poder de derribo/KO (solo golpes a la cabeza).
 
 export const BASE_MOVES = {
-  jab:      { key: 'jab',      type: 'punch', zone: 'head', dmg: 3,   stam: 1.5, startup: 0.09, active: 0.06, recovery: 0.14, range: 35, kd: 0.25, pose: 'jab' },
-  cross:    { key: 'cross',    type: 'punch', zone: 'head', dmg: 6.5, stam: 2.7, startup: 0.15, active: 0.07, recovery: 0.22, range: 37, kd: 0.65, pose: 'cross' },
-  hook:     { key: 'hook',     type: 'punch', zone: 'head', dmg: 8,   stam: 3.3, startup: 0.19, active: 0.07, recovery: 0.28, range: 30, kd: 1.0,  pose: 'hook' },
-  elbow:    { key: 'elbow',    type: 'punch', zone: 'head', dmg: 9,   stam: 3.5, startup: 0.17, active: 0.06, recovery: 0.26, range: 26, kd: 1.1,  pose: 'elbow' },
+  jab:      { key: 'jab',      type: 'punch', zone: 'head', dmg: 3,   stam: 1.5, startup: 0.09, active: 0.06, recovery: 0.14, range: 35, kd: 0.3,  pose: 'jab' },
+  cross:    { key: 'cross',    type: 'punch', zone: 'head', dmg: 6.5, stam: 2.7, startup: 0.15, active: 0.07, recovery: 0.22, range: 37, kd: 0.95, pose: 'cross' },
+  hook:     { key: 'hook',     type: 'punch', zone: 'head', dmg: 8,   stam: 3.3, startup: 0.19, active: 0.07, recovery: 0.28, range: 30, kd: 1.45, pose: 'hook' },
+  elbow:    { key: 'elbow',    type: 'punch', zone: 'head', dmg: 9,   stam: 3.5, startup: 0.17, active: 0.06, recovery: 0.26, range: 26, kd: 1.4,  pose: 'elbow' },
   lowKick:  { key: 'lowKick',  type: 'kick',  zone: 'legs', dmg: 6,   stam: 3,   startup: 0.20, active: 0.08, recovery: 0.28, range: 39, kd: 0,    pose: 'lowKick' },
   bodyKick: { key: 'bodyKick', type: 'kick',  zone: 'body', dmg: 8.5, stam: 4.5, startup: 0.26, active: 0.08, recovery: 0.34, range: 41, kd: 0,    pose: 'bodyKick' },
-  highKick: { key: 'highKick', type: 'kick',  zone: 'head', dmg: 15,  stam: 7,   startup: 0.36, active: 0.09, recovery: 0.46, range: 43, kd: 1.6,  pose: 'highKick' },
-  spinKick: { key: 'spinKick', type: 'kick',  zone: 'head', dmg: 17,  stam: 8.5, startup: 0.42, active: 0.09, recovery: 0.5,  range: 43, kd: 1.75, pose: 'highKick', spin: true },
+  highKick: { key: 'highKick', type: 'kick',  zone: 'head', dmg: 15,  stam: 7,   startup: 0.36, active: 0.09, recovery: 0.46, range: 43, kd: 1.25, pose: 'highKick' },
+  spinKick: { key: 'spinKick', type: 'kick',  zone: 'head', dmg: 17,  stam: 8.5, startup: 0.42, active: 0.09, recovery: 0.5,  range: 43, kd: 1.4,  pose: 'highKick', spin: true },
   takedown: { key: 'takedown', type: 'grapple', zone: null, dmg: 0,   stam: 7,   startup: 0.28, active: 0.12, recovery: 0.6,  range: 33, kd: 0,    pose: 'shoot', tdBonus: 0 },
 };
 

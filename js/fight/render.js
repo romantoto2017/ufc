@@ -1,5 +1,5 @@
 // Dibujo pixel art de la pelea: arena, público, jaula y peleadores por poses articuladas.
-import { ARENA_W } from './engine.js';
+import { ARENA_W, POUNCE_T } from './engine.js';
 import { drawHeadSmall, skinOf } from '../gfx/face.js';
 import { drawPerson } from '../gfx/scenes.js';
 
@@ -117,6 +117,9 @@ export class Renderer {
       this.shake = 3; this.excite = Math.min(1, this.excite + 0.4);
       const D = f[e.on]; this.dust(D.x, FLOOR_Y);
     } else if (e.type === 'tapout') { this.excite = 1; this.flash = 0.6; }
+    else if (e.type === 'pounce') this.excite = 1;
+    else if (e.type === 'gnp_start') { this.shake = 4; this.dust(f[e.on].x, FLOOR_Y); }
+    if (e.type === 'hit' && e.bigCounter) { this.flash = Math.max(this.flash, 0.35); this.shake = Math.max(this.shake, 6); }
   }
 
   spark(x, y, n, color) {
@@ -153,7 +156,7 @@ export class Renderer {
     // Sombras
     for (const f of fight.f) { ctx.fillStyle = 'rgba(0,0,0,0.28)'; ctx.fillRect(Math.round(f.x - 13), FLOOR_Y - 1, 26, 3); }
     // El que ataca se dibuja delante
-    const order = [...fight.f].sort((a, b) => (a.state === 'attack' || a.ground === 'top' ? 1 : 0) - (b.state === 'attack' || b.ground === 'top' ? 1 : 0));
+    const order = [...fight.f].sort((a, b) => (a.state === 'attack' || a.state === 'pounce' || a.ground === 'top' ? 1 : 0) - (b.state === 'attack' || b.state === 'pounce' || b.ground === 'top' ? 1 : 0));
     for (const f of order) this.drawFighter(f);
     if (this.ceremony) this.drawCeremony(dt);
     this.drawEffects(dt);
@@ -262,7 +265,7 @@ export class Renderer {
       case 'block': return { p: f.ground ? POSES.gBottomHit : f.blockZone === 'high' ? POSES.blockHigh : POSES.blockLow };
       case 'attack': {
         const m = f.move, sm = f.speedMult;
-        const st = m.startup / sm, ac = m.active, rc = m.recovery / sm;
+        const st = m.startup / sm, ac = m.active, rc = m.recovery / sm * (f.recMult || 1);
         const base = f.ground === 'top' ? POSES.gTop : f.ground === 'bottom' ? POSES.gBottom : POSES.guard;
         const ext = f.ground === 'bottom' ? POSES.gBottomHit : (POSES[m.pose] || POSES.jab);
         let p;
@@ -274,6 +277,12 @@ export class Renderer {
       }
       case 'hitstun': return { p: f.ground === 'bottom' ? POSES.gBottomHit : f.ground === 'top' ? POSES.gTop : f.hurtZone === 'head' ? POSES.hitHead : f.hurtZone === 'legs' ? POSES.hitLegs : POSES.hitBody };
       case 'sprawled': return { p: POSES.sprawled };
+      case 'pounce': {
+        // Se lanza en palomita sobre el caído y cae montado.
+        const k = Math.min(1, t / POUNCE_T);
+        const p = k < 0.5 ? mix(POSES.guard, POSES.shoot, easeOut(k * 2)) : mix(POSES.shoot, POSES.gnp, (k - 0.5) * 2);
+        return { p, lift: Math.round(Math.sin(Math.PI * k) * 9) };
+      }
       case 'down': return { p: POSES.down };
       case 'getup': return { p: t < 0.22 ? mix(POSES.down, POSES.getupMid, t / 0.22) : mix(POSES.getupMid, POSES.guard, Math.min(1, (t - 0.22) / 0.23)) };
       case 'ko': return { p: POSES.ko };
@@ -346,6 +355,15 @@ export class Renderer {
     const [hdx, hdy] = pt('hd');
     const lying = ['down', 'ko', 'tapped'].includes(f.state) || (f.ground === 'bottom');
     drawHeadSmall(ctx, f.data.cara, hdx, hdy, lying ? dir : dir, f.dmg.head / 100);
+    // Aturdido: estrellitas girando sobre la cabeza.
+    if (f.state === 'down' || f.rockedT > 0) {
+      for (let i = 0; i < 3; i++) {
+        const a = this.time * 6 + i * 2.1;
+        ctx.fillStyle = i === 1 ? '#ffffff' : '#ffe14a';
+        const sx = hdx + Math.round(Math.cos(a) * 7), sy = hdy - 9 + Math.round(Math.sin(a) * 2);
+        ctx.fillRect(sx, sy - 1, 1, 3); ctx.fillRect(sx - 1, sy, 3, 1);
+      }
+    }
     // Brazo delantero
     seg('sf', 'ef', 3, skin); seg('ef', 'hf', 3, skin); box('hf', 5, 5, corner.glove);
     if (f.data.cara?.tatuajes) { const [x0, y0] = pt('sf'), [x1, y1] = pt('ef'); ctx.fillStyle = '#2c3a4a'; ctx.fillRect(Math.round((x0 + x1) / 2), Math.round((y0 + y1) / 2), 2, 2); ctx.fillRect(x1, y1, 1, 1); }

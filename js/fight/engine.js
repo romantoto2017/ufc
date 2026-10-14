@@ -6,6 +6,10 @@ const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 export const ARENA_W = 480;          // ancho del mundo en píxeles
 const EDGE = 40;                      // límite de la jaula
 const MIN_SEP = 22;                   // distancia mínima de pie
+// Anti-spam: cada golpe suma "carga"; por encima de SPAM_FREE el atacante queda expuesto.
+const SPAM_FREE = 3, SPAM_DECAY = 1.4;
+const SPAM_W = { jab: 0.8, spinKick: 1.6 };
+export const POUNCE_T = 0.5;                 // duración del salto encima del rival derribado
 
 function emptyStats() {
   return {
@@ -30,6 +34,7 @@ export class FighterState {
     this.style = data.estilo;
     this.moves = movesForStyle(data.estilo, data.tecnicas);
     this.checkKick = (data.tecnicas || []).includes('checkKick');
+    this.counterSkill = 1; // la IA lo ajusta según la dificultad
     this.ctl = new Controller();
     this.staminaMax = 70 + this.a.cardio * 0.3;
     this.stamina = this.staminaMax;
@@ -45,6 +50,7 @@ export class FighterState {
     this.state = 'idle'; this.t = 0; this.move = null; this.hitDone = false;
     this.blockZone = null; this.ground = null; this.downT = 0; this.hitsWhileDown = 0;
     this.stunT = 0; this.walkPhase = 0; this.moving = 0; this.hurtZone = null; this.counter = false;
+    this.spam = 0; this.whiffed = false; this.recMult = 1; this.slipT = 0; this.rockedT = 0;
   }
 
   get stamFrac() { return this.stamina / this.staminaMax; }
@@ -54,6 +60,10 @@ export class FighterState {
   get canAct() { return this.state === 'idle' || this.state === 'walk' || this.state === 'block'; }
   get isAttacking() { return this.state === 'attack'; }
   get inStartup() { return this.state === 'attack' && this.t < this.move.startup / this.speedMult; }
+  get spamExcess() { return Math.max(0, this.spam - SPAM_FREE); }
+  get rocked() { return this.rockedT > 0 && this.ground === 'bottom'; }
+  // Calidad de boxeo para contragolpear: pegada, velocidad de manos y lectura defensiva.
+  get boxing() { return 0.4 + (this.a.golpeo * 0.5 + this.a.velocidad * 0.3 + this.a.defensa * 0.2) / 100 * 0.8; }
 
   newRoundStats() { this.cur = emptyStats(); this.roundStats.push(this.cur); }
   stat(k, v = 1) { this.stats[k] += v; this.cur[k] += v; }
@@ -129,6 +139,9 @@ export class Fight {
     const o = this.opp(f);
     f.t += dt;
     if (f.subCooldown > 0) f.subCooldown -= dt;
+    f.spam = Math.max(0, f.spam - SPAM_DECAY * dt);
+    if (f.slipT > 0) f.slipT -= dt;
+    if (f.rockedT > 0) { f.rockedT -= dt; if (f.rockedT <= 0) f.hitsWhileDown = 0; }
     // Recuperación de aguante: rápida al estar quieto o en guardia; el daño al cuerpo la reduce.
     const regenBase = 18 * (0.6 + f.a.cardio / 250) * (1 - f.dmg.body / 100 * 0.6);
 
@@ -163,7 +176,8 @@ export class Fight {
       }
       case 'attack': {
         const m = f.move, sm = f.speedMult;
-        const st = m.startup / sm, ac = m.active, rc = m.recovery / sm * (f.stamina < 1 ? 1.4 : 1);
+        // Golpe al aire o tirado de más: la recuperación se alarga y queda expuesto al contragolpe.
+        const st = m.startup / sm, ac = m.active, rc = m.recovery / sm * (f.stamina < 1 ? 1.4 : 1) * f.recMult;
         if (!f.hitDone && f.t >= st) { f.hitDone = true; this.resolveMove(f, o, m); }
         if (f.state !== 'attack') break; // pudo cambiar (derribo)
         // Permite encadenar combos en la segunda mitad de la recuperación.
@@ -184,12 +198,21 @@ export class Fight {
       case 'getup':
         if (f.t > 0.45) { f.state = 'idle'; f.t = 0; f.hitsWhileDown = 0; }
         break;
+      case 'pounce': {
+        // Se tira encima del rival caído; al llegar queda montado para el ground and pound.
+        const k = Math.min(1, f.t / POUNCE_T);
+        f.x = f.pounceFrom + (f.pounceTo - f.pounceFrom) * k;
+        if (f.t >= POUNCE_T) this.landPounce(f, o);
+        break;
+      }
       default: break;
     }
   }
 
   doAction(f, action) {
     const o = this.opp(f);
+    if (f.rocked) return; // aturdido abajo: solo puede cubrirse
+    if (action === 'slip') { if (!f.ground) { f.slipT = 0.35; f.spend(1); } return; }
     if (f.ground) {
       if (action === 'sub') return this.startSub(f, o);
       if (action === 'escape' && f.ground === 'bottom') {
@@ -209,17 +232,23 @@ export class Fight {
   startAttack(f, m) {
     f.state = 'attack'; f.t = 0; f.move = m; f.hitDone = false; f.blockZone = null; f.moving = 0;
     f.attackId = (f.attackId || 0) + 1;
-    f.spend(m.stam * (f.stamina < m.stam ? 0.5 : 1));
+    f.whiffed = false;
+    // Tirar golpes sin pausa: más carga de spam, más cansancio y peor recuperación.
+    const standingStrike = m.type !== 'grapple' && !f.ground;
+    if (standingStrike) f.spam += SPAM_W[m.key] || (m.type === 'kick' ? 1.2 : 1);
+    const ex = standingStrike ? f.spamExcess : 0;
+    f.recMult = 1 + Math.min(0.8, ex * 0.18);
+    f.spend(m.stam * (f.stamina < m.stam ? 0.5 : 1) * (1 + ex * 0.15));
     if (m.type !== 'grapple') f.stat('thrown');
     this.emit('swing', { who: f.idx, move: m.key, moveType: m.type });
   }
 
   // ---------- resolución de golpes ----------
-  resolveMove(A, D, m) {
+  resolveMove(A, D, m, opts = {}) {
     if (m.type === 'grapple') return this.resolveTakedown(A, D, m);
     const dist = Math.abs(A.x - D.x);
     const onGround = !!A.ground;
-    if (!onGround && dist > m.range) { this.emit('miss', { who: A.idx, move: m.key }); return; }
+    if (!onGround && dist > m.range) { this.whiff(A); this.emit('miss', { who: A.idx, move: m.key }); return; }
     if (D.state === 'ko') return;
     // A un rival caído solo se le puede pegar con los puños (sin patadas a la cabeza).
     if (D.state === 'down' && m.type === 'kick') { this.emit('miss', { who: A.idx, move: m.key }); return; }
@@ -227,19 +256,34 @@ export class Fight {
     // Esquiva: depende de la defensa del rival y de la precisión del atacante.
     const acc = (m.type === 'kick' ? A.a.patadas : A.a.golpeo) / 100;
     const defenderFree = D.state === 'idle' || D.state === 'walk' || D.state === 'block';
-    if (!onGround && defenderFree && D.state !== 'down') {
-      const pEvade = clamp(D.a.defensa / 100 * 0.4 * D.stamFactor - acc * 0.12, 0.03, 0.35);
-      if (this.rng() < pEvade) { this.emit('miss', { who: A.idx, move: m.key, slip: true }); return; }
+    const spamEx = A.spamExcess;
+    if (!onGround && defenderFree && D.state !== 'down' && !opts.counter) {
+      // El que tira golpes sin parar es previsible: más fácil de esquivar y de contragolpear.
+      const reading = D.slipT > 0 && m.zone === 'head';
+      const pEvade = Math.min(0.8, clamp(D.a.defensa / 100 * 0.4 * D.stamFactor - acc * 0.12, 0.03, 0.35) + Math.max(0, A.spam - 1.5) * 0.03 + spamEx * 0.03 + (reading ? 0.4 : 0));
+      if (this.rng() < pEvade) {
+        this.whiff(A);
+        this.emit('miss', { who: A.idx, move: m.key, slip: true });
+        const pCounter = (Math.min(0.5, spamEx * 0.12) + (reading ? 0.45 : 0)) * D.boxing * D.counterSkill;
+        if (this.rng() < pCounter) this.counterStrike(D, A);
+        return;
+      }
     }
 
     const blocked = D.state === 'block' && (m.zone === 'head' ? D.blockZone === 'high' : D.blockZone === 'low');
-    let dmg = m.dmg * (0.55 + acc * 0.7) * A.stamFactor * (0.85 + this.rng() * 0.3);
-    const counter = D.inStartup;
-    if (counter) dmg *= 1.25;
+    // Golpes tirados de a montón salen sin fuerza ni precisión.
+    let dmg = m.dmg * (0.55 + acc * 0.7) * A.stamFactor * (0.85 + this.rng() * 0.3) / (1 + spamEx * 0.1);
+    // Contragolpe: pegarle a alguien que está lanzando o que tiró al aire.
+    const counter = !!opts.counter || D.inStartup || (D.state === 'attack' && D.whiffed);
+    // Contra a alguien que venía tirando de a montón: el que más duele.
+    const bigCounter = counter && D.spamExcess > 0;
+    if (bigCounter) dmg *= 1.35 + Math.min(0.45, D.spamExcess * 0.1);
+    else if (counter) dmg *= opts.counter || D.inStartup ? 1.2 : 1.05;
     if (D.state === 'down') dmg *= 0.8;
+    if (D.rocked) dmg *= 1.25;
 
     if (blocked) {
-      dmg *= 0.25 - D.a.defensa / 1000;
+      dmg *= D.rocked ? 0.5 : 0.25 - D.a.defensa / 1000; // aturdido, se cubre mal
       D.spend(m.dmg * 0.12 * (1.2 - D.a.defensa / 200)); // bloquear casi no cansa
       if (D.stamina <= 0) dmg *= 2; // guardia rota por cansancio
       // Chequeo de patada baja: el atacante se lastima la pierna
@@ -248,15 +292,18 @@ export class Fight {
       A.stat('blocked'); A.stat('blockedDmg', dmg);
       D.state = 'block'; D.t = 0;
       this.emit('block', { who: D.idx, by: A.idx, zone: m.zone, move: m.key });
+      // Bloquear una ráfaga deja abierto al que la tira.
+      if (spamEx > 0 && !onGround) { A.recMult += 0.15; if (this.rng() < Math.min(0.4, spamEx * 0.08) * D.boxing * D.counterSkill) this.counterStrike(D, A); }
       return;
     }
 
     D.dmg[m.zone] = Math.min(100, D.dmg[m.zone] + dmg * this.zoneScale);
     A.stat('landed'); A.stat(m.zone); A.stat('dmgDealt', dmg);
-    if (D.state === 'down') D.hitsWhileDown++;
+    if (D.state === 'down' || D.rocked) D.hitsWhileDown++;
     if (m.zone === 'body') D.spend(dmg * 0.8);
     if (A.ground) this.groundIdleT = 0;
-    this.emit('hit', { who: D.idx, by: A.idx, zone: m.zone, move: m.key, dmg, counter, x: D.x });
+    this.emit('hit', { who: D.idx, by: A.idx, zone: m.zone, move: m.key, dmg, counter, bigCounter, x: D.x });
+    D.spam = Math.max(0, D.spam - 1); // al recibir se corta la ráfaga
 
     // Reacción
     if (D.state !== 'down' && D.state !== 'ko') {
@@ -269,7 +316,9 @@ export class Fight {
     if (D.dmg.head >= 100) return this.finish(A, D, 'tko');
     // El árbitro para la pelea si el caído recibe golpes sin defenderse (antes cuanto más dañado esté).
     if (D.state === 'down' && D.hitsWhileDown >= Math.max(2, 3 + Math.floor((60 - D.dmg.head) / 20))) return this.finish(A, D, 'tko');
-    if (m.zone === 'head' && m.kd > 0 && !A.ground) this.checkKnockdown(A, D, m, dmg);
+    // Ground and pound tras un knockdown: si no se defiende con inteligencia, el árbitro para la pelea.
+    if (D.rocked && D.hitsWhileDown >= Math.max(3, 5 + Math.floor((60 - D.dmg.head) / 15))) return this.finish(A, D, 'tko');
+    if (m.zone === 'head' && m.kd > 0 && !A.ground) this.checkKnockdown(A, D, m, dmg, bigCounter);
     else if (m.zone === 'body' && D.dmg.body > 80 && dmg >= 6 && this.rng() < (D.dmg.body - 80) / 60) this.knockdown(A, D, 'body');
     else if (m.zone === 'legs' && D.dmg.legs >= 95 && dmg >= 5) {
       if (D.dmg.legs >= 100 && D.legsDowned) return this.finish(A, D, 'tko');
@@ -277,12 +326,14 @@ export class Fight {
     }
   }
 
-  checkKnockdown(A, D, m, dmg) {
+  checkKnockdown(A, D, m, dmg, counter = false) {
     const chin = 6 + D.a.menton / 100 * 14;
-    const koPower = dmg * m.kd * (0.35 + D.dmg.head / 100 * 1.3);
-    const p = clamp((koPower - chin * 0.7) / (chin * 4), 0, 0.5);
+    const power = 0.75 + (m.type === 'kick' ? A.a.patadas : A.a.golpeo) / 100 * 0.4; // pegada
+    let koPower = dmg * m.kd * power * (0.35 + D.dmg.head / 100 * 1.3);
+    if (counter) koPower *= 1.5; // el golpe que no ves venir
+    const p = clamp((koPower - chin * 0.95) / (chin * 4.5), 0, 0.5);
     if (this.rng() >= p) return;
-    const pKO = Math.pow(D.dmg.head / 100, 2) * 0.5 + (koPower > chin * 1.7 ? 0.35 : 0);
+    const pKO = Math.pow(D.dmg.head / 100, 2) * 0.5 + (koPower > chin * 1.6 ? 0.35 : 0);
     if (this.rng() < pKO) return this.finish(A, D, 'ko');
     this.knockdown(A, D, 'head');
   }
@@ -295,7 +346,41 @@ export class Fight {
     A.stat('kd');
     this.hitstop = 0.15;
     this.emit('knockdown', { who: D.idx, by: A.idx, cause });
+    // El que derriba se tira encima para rematar con ground and pound.
+    if (!this.noPounce && A.state !== 'ko' && A.state !== 'down') {
+      A.state = 'pounce'; A.t = 0; A.move = null; A.ctl.clear();
+      A.pounceFrom = A.x;
+      A.pounceTo = clamp(D.x + (Math.sign(A.x - D.x) || -D.dir) * 12, EDGE, ARENA_W - EDGE);
+      this.emit('pounce', { who: A.idx, on: D.idx });
+    }
   }
+
+  landPounce(A, D) {
+    A.state = 'idle'; A.t = 0;
+    if (D.state !== 'down') return; // se levantó antes
+    A.ground = 'top'; D.ground = 'bottom';
+    D.state = 'idle'; D.t = 0; D.move = null; D.ctl.clear();
+    D.dir = Math.sign(A.x - D.x) || 1; A.dir = -D.dir;
+    D.rockedT = 1.6 + D.dmg.head / 100 * 2 + (D.downT > 2.5 ? 0.6 : 0);
+    D.hitsWhileDown = 0;
+    this.groundIdleT = 0; this.groundT = 0;
+    this.emit('gnp_start', { who: A.idx, on: D.idx });
+  }
+
+  // Contragolpe instantáneo (cruzado o gancho) contra quien tira golpes de más.
+  counterStrike(C, T) {
+    if (this.result || C.ground || !C.canAct) return;
+    const dist = Math.abs(C.x - T.x);
+    const m = dist <= C.moves.hook.range ? C.moves.hook : dist <= C.moves.cross.range ? C.moves.cross : null;
+    if (!m) return;
+    C.state = 'attack'; C.move = m; C.t = m.startup / C.speedMult; C.hitDone = true; C.blockZone = null;
+    C.attackId = (C.attackId || 0) + 1; C.whiffed = false; C.recMult = 1;
+    C.spend(m.stam * 0.6); C.stat('thrown');
+    this.emit('swing', { who: C.idx, move: m.key, moveType: m.type, counter: true });
+    this.resolveMove(C, T, m, { counter: true });
+  }
+
+  whiff(A) { A.whiffed = true; A.recMult += 0.35; }
 
   resolveTakedown(A, D, m) {
     A.stat('tdAtt');
@@ -332,7 +417,7 @@ export class Fight {
 
   standUp(reason) {
     const [A, B] = this.f;
-    for (const f of this.f) { f.ground = null; f.state = 'idle'; f.t = 0; f.move = null; }
+    for (const f of this.f) { f.ground = null; f.state = 'idle'; f.t = 0; f.move = null; f.rockedT = 0; }
     const mid = (A.x + B.x) / 2;
     const left = A.x <= B.x ? A : B, right = left === A ? B : A;
     left.x = clamp(mid - 16, EDGE, ARENA_W - EDGE); right.x = clamp(mid + 16, EDGE, ARENA_W - EDGE);

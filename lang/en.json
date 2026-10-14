@@ -366,5 +366,13 @@
  "news_renewed": "{name} re-signs with {org}.",
  "news_retired": "{name} retires ({record}).",
  "news_champ_retired": "Champion {name} retires! Title vacant.",
- "news_player_retired": "{name} retires with a {record} record."
+ "news_player_retired": "{name} retires with a {record} record.",
+ "pounce_go": "FINISH HIM!",
+ "pounce_def": "COVER UP!",
+ "counter_big": "DEVASTATING COUNTER!",
+ "countered": "COUNTERED!",
+ "spam_warn": "You're throwing too much: you'll get countered",
+ "rocked_hint": "Rocked: keep your guard up",
+ "tut_spam": "Don't throw nonstop: if you spam, your opponent reads you, slips and counters (and a big puncher can put you to sleep). Throw 2 or 3 strikes, cover up and go again.",
+ "tut_gnp": "When you drop him, you jump on top automatically. Finish with PUNCH and ELBOW on the ground: if he can't defend, the referee stops it by TKO. If you get dropped, keep your guard high."
 }

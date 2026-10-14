@@ -118,8 +118,10 @@ function updateHud(ctx) {
     document.getElementById('sub-label').textContent = sub.att === ctx.player ? t('sub_attempt') : t('sub_defend');
   } else { meter.hidden = true; tap.hidden = true; }
   // Modo de botones según posición
-  const mode = ctx.player.ground ? 'ground-' + ctx.player.ground : 'stand';
+  const mode = ctx.player.ground ? 'ground-' + ctx.player.ground + (ctx.player.rocked ? '-rocked' : '') : 'stand';
   if (mode !== ctx.groundMode) setPadMode(ctx, mode);
+  // Aviso (una vez por round) si el jugador está tirando golpes sin pausa.
+  if (ctx.player.spamExcess > 0.5 && ctx.spamWarned !== fight.round && !ctx.tutorial) { ctx.spamWarned = fight.round; banner(t('spam_warn'), 'small'); }
 }
 
 function banner(text, kind = '') {
@@ -153,6 +155,7 @@ function setPadMode(ctx, mode) {
     }
     const label = moves[a] ? t(moves[a].nameKey) : t('act_' + a);
     const b = el('button', { class: 'cbtn ' + (BTN_CLASS[a] || ''), 'data-action': a, text: label, 'aria-label': label });
+    if (mode.endsWith('-rocked')) b.disabled = true; // aturdido: solo cubrirse
     pad.append(b);
   }
   // Los bloqueos bajos y el movimiento no se usan en el suelo
@@ -262,12 +265,20 @@ function handleEvent(ctx, e) {
     case 'hit': {
       audio.play(e.dmg > 9 ? 'heavy' : e.move.toLowerCase().includes('kick') ? 'kick' : 'punch');
       if (e.who === player.idx) vibrate(e.dmg > 9 ? 40 : 15, vib);
-      if (e.counter && e.by === player.idx) banner(t('counter'), 'small');
+      if (e.bigCounter) {
+        banner(t(e.by === player.idx ? 'counter_big' : 'countered'), 'big');
+        if (e.who === player.idx) vibrate([50, 30, 50], vib);
+      } else if (e.counter && e.by === player.idx) banner(t('counter'), 'small');
       audio.setCrowd(Math.min(1, renderer.excite));
       break;
     }
     case 'block': audio.play('block'); break;
     case 'knockdown': audio.play('knockdown'); banner(t('knockdown'), 'big'); vibrate([60, 40, 60], vib); break;
+    case 'pounce':
+      audio.play('takedown'); audio.roar(0.9);
+      banner(t(e.who === player.idx ? 'pounce_go' : 'pounce_def'), 'big');
+      break;
+    case 'gnp_start': if (e.on === player.idx) { banner(t('rocked_hint'), 'small'); vibrate(40, vib); } break;
     case 'takedown': audio.play('takedown'); banner(t('takedown_banner'), 'small'); vibrate(30, vib); break;
     case 'standup': if (e.reason === 'ref_standup') banner(t('stood_up'), 'small'); break;
     case 'sub_escape': banner(t('sub_escaped'), 'small'); break;
