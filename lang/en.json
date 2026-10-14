@@ -372,5 +372,13 @@
  "spam_warn": "You're throwing too much: you'll get countered",
  "rocked_hint": "Rocked: keep your guard up",
  "tut_spam": "Don't throw nonstop: if you spam, your opponent reads you, slips and counters (and a big puncher can put you to sleep). Throw 2 or 3 strikes, cover up and go again.",
- "tut_gnp": "When you drop him, you jump on top automatically. Finish with PUNCH and ELBOW on the ground: if he can't defend, the referee stops it by TKO. If you get dropped, keep your guard high."
+ "tut_gnp": "When you drop him, you jump on top automatically. Finish with PUNCH and ELBOW on the ground: if he can't defend, the referee stops it by TKO. If you get dropped, keep your guard high.",
+ "tut_jab_c": "Tap JAB: fast and light, measures distance.",
+ "tut_cross_c": "Tap CROSS: stronger than the jab, good reach.",
+ "tut_hook_c": "Tap HOOK: hits hard, but you need to be close.",
+ "tut_elbow_c": "Tap ELBOW: very short and powerful, up close.",
+ "tut_low_c": "Tap LOW KICK: hurts the legs and slows him down.",
+ "tut_body_c": "Tap BODY KICK: goes to the body and takes his breath away.",
+ "tut_high_c": "Tap HIGH KICK: slow, but can knock out.",
+ "tut_spin_c": "Tap SPIN KICK: spinning kick!"
 }

@@ -8,5 +8,5 @@
   "tamanoBotones": "mediano",
   "opacidadBotones": 75,
   "vibracion": true,
-  "esquemaControles": "simple"
+  "esquemaControles": "clasico"
 }

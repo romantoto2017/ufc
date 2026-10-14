@@ -11,7 +11,7 @@ npm test             # tests: simulación, motor IA vs IA, roster y carrera comp
 
 Para el celular: GitHub Pages (Settings → Pages → rama `claude/bold-wozniak-8a0tk5`, carpeta raíz). Después lo abrís en el teléfono y lo instalás ("Agregar a pantalla principal").
 
-**Controles (2 botones, por defecto):** PUÑO (1 toque jab, 2 recto, 3 gancho, 4 codazo, siempre tocando seguido) y PATADA (baja, media, alta y giratoria). Se puede cambiar al esquema clásico en Configuración. Hay un **Tutorial** en el menú.
+**Controles (clásico, por defecto):** un botón por golpe (jab, recto, gancho, codazo, patada baja, media, alta, giratoria y derribo). En Configuración se puede elegir el esquema de 2 botones: PUÑO (1 toque jab, 2 recto, 3 gancho, 4 codazo, siempre tocando seguido) y PATADA (baja, media, alta y giratoria). Hay un **Tutorial** en el menú, que se adapta al esquema elegido.
 
 **Pelea:** spamear golpes no sirve. Cada golpe suma "carga" y, si tirás sin pausa, el rival te esquiva y te contragolpea con el doble de daño (con buena pegada te puede noquear). Además pegás más flojo, te cansás más y tardás más en recuperarte. Los puños noquean más que antes y la pegada (golpeo) pesa en el knockdown. Cuando tirás a alguien, te le tirás encima solo para rematarlo con ground and pound: si no se cubre, el árbitro para la pelea por TKO.
 

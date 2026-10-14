@@ -18,7 +18,9 @@ export async function loadAll() {
   state.defaults = defaults;
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { saved = {}; }
-  state.settings = { ...defaults, ...saved };
+  // v2: el esquema por defecto pasó a ser el clásico (todos los botones); se aplica una vez a lo guardado.
+  if ((saved.settingsV || 1) < 2) { delete saved.esquemaControles; saved.settingsV = 2; }
+  state.settings = { ...defaults, ...saved, settingsV: 2 };
   state.divisions = fdb.divisiones;
   // Las estrellas siempre se recalculan desde los atributos.
   state.fighters = fdb.peleadores.filter(f => f.atributos).map(f => ({ ...f, estrellas: stars(f.atributos) }));

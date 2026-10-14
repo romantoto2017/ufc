@@ -372,5 +372,13 @@
  "spam_warn": "Estás tirando de más: te van a contragolpear",
  "rocked_hint": "Aturdido: mantené la guardia alta",
  "tut_spam": "No tires golpes sin parar: si spameás, el rival te lee, te esquiva y te contragolpea (y si tiene pegada, te duerme). Tirá 2 o 3 golpes, cubrite y volvé a entrar.",
- "tut_gnp": "Cuando lo tirás, te le tirás encima solo. Ahí rematalo con PUÑO y CODAZO en el suelo: si no se defiende, el árbitro para la pelea por TKO. Si te tiran a vos, mantené la guardia alta."
+ "tut_gnp": "Cuando lo tirás, te le tirás encima solo. Ahí rematalo con GOLPE y CODAZO en el suelo: si no se defiende, el árbitro para la pelea por TKO. Si te tiran a vos, mantené la guardia alta.",
+ "tut_jab_c": "Tocá JAB: rápido y débil, sirve para medir la distancia.",
+ "tut_cross_c": "Tocá RECTO: más fuerte que el jab y con buen alcance.",
+ "tut_hook_c": "Tocá GANCHO: pega fuerte, pero hay que estar cerca.",
+ "tut_elbow_c": "Tocá CODAZO: muy corto y potente, pegado al rival.",
+ "tut_low_c": "Tocá PATADA BAJA: daña las piernas y lo vuelve lento.",
+ "tut_body_c": "Tocá PATADA MEDIA: va al cuerpo y le quita aire.",
+ "tut_high_c": "Tocá PATADA ALTA: lenta, pero puede noquear.",
+ "tut_spin_c": "Tocá PATADA GIRO: ¡patada giratoria!"
 }

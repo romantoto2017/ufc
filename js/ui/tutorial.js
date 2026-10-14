@@ -2,6 +2,7 @@
 import { t } from '../i18n.js';
 import { audio } from '../audio.js';
 import { el } from './common.js';
+import { state } from '../store.js';
 
 const STEPS = [
   { key: 'tut_move', check: s => s.moved > 14 },
@@ -50,7 +51,10 @@ export class Tutorial {
     this.box.innerHTML = '';
     const exitBtn = el('button', { class: 'btn btn-small', text: t('tut_exit') });
     exitBtn.addEventListener('click', () => this.exit());
-    const kids = [el('b', { text: t('tut_title', { n: this.i + 1, total: STEPS.length }) }), el('div', { text: t(s.key) })];
+    // En el esquema clásico cada golpe tiene su botón: los pasos de golpes usan otro texto.
+    const classic = (state.settings.esquemaControles || 'clasico') !== 'simple';
+    const key = classic && s.move ? s.key + '_c' : s.key;
+    const kids = [el('b', { text: t('tut_title', { n: this.i + 1, total: STEPS.length }) }), el('div', { text: t(key) })];
     if (s.count) kids.push(el('div', { class: 'note', text: `${this.count}/${s.count}` }));
     const row = el('div', { class: 'row-actions' });
     if (s.info) {
