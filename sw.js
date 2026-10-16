@@ -1,10 +1,10 @@
 // Service worker: red primero para todo el juego (siempre la última versión);
 // la caché queda como respaldo para jugar sin conexión.
-const VERSION = 'pixelmma-v10';
+const VERSION = 'pixelmma-v11';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/main.js', 'js/store.js', 'js/i18n.js', 'js/audio.js', 'js/ratings.js', 'js/sim.js',
-  'js/fight/engine.js', 'js/fight/ai.js', 'js/fight/moves.js', 'js/fight/render.js',
+  'js/fight/engine.js', 'js/fight/ai.js', 'js/fight/moves.js', 'js/fight/render.js', 'js/fight/techniques.js',
   'js/gfx/face.js', 'js/gfx/flag.js', 'js/gfx/logo.js',
   'js/ui/common.js', 'js/ui/screens.js', 'js/ui/fightScreen.js', 'js/ui/careerScreens.js', 'js/ui/tutorial.js',
   'js/career/career.js', 'js/career/generator.js', 'js/gfx/scenes.js',

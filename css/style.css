@@ -397,3 +397,28 @@ button, .btn, .cbtn, a, input, select { touch-action: manipulation; }
   .fight-card .note { font-size: 15px; line-height: 1.05; }
   .hub-card .btn { min-height: 40px; padding: 8px 10px; }
 }
+
+/* Entrenamiento: siempre filas de 4 que se achican con la pantalla (antes se salían de la columna en el celular) */
+.train-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+.train-grid .btn { min-width: 0; overflow: hidden; padding: 6px 1px; font-size: 6px; min-height: 46px; gap: 4px; }
+.train-grid .btn span { white-space: nowrap; }
+.train-grid .btn small { font-size: 16px; }
+@media (max-height: 430px) { .hub-layout { grid-template-columns: 0.95fr 0.95fr 1.35fr; } }
+
+/* Habilidades especiales por nivel */
+.tech-tier { font-family: var(--font-pixel); font-size: 8px; margin-top: 6px; padding: 4px 0 2px; border-bottom: 2px solid var(--line, #2a3350); }
+.tech-tier.tier-1 { color: #9fb3c8; }
+.tech-tier.tier-2 { color: #6fc3ff; }
+.tech-tier.tier-3 { color: var(--gold); }
+.tech-row { grid-template-columns: 1fr; gap: 2px; padding-bottom: 6px; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+.tech-row .btn { min-height: 36px; flex-direction: row; justify-content: space-between; gap: 6px; }
+.tech-row .note { display: block; line-height: 1.05; }
+.tech-req { font-size: 14px; color: var(--muted); line-height: 1.1; }
+.tech-req .ok { color: #57d16f; }
+.tech-req .bad { color: #ff5a5a; }
+.tech-row.has .btn { border-color: var(--gold); }
+
+/* Esquema clásico: botones de golpe un poco más chicos y el derribo en una franja baja */
+.pad-right.classic { grid-template-columns: repeat(4, calc(var(--btn) * 0.86)); gap: 6px; }
+.pad-right.classic .cbtn { width: calc(var(--btn) * 0.86); height: calc(var(--btn) * 0.86); font-size: calc(var(--btn) * 0.11); }
+.pad-right.classic [data-action="takedown"] { grid-column: 1 / -1; width: 100%; height: calc(var(--btn) * 0.6); }

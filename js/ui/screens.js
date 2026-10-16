@@ -262,7 +262,7 @@ export function showResult(a, b, result, { simulated, onRematch, onMenu, career 
     side.append(el('div', { class: 'box' }, el('h3', { text: t('sim_factors') }),
       el('table', { class: 'stats' },
         el('tr', {}, el('td', { text: a.nombre.split(' ').pop() }), el('td', {}), el('td', { text: b.nombre.split(' ').pop() })),
-        row('win_prob'), row('factor_rating', f.rating), row('factor_style', f.style), row('factor_reach', f.reach), row('factor_chin', f.chin), row('factor_age', f.age)),
+        row('win_prob'), row('factor_rating', f.rating), row('factor_style', f.style), row('factor_reach', f.reach), row('factor_chin', f.chin), row('factor_age', f.age), ...(f.tech ? [row('factor_tech', f.tech)] : [])),
       el('p', { class: 'note', text: t('sim_factors_note') })));
   }
   if (career) {

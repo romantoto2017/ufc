@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { createPlayer, newCareer, makeOffer, applyCareerFight, acceptContract, train, opponentOf, rankingTable, relink, setNames } from '../js/career/career.js';
+import { createPlayer, newCareer, makeOffer, applyCareerFight, acceptContract, train, opponentOf, rankingTable, relink, setNames, learnTechnique, TECHNIQUES } from '../js/career/career.js';
 import { generateFighter } from '../js/career/generator.js';
 import { simulateFight } from '../js/sim.js';
 import { stars } from '../js/ratings.js';
@@ -112,4 +112,30 @@ test('récords creíbles: nada de récord perdedor en UFC ni en promotoras fuert
     const bad = c.ufc.filter(f => f.id !== 'player' && !f.retirado && (() => { const [w, l] = rec(f.record); return l >= w; })());
     assert.equal(bad.length, 0, bad.map(f => `${f.nombre} ${f.record}`).join(', '));
   }
+});
+
+test('escalera: ~5 peleas para la primera promotora, 10+ para UFC; las habilidades no alcanzan para todas', () => {
+  const total = p => p.record.split('-').map(Number).reduce((a, b) => a + b, 0);
+  let learnedMax = 0;
+  for (let seed = 1; seed <= 6; seed++) {
+    const p = createPlayer({ nombre: 'T', pais: ['AR', 'US', 'BR'][seed % 3], edad: 20, division: 'ligero', altura: 176, alcance: 180, estilo: 'boxeo', postura: 'ortodoxa', cara: {} });
+    const c = newCareer({ player: p, promos, fighters, seed: seed * 31 });
+    const rng = seeded(seed);
+    let orgAt = null, ufcAt = null;
+    for (let i = 0; i < 80 && !c.retired; i++) {
+      if (c.pendingContract) acceptContract(c);
+      if (orgAt == null && c.stage !== 'nacional') orgAt = total(c.player);
+      if (ufcAt == null && c.stage === 'ufc') ufcAt = total(c.player);
+      makeOffer(c, ctx);
+      const before = c.player.puntos;
+      while (train(c, 'boxeo').ok);
+      assert.equal(c.player.puntos, before, 'entrenar no da puntos de habilidad');
+      for (const k of Object.keys(TECHNIQUES)) learnTechnique(c, k);
+      applyCareerFight(c, ctx, simulateFight(c.player, opponentOf(c), { rounds: c.offer.rounds, rng }));
+    }
+    if (orgAt != null) assert.ok(orgAt >= 4, `promotora con ${orgAt} peleas`);
+    if (ufcAt != null) assert.ok(ufcAt >= 10, `UFC con ${ufcAt} peleas`);
+    learnedMax = Math.max(learnedMax, c.player.tecnicas.length);
+  }
+  assert.ok(learnedMax < Object.keys(TECHNIQUES).length / 2, `aprendió ${learnedMax} de ${Object.keys(TECHNIQUES).length}`);
 });

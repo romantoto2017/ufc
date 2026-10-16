@@ -33,10 +33,11 @@ export class FighterState {
     this.a = data.atributos;
     this.style = data.estilo;
     this.moves = movesForStyle(data.estilo, data.tecnicas);
-    this.checkKick = (data.tecnicas || []).includes('checkKick');
+    this.tech = new Set(data.tecnicas || []); // habilidades especiales (modo carrera)
+    this.checkKick = this.tech.has('checkKick');
     this.counterSkill = 1; // la IA lo ajusta según la dificultad
     this.ctl = new Controller();
-    this.staminaMax = 70 + this.a.cardio * 0.3;
+    this.staminaMax = 70 + this.a.cardio * 0.3 + (this.tech.has('gasTank') ? 15 : 0);
     this.stamina = this.staminaMax;
     this.dmg = { head: 0, body: 0, legs: 0 };
     this.stats = emptyStats();
@@ -143,7 +144,7 @@ export class Fight {
     if (f.slipT > 0) f.slipT -= dt;
     if (f.rockedT > 0) { f.rockedT -= dt; if (f.rockedT <= 0) f.hitsWhileDown = 0; }
     // Recuperación de aguante: rápida al estar quieto o en guardia; el daño al cuerpo la reduce.
-    const regenBase = 18 * (0.6 + f.a.cardio / 250) * (1 - f.dmg.body / 100 * 0.6);
+    const regenBase = 18 * (0.6 + f.a.cardio / 250) * (1 - f.dmg.body / 100 * 0.6) * (f.tech.has('gasTank') ? 1.25 : 1);
 
     switch (f.state) {
       case 'idle': case 'walk': case 'block': {
@@ -260,11 +261,12 @@ export class Fight {
     if (!onGround && defenderFree && D.state !== 'down' && !opts.counter) {
       // El que tira golpes sin parar es previsible: más fácil de esquivar y de contragolpear.
       const reading = D.slipT > 0 && m.zone === 'head';
-      const pEvade = Math.min(0.8, clamp(D.a.defensa / 100 * 0.4 * D.stamFactor - acc * 0.12, 0.03, 0.35) + Math.max(0, A.spam - 1.5) * 0.03 + spamEx * 0.03 + (reading ? 0.4 : 0));
+      const slipper = D.tech.has('headMovement') && m.zone === 'head' ? 0.07 : 0; // movimiento de cabeza
+      const pEvade = Math.min(0.8, clamp(D.a.defensa / 100 * 0.4 * D.stamFactor - acc * 0.12, 0.03, 0.35) + Math.max(0, A.spam - 1.5) * 0.03 + spamEx * 0.03 + (reading ? 0.4 : 0) + slipper);
       if (this.rng() < pEvade) {
         this.whiff(A);
         this.emit('miss', { who: A.idx, move: m.key, slip: true });
-        const pCounter = (Math.min(0.5, spamEx * 0.12) + (reading ? 0.45 : 0)) * D.boxing * D.counterSkill;
+        const pCounter = (Math.min(0.5, spamEx * 0.12) + (reading ? 0.45 : 0) + (D.tech.has('counterPuncher') ? 0.1 : 0)) * D.boxing * D.counterSkill;
         if (this.rng() < pCounter) this.counterStrike(D, A);
         return;
       }
@@ -281,6 +283,9 @@ export class Fight {
     else if (counter) dmg *= opts.counter || D.inStartup ? 1.2 : 1.05;
     if (D.state === 'down') dmg *= 0.8;
     if (D.rocked) dmg *= 1.25;
+    if (opts.counter && A.tech.has('counterPuncher')) dmg *= 1.15;
+    const killer = A.tech.has('killerInstinct') && D.dmg.head > 50 && m.zone === 'head';
+    if (killer) dmg *= 1.15; // huele la sangre
 
     if (blocked) {
       dmg *= D.rocked ? 0.5 : 0.25 - D.a.defensa / 1000; // aturdido, se cubre mal
@@ -293,14 +298,16 @@ export class Fight {
       D.state = 'block'; D.t = 0;
       this.emit('block', { who: D.idx, by: A.idx, zone: m.zone, move: m.key });
       // Bloquear una ráfaga deja abierto al que la tira.
-      if (spamEx > 0 && !onGround) { A.recMult += 0.15; if (this.rng() < Math.min(0.4, spamEx * 0.08) * D.boxing * D.counterSkill) this.counterStrike(D, A); }
+      if (spamEx > 0 && !onGround) A.recMult += 0.15;
+      const pReturn = (spamEx > 0 ? Math.min(0.4, spamEx * 0.08) : 0) + (D.tech.has('counterPuncher') && m.zone === 'head' ? 0.05 : 0);
+      if (!onGround && pReturn > 0 && this.rng() < pReturn * D.boxing * D.counterSkill) this.counterStrike(D, A);
       return;
     }
 
     D.dmg[m.zone] = Math.min(100, D.dmg[m.zone] + dmg * this.zoneScale);
     A.stat('landed'); A.stat(m.zone); A.stat('dmgDealt', dmg);
     if (D.state === 'down' || D.rocked) D.hitsWhileDown++;
-    if (m.zone === 'body') D.spend(dmg * 0.8);
+    if (m.zone === 'body') D.spend(dmg * 0.8 * (A.tech.has('bodySnatcher') ? 1.7 : 1));
     if (A.ground) this.groundIdleT = 0;
     this.emit('hit', { who: D.idx, by: A.idx, zone: m.zone, move: m.key, dmg, counter, bigCounter, x: D.x });
     D.spam = Math.max(0, D.spam - 1); // al recibir se corta la ráfaga
@@ -317,8 +324,8 @@ export class Fight {
     // El árbitro para la pelea si el caído recibe golpes sin defenderse (antes cuanto más dañado esté).
     if (D.state === 'down' && D.hitsWhileDown >= Math.max(2, 3 + Math.floor((60 - D.dmg.head) / 20))) return this.finish(A, D, 'tko');
     // Ground and pound tras un knockdown: si no se defiende con inteligencia, el árbitro para la pelea.
-    if (D.rocked && D.hitsWhileDown >= Math.max(3, 5 + Math.floor((60 - D.dmg.head) / 15))) return this.finish(A, D, 'tko');
-    if (m.zone === 'head' && m.kd > 0 && !A.ground) this.checkKnockdown(A, D, m, dmg, bigCounter);
+    if (D.rocked && D.hitsWhileDown >= Math.max(3, 5 + Math.floor((60 - D.dmg.head) / 15) - (A.tech.has('groundAndPound') ? 2 : 0))) return this.finish(A, D, 'tko');
+    if (m.zone === 'head' && m.kd > 0 && !A.ground) this.checkKnockdown(A, D, m, dmg, bigCounter, killer);
     else if (m.zone === 'body' && D.dmg.body > 80 && dmg >= 6 && this.rng() < (D.dmg.body - 80) / 60) this.knockdown(A, D, 'body');
     else if (m.zone === 'legs' && D.dmg.legs >= 95 && dmg >= 5) {
       if (D.dmg.legs >= 100 && D.legsDowned) return this.finish(A, D, 'tko');
@@ -326,15 +333,20 @@ export class Fight {
     }
   }
 
-  checkKnockdown(A, D, m, dmg, counter = false) {
-    const chin = 6 + D.a.menton / 100 * 14;
+  checkKnockdown(A, D, m, dmg, counter = false, killer = false) {
+    const chin = (6 + D.a.menton / 100 * 14) * (D.tech.has('ironChin') ? 1.18 : 1);
     const power = 0.75 + (m.type === 'kick' ? A.a.patadas : A.a.golpeo) / 100 * 0.4; // pegada
     let koPower = dmg * m.kd * power * (0.35 + D.dmg.head / 100 * 1.3);
     if (counter) koPower *= 1.5; // el golpe que no ves venir
+    if (killer) koPower *= 1.2;
     const p = clamp((koPower - chin * 0.95) / (chin * 4.5), 0, 0.5);
     if (this.rng() >= p) return;
     const pKO = Math.pow(D.dmg.head / 100, 2) * 0.5 + (koPower > chin * 1.6 ? 0.35 : 0);
-    if (this.rng() < pKO) return this.finish(A, D, 'ko');
+    if (this.rng() < pKO) {
+      // Corazón de campeón: una vez por pelea, el nocaut queda en knockdown.
+      if (D.tech.has('unbreakable') && !D.survivedKO) D.survivedKO = true;
+      else return this.finish(A, D, 'ko');
+    }
     this.knockdown(A, D, 'head');
   }
 
@@ -389,6 +401,7 @@ export class Fight {
     let p = 0.3 + (A.a.grappling - (D.a.grappling * 0.6 + D.a.defensa * 0.4)) / 100 * 0.8 + (m.tdBonus || 0);
     if (D.state === 'attack') p += 0.18;
     if (D.state === 'block' && D.blockZone === 'low') p -= 0.35; // sprawl
+    if (D.tech.has('sprawl')) p -= 0.18;
     p += (1 - D.stamFrac) * 0.2 - (1 - A.stamFrac) * 0.15;
     p = clamp(p, 0.05, 0.75);
     if (this.rng() < p) {
@@ -410,7 +423,7 @@ export class Fight {
 
   resolveEscape(f) {
     const top = this.opp(f);
-    const p = clamp(0.35 + (f.a.grappling - top.a.grappling) / 100 * 0.6 + (1 - top.stamFrac) * 0.25, 0.12, 0.7);
+    const p = clamp(0.35 + (f.a.grappling - top.a.grappling) / 100 * 0.6 + (1 - top.stamFrac) * 0.25 + (f.tech.has('escapeArtist') ? 0.2 : 0), 0.12, 0.85);
     if (this.rng() < p) this.standUp('escape');
     else { f.state = 'idle'; f.t = 0; this.emit('escape_fail', { who: f.idx }); }
   }
@@ -432,7 +445,8 @@ export class Fight {
     att.ctl.clear(); def.ctl.clear();
     // Probabilidad base según atributos, aguante y daño; los toques (taps) de cada lado la inclinan.
     const pBase = clamp(0.05 + (att.a.sumisiones - (def.a.grappling * 0.7 + def.a.defensa * 0.3)) / 100 * 0.5
-      + (1 - def.stamFrac) * 0.15 + def.dmg.head / 100 * 0.15 + (att.ground === 'top' ? 0.03 : 0) + (att.style === 'bjj' ? 0.04 : 0), 0.03, 0.6);
+      + (1 - def.stamFrac) * 0.15 + def.dmg.head / 100 * 0.15 + (att.ground === 'top' ? 0.03 : 0) + (att.style === 'bjj' ? 0.04 : 0)
+      + (att.tech.has('subHunter') ? 0.15 : 0) - (def.tech.has('escapeArtist') ? 0.1 : 0), 0.03, 0.75);
     const bias = this.rng() < pBase ? 1 : -1;
     this.sub = { att, def, progress: 0.3, t: 0, max: 0.3, bias, name: randomSubmission(att.style, this.rng) };
     att.state = 'sub'; def.state = 'sub'; att.move = def.move = null;
@@ -508,7 +522,7 @@ export class Fight {
     if (this.round >= this.rounds) return this.decision();
     for (const f of this.f) {
       f.stamina += (f.staminaMax - f.stamina) * 0.65;
-      f.staminaMax = Math.max(50, f.staminaMax - (3 + f.dmg.body * 0.05) * (1.3 - f.a.cardio / 100));
+      f.staminaMax = Math.max(50, f.staminaMax - (3 + f.dmg.body * 0.05) * (1.3 - f.a.cardio / 100) * (f.tech.has('gasTank') ? 0.5 : 1));
       f.stamina = Math.min(f.stamina, f.staminaMax);
       f.dmg.head *= 0.85; f.dmg.body *= 0.9; f.dmg.legs *= 0.85;
       f.legsDowned = false;

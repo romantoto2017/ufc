@@ -50,17 +50,27 @@ const STYLE_VARIANTS = {
 const MULT_FIELDS = ['dmg', 'stam', 'startup', 'active', 'recovery', 'range', 'kd'];
 
 // Técnicas aprendidas en el modo carrera (se aplican encima del estilo).
+// Los efectos de reglas (esquiva, contras, mentón, aguante...) están en engine.js.
 const TECHNIQUE_VARIANTS = {
-  elbow: { elbow: { dmg: 1.15, startup: 0.9 } },
-  spinKick: { spinKick: { dmg: 1.1, startup: 0.85 } },
-  singleLeg: { takedown: { nameKey: 'move_singleLeg', tdBonus: 0.06 } },
-  doubleLeg: { takedown: { nameKey: 'move_doubleLeg', tdBonus: 0.12, startup: 0.9 } },
+  elbow: { elbow: { dmg: 1.2, startup: 0.85, kd: 1.2 } },
+  spinKick: { spinKick: { dmg: 1.15, startup: 0.8, kd: 1.15 } },
+  singleLeg: { takedown: { nameKey: 'move_singleLeg', tdBonus: 0.08 } },
+  doubleLeg: { takedown: { nameKey: 'move_doubleLeg', tdBonus: 0.15, startup: 0.85 } },
+  heavyHands: { jab: { kd: 1.2, dmg: 1.05 }, cross: { kd: 1.2, dmg: 1.05 }, hook: { kd: 1.2, dmg: 1.05 }, elbow: { kd: 1.12 } },
+  legKiller: { lowKick: { dmg: 1.35, startup: 0.9 } },
+  bodySnatcher: { bodyKick: { dmg: 1.3 } },
+  groundAndPound: { gnpPunch: { dmg: 1.35 }, gnpElbow: { dmg: 1.35, startup: 0.85 } },
 };
 
 export function movesForStyle(style, learned = []) {
   const out = {};
   const variants = { ...(STYLE_VARIANTS[style] || {}) };
-  for (const t of learned || []) for (const [k, v] of Object.entries(TECHNIQUE_VARIANTS[t] || {})) variants[k] = { ...(variants[k] || {}), ...v };
+  // Las técnicas se suman al estilo: los multiplicadores se acumulan.
+  for (const t of learned || []) for (const [k, v] of Object.entries(TECHNIQUE_VARIANTS[t] || {})) {
+    const cur = { ...(variants[k] || {}) };
+    for (const [f, val] of Object.entries(v)) cur[f] = MULT_FIELDS.includes(f) && typeof cur[f] === 'number' ? cur[f] * val : f === 'tdBonus' && cur[f] ? cur[f] + val : val;
+    variants[k] = cur;
+  }
   for (const [k, base] of Object.entries(BASE_MOVES)) {
     const m = { ...base, nameKey: 'move_' + k };
     const v = variants[k];
@@ -73,7 +83,11 @@ export function movesForStyle(style, learned = []) {
     }
     out[k] = m;
   }
-  for (const [k, base] of Object.entries(GROUND_MOVES)) out[k] = { ...base, nameKey: 'move_' + k };
+  for (const [k, base] of Object.entries(GROUND_MOVES)) {
+    const m = { ...base, nameKey: 'move_' + k };
+    for (const [f, val] of Object.entries(variants[k] || {})) if (MULT_FIELDS.includes(f)) m[f] = base[f] * val;
+    out[k] = m;
+  }
   if (style === 'lucha_libre') { out.gnpPunch.dmg *= 1.2; out.gnpElbow.dmg *= 1.2; }
   return out;
 }

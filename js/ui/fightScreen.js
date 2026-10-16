@@ -140,6 +140,7 @@ function setPadMode(ctx, mode) {
   let actions;
   const simple = (state.settings.esquemaControles || 'clasico') === 'simple';
   pad.classList.toggle('simple', simple && mode === 'stand');
+  pad.classList.toggle('classic', !simple && mode === 'stand');
   if (mode === 'stand' && simple) actions = ['chain:punch', 'chain:kick', 'takedown'];
   else if (mode === 'stand') actions = STANDING_ACTIONS;
   else if (mode === 'ground-top') actions = ['gnpPunch', 'gnpElbow', 'sub', 'standUp'];

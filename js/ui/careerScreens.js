@@ -294,7 +294,8 @@ function renderTab(panel) {
     for (const [focus, map] of Object.entries(C.TRAINING)) {
       const main = Object.keys(map)[0];
       const b = el('button', { class: 'btn btn-small', disabled: c.camp.sessions >= c.camp.max },
-        el('span', { text: t('train_' + focus) }), el('small', { text: `${t('attr_' + main)} ${Math.round(p.atributos[main])}` }));
+        el('span', { text: t('train_' + focus) }), el('small', { text: String(Math.round(p.atributos[main])) }));
+      b.title = `${t('attr_' + main)} ${Math.round(p.atributos[main])}`;
       b.addEventListener('click', () => {
         const r = C.train(c, focus);
         if (!r.ok) { toast(t(r.reason === 'no_time' ? 'no_time' : 'camp_full')); return; }
@@ -307,11 +308,18 @@ function renderTab(panel) {
     panel.append(el('p', { class: 'note', text: t('train_note', { techo: p.techo, pts: p.puntos }) }), grid);
   } else if (hubTab === 'tech') {
     panel.append(el('p', { class: 'note', text: t('tech_points', { n: p.puntos }) }));
-    for (const [k, tech] of Object.entries(C.TECHNIQUES)) {
-      const has = p.tecnicas.includes(k);
-      const b = el('button', { class: 'btn btn-small', disabled: has || p.puntos < tech.cost }, el('span', { text: t(tech.nameKey) }), el('small', { text: has ? t('learned') : t('cost_pts', { n: tech.cost }) }));
-      b.addEventListener('click', () => { if (C.learnTechnique(c, k)) { audio.play('ui'); persist(); renderHub(); } });
-      panel.append(el('div', { class: 'tech-row' }, b, el('span', { class: 'note', text: t('techdesc_' + k) })));
+    for (const tier of [1, 2, 3]) {
+      panel.append(el('div', { class: 'tech-tier tier-' + tier, text: '★'.repeat(tier) + ' ' + t('tier_' + tier) }));
+      for (const [k, tech] of Object.entries(C.TECHNIQUES).filter(([, x]) => x.tier === tier)) {
+        const st = C.techniqueStatus(c, k), has = st.reason === 'learned';
+        const b = el('button', { class: 'btn btn-small', disabled: !st.ok }, el('span', { text: t(tech.nameKey) }), el('small', { text: has ? t('learned') : t('cost_pts', { n: tech.cost }) }));
+        b.addEventListener('click', () => { if (C.learnTechnique(c, k)) { audio.play('ui'); persist(); renderHub(); } });
+        // Requisitos: en rojo los que todavía no cumplís.
+        const req = el('div', { class: 'tech-req' }, t('tech_req', { list: '' }));
+        for (const [a, v] of Object.entries(tech.req)) req.append(el('span', { class: p.atributos[a] >= v || has ? 'ok' : 'bad', text: `${t('attr_' + a)} ${v} ` }));
+        if (tech.stars) req.append(el('span', { class: stars(p.atributos) >= tech.stars || has ? 'ok' : 'bad', text: t('req_stars', { n: tech.stars }) }));
+        panel.append(el('div', { class: 'tech-row' + (has ? ' has' : '') }, b, el('div', {}, el('span', { class: 'note', text: t('techdesc_' + k) }), req)));
+      }
     }
   } else if (hubTab === 'rank') {
     const divSel = el('div', { class: 'seg' });

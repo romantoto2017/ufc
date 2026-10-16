@@ -3,6 +3,8 @@
 import { ATTRS, STYLE_PROFILE, stars, starsExact, overall } from '../ratings.js';
 import { simulateFight, applyResult, winProbability } from '../sim.js';
 import { generateFighter, makeAttributes, starsToOverall, namesFor, orgStars, plausibleRecord, ADVANCED_TIER } from './generator.js';
+import { TECHNIQUES } from '../fight/techniques.js';
+export { TECHNIQUES };
 
 // Nombres por país para los recién llegados a UFC (los carga la interfaz o los tests).
 let NAMES = null;
@@ -37,14 +39,11 @@ function setRec(f, r) { f.record = `${r.w}-${r.l}-${r.d}`; }
 export const REGIONAL_TITLE_STREAK = 3;
 export const NATIONAL_SAME_COUNTRY_FIGHTS = 3;
 
-export const TECHNIQUES = {
-  elbow:     { cost: 3, nameKey: 'move_elbow' },
-  spinKick:  { cost: 4, nameKey: 'move_spinKick' },
-  singleLeg: { cost: 3, nameKey: 'move_singleLeg' },
-  doubleLeg: { cost: 4, nameKey: 'move_doubleLeg' },
-  checkKick: { cost: 2, nameKey: 'tech_checkKick' },
-  ironChin:  { cost: 5, nameKey: 'tech_ironChin' },
-};
+// Experiencia mínima sorteada por carrera: ~5 peleas para la primera promotora y ~10-12 para UFC.
+export function careerNeeds(c) {
+  if (!c.needs) { const r = rngOf(c); c.needs = { org: 4 + Math.floor(r() * 3), ufc: 10 + Math.floor(r() * 3) }; }
+  return c.needs;
+}
 
 export const TRAINING = {
   boxeo:    { golpeo: 1, velocidad: 0.3 },
@@ -99,7 +98,7 @@ export function newCareer({ player, promos, fighters, existing = false, seed = D
     stage: 'nacional', org: null, stageFights: 0, stageWins: 0, sameCountryFights: 0,
     ufc: fighters.map(f => ({ ...f, atributos: { ...f.atributos } })),
     generics: {}, regionalChamp: {}, eventNo: {}, offer: null, pendingContract: null, camp: null,
-    news: [], dwcsTries: 0, rtuRound: 0, released: false, injuryWeeks: 0, lastWorldSim: START_DATE,
+    news: [], dwcsTries: 0, rtuRound: 0, released: false, injuryWeeks: 0, lastWorldSim: START_DATE, techV: 2,
   };
   if (existing) {
     // Tomar un peleador existente: ya está en UFC con su récord y ranking.
@@ -269,7 +268,6 @@ export function train(c, focus) {
     gains[attr] = Math.round(g * 10) / 10;
   }
   c.camp.sessions++;
-  p.puntos += 1;
   c.date = addDays(c.date, 7);
   let injury = false;
   if (rng() < 0.03) { injury = true; c.date = addDays(c.date, 14); p.atributos.cardio = Math.max(15, p.atributos.cardio - 1); news(c, 'news_injury', {}); }
@@ -277,9 +275,21 @@ export function train(c, focus) {
   return { ok: true, gains, injury };
 }
 
+// ¿Se puede aprender? Pide puntos, atributos mínimos y (las legendarias) 4 estrellas.
+export function techniqueStatus(c, key) {
+  const p = c.player, t = TECHNIQUES[key];
+  if (!t) return { ok: false, reason: 'unknown' };
+  if (p.tecnicas.includes(key)) return { ok: false, reason: 'learned' };
+  const missing = Object.entries(t.req).filter(([a, v]) => p.atributos[a] < v);
+  if (missing.length) return { ok: false, reason: 'req', missing };
+  if (t.stars && stars(p.atributos) < t.stars) return { ok: false, reason: 'stars' };
+  if (p.puntos < t.cost) return { ok: false, reason: 'points' };
+  return { ok: true };
+}
+
 export function learnTechnique(c, key) {
   const p = c.player, t = TECHNIQUES[key];
-  if (!t || p.tecnicas.includes(key) || p.puntos < t.cost) return false;
+  if (!techniqueStatus(c, key).ok) return false;
   p.puntos -= t.cost; p.tecnicas.push(key);
   if (key === 'ironChin') p.atributos.menton = Math.min(p.techo, p.atributos.menton + 3);
   return true;
@@ -328,7 +338,9 @@ export function applyCareerFight(c, ctx, result) {
   const exp = won ? 0.8 : draw ? 0.4 : 0.25;
   for (const a of ATTRS) p.atributos[a] = Math.round(clamp(p.atributos[a] + exp * (a === 'defensa' ? 1.5 : 0.6), 15, p.techo) * 10) / 10;
   if (!won && !draw && (result.method === 'ko' || result.method === 'tko')) p.atributos.menton = Math.max(15, p.atributos.menton - 1.5);
-  p.puntos += won ? 3 : 1;
+  // Puntos de habilidad: solo peleando. Ganar 1, por nocaut o sumisión +1, ganar un título +2.
+  const finished = ['ko', 'tko', 'sub'].includes(result.method);
+  p.puntos += won ? 1 + (finished ? 1 : 0) + (offer.title ? 2 : 0) : 0;
 
   // Bolsa
   const earned = offer.purse.show + (won ? offer.purse.win : 0);
@@ -411,10 +423,15 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
   const r = rec(p);
   const winPct = r.w / Math.max(1, r.w + r.l);
   const st = starsExact(p.atributos);
+  const nFights = r.w + r.l + r.d, need = careerNeeds(c);
+  const ufcReady = nFights >= need.ufc;
+  // Con 14 peleas, buen récord y nivel, UFC ya debería haberlo llamado: se apuran las invitaciones.
+  const overdue = nFights >= 12 && winPct >= 0.65 && st >= 2.5;
   const offer = (org, type, fights, ev = 'contract') => { offerContract(c, org, type, fights); events.push({ type: ev, org, fights: c.pendingContract.fights }); };
   switch (c.stage) {
     case 'nacional': {
-      if (won && c.sameCountryFights >= NATIONAL_SAME_COUNTRY_FIGHTS && r.w >= 3 && winPct >= 0.6 && st >= 1.8 && rng() < 0.7) {
+      // Con ~5 peleas y récord ganador llega la primera promotora (si se demora, la chance sube).
+      if (won && nFights >= need.org && c.sameCountryFights >= NATIONAL_SAME_COUNTRY_FIGHTS && r.w >= 3 && winPct >= 0.55 && st >= 1.8 && rng() < (nFights >= need.org + 2 ? 0.95 : 0.75)) {
         const org = higherOrg(c, promos, rng);
         if (org) offer(org.id, 'regional', 3);
       }
@@ -426,14 +443,14 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
       if (won && c.cooldownWins > 0) c.cooldownWins--;
       const ready = !(c.cooldownWins > 0);
       const hot = ((champ && won) || c.streakInStage >= 3) && r.w > r.l; // con récord perdedor no te llaman de arriba
-      if (r.w > r.l && won && champ && org.nivel >= 2.5 && rng() < 0.4 + (org.nivel - 2.5) * 0.3) {
+      if (ufcReady && r.w > r.l && won && champ && org.nivel >= 2.5 && rng() < 0.4 + (org.nivel - 2.5) * 0.3) {
         // Campeón de una promotora fuerte: UFC lo llama directo (contrato corto)
         offer('ufc', 'ufc', 1 + Math.floor(rng() * 2)); news(c, 'news_ufc_contract', { name: p.nombre });
-      } else if (r.w > r.l && won && st >= 2.8 && c.streakInStage >= 3 && rng() < 0.07) {
+      } else if (nFights >= need.ufc - 1 && r.w > r.l && won && st >= 2.8 && c.streakInStage >= 3 && rng() < 0.07) {
         offer('ufc', 'ufc', 1, 'short_notice'); news(c, 'news_short_notice', { name: p.nombre });
       } else if (hot && rng() < 0.45 && higherOrg(c, promos, rng)) {
         offer(higherOrg(c, promos, rng).id, 'regional', 3 + Math.floor(rng() * 2));
-      } else if (ready && r.w > r.l && ((champ && won) || p.racha >= 4 || (r.w >= 8 && st >= 3 && p.racha >= 2)) && rng() < 0.6) {
+      } else if (ready && nFights >= need.ufc - 1 && r.w > r.l && ((champ && won) || p.racha >= 3 || (r.w >= 8 && st >= 2.8 && won) || (overdue && won)) && rng() < (overdue ? 0.9 : 0.65)) {
         // Asiáticos: Road to UFC; tras 2 torneos perdidos también pueden ir al Contender Series.
         const asian = isAsian(promos, p.pais) && (c.rtuFails || 0) < 2;
         c.stage = asian ? 'rtu' : 'dwcs'; c.prevOrg = c.org; c.org = c.stage; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0; c.rtuRound = 0; c.contract = null;
@@ -455,7 +472,7 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
     }
     case 'dwcs': {
       if (won) {
-        const chance = ['ko', 'tko', 'sub'].includes(result.method) ? 0.9 : result.method === 'dec_unanimous' ? 0.5 : 0.25;
+        const chance = (['ko', 'tko', 'sub'].includes(result.method) ? 0.9 : result.method === 'dec_unanimous' ? 0.5 : 0.25) + (overdue ? 0.25 : 0);
         if (rng() < chance) { offer('ufc', 'ufc', 2 + Math.floor(rng() * 3)); news(c, 'news_ufc_contract', { name: p.nombre }); }
         else {
           events.push({ type: 'no_contract' });
@@ -474,7 +491,7 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
       break;
     }
     case 'pfl': {
-      if (won && (c.regionalChamp.pfl === 'player' ? rng() < 0.5 : rng() < 0.12) && st >= 3.2) offer('ufc', 'ufc', 2 + Math.floor(rng() * 3));
+      if (ufcReady && won && (c.regionalChamp.pfl === 'player' ? rng() < 0.5 : rng() < (overdue ? 0.3 : 0.12)) && st >= 3.2) offer('ufc', 'ufc', 2 + Math.floor(rng() * 3));
       else if (!won && !draw && (p.racha <= -3 || r.l > r.w)) {
         events.push({ type: 'released', org: 'pfl' }); news(c, 'news_released_org', { name: p.nombre, org: 'PFL' });
         backToRegional(c, ctx);
@@ -524,7 +541,7 @@ function backToRegional(c, ctx) {
   c.stage = 'regional'; c.org = back;
   c.contract = { org: back, total: 3, left: 3, w: 0, l: 0 };
   c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0;
-  c.cooldownWins = 3; // hay que volver a ganarse la oportunidad
+  c.cooldownWins = 2; // hay que volver a ganarse la oportunidad
 }
 
 export function acceptContract(c) {
@@ -700,6 +717,8 @@ export function load() {
 }
 // Tras JSON, el jugador dentro del mundo UFC y c.player deben ser el mismo objeto.
 export function relink(c) {
+  // v2 de habilidades: los puntos se ganan solo peleando; las partidas viejas tenían cientos acumulados.
+  if ((c.techV || 1) < 2) { c.techV = 2; if (c.player) c.player.puntos = Math.min(c.player.puntos || 0, 8); }
   const i = c.ufc.findIndex(f => f.id === 'player');
   if (i >= 0) c.ufc[i] = c.player;
   return c;

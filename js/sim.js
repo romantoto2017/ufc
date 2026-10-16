@@ -1,5 +1,6 @@
 // Simulación realista de peleas (sin jugar) y actualización del mundo.
 import { starsExact, progressAfterFight } from './ratings.js';
+import { techSimBonus } from './fight/techniques.js';
 
 export const MAX_FAVORITE = 0.92;
 const K_STARS = 1.45; // pendiente logística por estrella de diferencia
@@ -20,12 +21,13 @@ export function matchupFactors(a, b) {
   const reach = clamp(((a.alcance || 0) - (b.alcance || 0)) / 10 * 0.07, -0.2, 0.2);
   const chin = (a.atributos.menton - b.atributos.menton) / 100 * 0.4;
   const age = agePenalty(b.edad) - agePenalty(a.edad);
-  return { rating, style, reach, chin, age };
+  const tech = techSimBonus(a.tecnicas) - techSimBonus(b.tecnicas); // habilidades especiales (carrera)
+  return { rating, style, reach, chin, age, tech };
 }
 
 export function winProbability(a, b) {
   const f = matchupFactors(a, b);
-  const x = f.rating + f.style + f.reach + f.chin + f.age;
+  const x = f.rating + f.style + f.reach + f.chin + f.age + f.tech;
   return clamp(logistic(x), 1 - MAX_FAVORITE, MAX_FAVORITE);
 }
 

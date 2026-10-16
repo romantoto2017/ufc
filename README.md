@@ -25,7 +25,9 @@ En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J 
 - **Modo carrera**:
   - Creás tu peleador (país, edad, división, altura, alcance, estilo, guardia y cara) o tomás uno real.
   - Escalera: circuito nacional, después la organización regional, después el Contender Series (o Road to UFC si sos asiático) y por último UFC. PFL aparece como alternativa.
-  - Rivales genéricos coherentes y guardados (puede haber revanchas), entrenamiento, técnicas, gimnasio y dinero.
+  - Rivales genéricos coherentes y guardados (puede haber revanchas), entrenamiento, gimnasio y dinero.
+  - Experiencia: ~5 peleas para la primera promotora y entre 10 y 16 (a veces más) para llegar a UFC.
+  - 18 habilidades especiales en 3 niveles (común, avanzada, legendaria) con atributos mínimos. Los puntos salen solo de pelear (+1 por victoria, +1 por KO o sumisión, +2 por título), así que en una carrera se consiguen 3 a 6: hay que elegir. Cambian la pelea jugada y también la simulación.
   - El mundo UFC se simula mes a mes: cambian récords, rankings, valoraciones y campeones.
 - **Carrera realista**:
   - Lo normal es ~1 pelea por año y nunca más de 3 en 12 meses.
