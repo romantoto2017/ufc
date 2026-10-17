@@ -16,6 +16,22 @@ function pick(rng, arr) { return arr[Math.floor(rng() * arr.length)]; }
 function randInt(rng, a, b) { return a + Math.floor(rng() * (b - a + 1)); }
 function gauss(rng) { let u = 0; while (!u) u = rng(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rng()); }
 
+export function randomName(rng, names) {
+  let pool = names;
+  // Países con comunidades distintas (Rusia, Sudáfrica, Nigeria...): nombre y apellido del mismo grupo.
+  if (names.grupos?.length) {
+    const total = names.grupos.reduce((s, g) => s + (g.peso || 1), 0);
+    let r = rng() * total;
+    pool = names.grupos[0];
+    for (const g of names.grupos) { r -= g.peso || 1; if (r <= 0) { pool = g; break; } }
+  }
+  const first = pick(rng, pool.nombres);
+  let last = first;
+  // En Corea, Vietnam o China unos pocos apellidos son muchísimo más comunes. Nunca "Olawale Olawale".
+  for (let i = 0; i < 5 && last === first; i++) last = pool.frecuentes?.length && rng() < 0.45 ? pick(rng, pool.frecuentes) : pick(rng, pool.apellidos);
+  return `${first} ${last}`;
+}
+
 export function namesFor(namesDb, country) {
   const key = namesDb[country] ? country : (namesDb._alias?.[country] || 'US');
   return namesDb[key] || namesDb.US;
@@ -186,7 +202,7 @@ export function generateFighter(rng, { namesDb, country, division, level, archet
   const targetStars = clamp(lo + (hi - lo) * rng() + archShift, lo, hi);
   const style = pick(rng, STYLES);
   const names = namesFor(namesDb, country);
-  const nombre = `${pick(rng, names.nombres)} ${pick(rng, names.apellidos)}`;
+  const nombre = randomName(rng, names);
   const h = HEIGHT_BY_DIV[division] + Math.round(gauss(rng) * 4);
   const reach = h + Math.round(gauss(rng) * 4);
   const streak = archetype === 'relleno' ? -randInt(rng, 0, 3) : archetype === 'prospecto' ? randInt(rng, 1, Math.max(1, rec.w)) : randInt(rng, -2, 3);

@@ -13,6 +13,7 @@ import { show, el, starsEl, rankLabel, fmtTime, segmented, resetHistory } from '
 import { showResult, showVS } from './screens.js';
 import { startFight } from './fightScreen.js';
 import * as C from '../career/career.js';
+import { randomName, namesFor } from '../career/generator.js';
 
 let career = null;
 let names = null;
@@ -115,17 +116,16 @@ function renderCreate() {
   const countries = Object.keys(names).filter(k => /^[A-Z]{2,3}$/.test(k)).sort((a, b) => countryName(a).localeCompare(countryName(b)));
   const sel = el('select', { class: 'text-in' }, countries.map(c => el('option', { value: c, selected: c === draft.pais, text: countryName(c) })));
   sel.addEventListener('change', () => { draft.pais = sel.value; renderPreview(); });
-  const randomName = el('button', { type: 'button', class: 'btn btn-small', text: t('random_name') });
-  randomName.addEventListener('click', () => {
-    const n = names[draft.pais] || names[names._alias?.[draft.pais]] || names.US;
-    draft.nombre = `${n.nombres[Math.floor(Math.random() * n.nombres.length)]} ${n.apellidos[Math.floor(Math.random() * n.apellidos.length)]}`;
+  const randomBtn = el('button', { type: 'button', class: 'btn btn-small', text: t('random_name') });
+  randomBtn.addEventListener('click', () => {
+    draft.nombre = randomName(Math.random, namesFor(names, draft.pais));
     nameIn.value = draft.nombre; renderPreview();
   });
   const [hMin, hMax] = HEIGHT_RANGE[draft.division];
   draft.altura = Math.min(hMax, Math.max(hMin, draft.altura));
   draft.alcance = Math.min(draft.altura + 14, Math.max(draft.altura - 6, draft.alcance));
   form.append(
-    field('field_name', el('div', { class: 'range-row' }, nameIn, randomName)),
+    field('field_name', el('div', { class: 'range-row' }, nameIn, randomBtn)),
     field('field_nick', nickIn),
     field('field_country', sel),
     field('age', range(18, 35, draft.edad, v => { draft.edad = v; }, v => `${v} ${t('years')}`)),
