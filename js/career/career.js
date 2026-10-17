@@ -34,6 +34,35 @@ function ageOn(dob, iso) {
   return Y - y - ((M < m || (M === m && D < d)) ? 1 : 0);
 }
 function rec(f) { const [w, l, d] = String(f.record).split('-').map(n => parseInt(n, 10) || 0); return { w, l, d }; }
+
+// ---------- top 15 ----------
+// Casi nadie entra al ranking por ganar una pelea en UFC: hacen falta 3 o 4 victorias en UFC (según el peleador).
+// Excepciones (alcanza con 1): invicto con 17+ victorias, o ex campeón con 2+ defensas en otra promotora.
+const hashId = id => [...String(id)].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7);
+export function ufcWins(f) {
+  if (f.ufcW == null) {
+    // Jugador: se cuentan sus victorias en UFC del historial (partidas viejas). Los del roster real ya son veteranos.
+    if (f.id === 'player' && !f.realId) f.ufcW = (f.historial || []).filter(h => h.org === 'ufc' && h.resultado === 'W').length;
+    else f.ufcW = f.nuevo ? 0 : 6;
+  }
+  return f.ufcW;
+}
+function defensesElsewhere(f) {
+  if (f.id !== 'player') return f.exChampDef || 0;
+  const titleWins = (f.historial || []).filter(h => h.titulo && h.resultado === 'W' && h.org !== 'ufc').length;
+  return Math.max(0, titleWins - 1); // la primera es la conquista; el resto, defensas
+}
+export function rankEligible(f) {
+  if (f.ranking != null) return true;
+  const r = rec(f);
+  const fastTrack = (r.l === 0 && r.w >= 17) || defensesElsewhere(f) >= 2;
+  return ufcWins(f) >= (fastTrack ? 1 : 3 + (hashId(f.id) % 2));
+}
+// Antes de aplicar una pelea de UFC: suma la victoria y marca quién puede entrar al ranking.
+function countUfcWin(W, L) {
+  if (W) W.ufcW = ufcWins(W) + 1;
+  for (const f of [W, L]) if (f) f.rankEligible = rankEligible(f);
+}
 function setRec(f, r) { f.record = `${r.w}-${r.l}-${r.d}`; }
 
 export const REGIONAL_TITLE_STREAK = 3;
@@ -106,7 +135,7 @@ export function newCareer({ player, promos, fighters, existing = false, seed = D
     Object.assign(player, { ...real, jugador: true, id: 'player', realId: real.id, tecnicas: [], puntos: 0, dinero: 50000, gimnasio: 2, historial: [], cinturones: real.ranking === 0 ? ['ufc'] : [], techo: clamp(Math.round(97 - Math.max(0, real.edad - 26) * 1.2), 75, 98) });
     c.ufc = c.ufc.filter(f => f.id !== real.id);
     c.ufc.push(player);
-    c.stage = 'ufc'; c.org = 'ufc';
+    c.stage = 'ufc'; c.org = 'ufc'; player.ufcW = 6;
   }
   news(c, 'news_start', { name: player.nombre });
   return c;
@@ -236,7 +265,8 @@ function ufcOpponent(c, rng) {
     if (pool.length) return pick(rng, pool);
   }
   const unranked = div.filter(f => f.ranking == null);
-  if (p.racha >= 2 || rng() < 0.15) {
+  // Contra rankeados recién cuando ya tenés recorrido en UFC (o venís de campeón invicto).
+  if ((rankEligible(p) || ufcWins(p) >= 2) && (p.racha >= 2 || rng() < 0.15)) {
     const low = div.filter(f => f.ranking != null && f.ranking >= 11);
     if (low.length) return pick(rng, low);
   }
@@ -317,6 +347,7 @@ export function applyCareerFight(c, ctx, result) {
   if (c.stage === 'ufc' && !draw) {
     // El jugador progresa por entrenamiento; se conserva su ficha de atributos.
     const keep = { ...p.atributos };
+    countUfcWin(c.ufc.find(f => f.id === result.winnerId), c.ufc.find(f => f.id === result.loserId));
     applyResult(c.ufc, { winnerId: result.winnerId, loserId: result.loserId });
     p.atributos = keep;
   } else {
@@ -591,7 +622,7 @@ export function simulateWorld(c, months) {
     for (const div of divisions) {
       const pool = c.ufc.filter(f => f.division === div && f.id !== 'player' && !f.retirado);
       if (pool.length < 4) continue;
-      const fights = 2;
+      const fights = 3;
       const used = new Set(c.offer ? [c.offer.opponentId] : []);
       // Pelea por el título aproximadamente cada 4 meses
       if (rng() < 0.25) {
@@ -632,9 +663,13 @@ function cutLosers(c, div, rng) {
 function newUfcProspect(c, div, rng) {
   const countries = Object.keys(NAMES).filter(k => /^[A-Z]{2,3}$/.test(k));
   const nf = generateFighter(rng, { namesDb: NAMES, country: pick(rng, countries), division: div, level: 'ufc', archetype: 'prospecto', idPrefix: 'ufc' });
-  nf.generico = false; nf.nuevo = true;
+  nf.generico = false; nf.nuevo = true; nf.ufcW = 0;
+  if (rng() < 0.06) nf.exChampDef = 2 + Math.floor(rng() * 3); // ex campeón con defensas en otra promotora
   return nf;
 }
+
+// Peleadores activos por división en el mundo UFC (el top 15 tiene que ser una élite, no media división).
+const UFC_DIV_SIZE = 34;
 
 // Cada año: los veteranos se retiran (la mayoría entre los 36 y los 40) y llegan prospectos nuevos.
 const RETIRE_BY_AGE = { 34: 0.05, 35: 0.1, 36: 0.2, 37: 0.32, 38: 0.48, 39: 0.65 };
@@ -656,7 +691,7 @@ function yearlyTurnover(c, rng) {
   for (const div of divisions) {
     rerank(c, div);
     const active = c.ufc.filter(f => f.division === div && !f.retirado).length;
-    const newcomers = Math.max(0, 26 - active) + (rng() < 0.6 ? 1 : 0);
+    const newcomers = Math.max(0, UFC_DIV_SIZE - active) + (rng() < 0.6 ? 1 : 0);
     for (let i = 0; i < newcomers && NAMES; i++) c.ufc.push(newUfcProspect(c, div, rng));
   }
   // Los retirados viejos se borran para que el guardado no crezca sin límite
@@ -675,7 +710,10 @@ function rerank(c, div) {
   // Completar el top 15 con los mejores no rankeados
   const n = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking != null).length;
   if (n < 16) {
-    const pool = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking == null && f.id !== 'player').sort((a, b) => b.racha - a.racha || starsExact(b.atributos) - starsExact(a.atributos));
+    const free = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking == null && f.id !== 'player');
+    const byForm = (a, b) => b.racha - a.racha || starsExact(b.atributos) - starsExact(a.atributos);
+    // Primero los que ya se ganaron el lugar; si faltan, los de más victorias en UFC (mínimo 3).
+    const pool = [...free.filter(rankEligible).sort(byForm), ...free.filter(f => !rankEligible(f) && ufcWins(f) >= 3).sort((a, b) => ufcWins(b) - ufcWins(a) || byForm(a, b))];
     pool.slice(0, 16 - n).forEach((f, i) => { f.ranking = n + i; });
   }
 }
@@ -683,6 +721,7 @@ function rerank(c, div) {
 function fightAI(c, a, b, rounds, rng) {
   const res = simulateFight(a, b, { rounds, rng });
   const wasChamp = [a, b].find(f => f.ranking === 0);
+  if (res.winnerId) countUfcWin(c.ufc.find(f => f.id === res.winnerId), c.ufc.find(f => f.id === res.loserId));
   applyResult(c.ufc, res);
   const W = c.ufc.find(f => f.id === res.winnerId);
   if (wasChamp && W !== wasChamp && W.ranking === 0) news(c, 'news_new_champ', { name: W.nombre, div: W.division });
@@ -691,10 +730,12 @@ function fightAI(c, a, b, rounds, rng) {
 // Los no rankeados con racha entran al top 15 desplazando a quien viene perdiendo.
 function maintainRankings(c, div) {
   const fs = c.ufc.filter(f => f.division === div && !f.retirado);
-  const hot = fs.filter(f => f.ranking == null && f.racha >= 3).sort((x, y) => y.racha - x.racha)[0];
+  const hot = fs.filter(f => f.ranking == null && f.racha >= 3 && rankEligible(f)).sort((x, y) => y.racha - x.racha)[0];
   const cold = fs.filter(f => f.ranking != null && f.ranking >= 12 && f.racha <= -2).sort((x, y) => y.ranking - x.ranking)[0];
   if (hot && cold) { hot.ranking = cold.ranking; cold.ranking = null; }
   for (const f of fs) if (f.retirado && f.ranking != null) f.ranking = null;
+  // Huecos por cortes o retiros: se completa el top 15 en el momento.
+  if (fs.filter(f => f.ranking != null && !f.retirado).length < 16) rerank(c, div);
 }
 
 export function rankingTable(c, division) {

@@ -25,7 +25,7 @@ test('rivales genéricos coherentes con edad, récord y nivel', () => {
     const s = stars(f.atributos);
     const range = { nacional: [1, 2.5], regional: [1.5, 3], dwcs: [3, 3.5] }[level];
     assert.ok(s >= range[0] - 0.5 && s <= range[1] + 0.5, `${level} ${s}`);
-    if (f.arquetipo === 'prospecto') assert.ok(f.edad <= 25 && l <= 1);
+    if (f.arquetipo === 'prospecto') assert.ok(level === 'dwcs' ? f.edad <= 28 && l <= 2 : f.edad <= 25 && l <= 1, `${level} ${f.edad} ${f.record}`);
     if (f.arquetipo === 'veterano') { assert.ok(f.edad >= 31); assert.ok(f.atributos.menton > f.atributos.velocidad); }
     assert.ok(names.AR.nombres.includes(f.nombre.split(' ')[0]));
   }

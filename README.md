@@ -36,7 +36,9 @@ En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J 
   - Promotoras por nivel (Samurai/Naciones 1,5 → LFA/Cage Warriors/KSW 3 → ONE/RIZIN 3,5): ganando, te llegan ofertas de promotoras mejores.
   - Caminos a UFC aleatorios: el campeón de una promotora fuerte puede recibir un contrato directo de 1 o 2 peleas, también hay llamados de último momento, el Contender Series o el Road to UFC, y PFL.
   - Los contratos tienen una cantidad de peleas y se renuevan según tus resultados.
-  - En el mundo UFC los veteranos se retiran y llegan prospectos nuevos. UFC corta a quien queda con récord no ganador o con 3 derrotas seguidas sin ranking.
+  - En el mundo UFC los veteranos se retiran y llegan prospectos nuevos (con 10 a 18 peleas, como vos).
+  - Top 15 difícil: hacen falta 3 o 4 victorias en UFC. Solo entran después de 1 victoria los invictos de 17-0 o más y los ex campeones con 2 o más defensas en otra promotora.
+  - Rivales generados con tono de piel, pelo y nombre según su país (más de 100 países). UFC corta a quien queda con récord no ganador o con 3 derrotas seguidas sin ranking.
   - Récords creíbles: en el circuito nacional nadie pasa de 10 peleas; desde Ares, Brave, Oktagon, LFA, etc. para arriba nadie tiene récord perdedor (tampoco vos: te cortan y bajás de nivel).
 - **Presentación**:
   - Intro con el presentador gritando "IT'S TIMEEE!".

@@ -1,6 +1,6 @@
 // Service worker: red primero para todo el juego (siempre la última versión);
 // la caché queda como respaldo para jugar sin conexión.
-const VERSION = 'pixelmma-v11';
+const VERSION = 'pixelmma-v12';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/main.js', 'js/store.js', 'js/i18n.js', 'js/audio.js', 'js/ratings.js', 'js/sim.js',
@@ -10,7 +10,7 @@ const SHELL = [
   'js/career/career.js', 'js/career/generator.js', 'js/gfx/scenes.js',
   'data/fighters.json', 'data/promotions.json', 'data/names.json', 'data/settings.json',
   'lang/es.json', 'lang/en.json',
-  'assets/logos/ufc.png', 'assets/icons/icon-192.png', 'assets/icons/icon-512.png', 'assets/icons/favicon-32.png', 'assets/icons/favicon-64.png',
+  'assets/logos/ufc.png', 'assets/icons/icon-192.png', 'assets/icons/icon-512.png', 'assets/icons/favicon-32.png', 'assets/icons/favicon-64.png', 'assets/icons/apple-touch-icon.png', 'assets/icons/icon-maskable-512.png',
 ];
 
 self.addEventListener('install', e => {

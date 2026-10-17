@@ -19,7 +19,16 @@ const SIMPLE = {
   BE: ['v', [K, '#fdda24', '#ef3340']], NG: ['v', ['#008751', W, '#008751']], PE: ['v', ['#d91023', W, '#d91023']],
   RO: ['v', ['#002b7f', '#fcd116', '#ce1126']], MD: ['v', ['#0046ae', '#ffd200', '#cc092f']], TD: ['v', ['#002664', '#fecb00', '#c60c30']],
   CI: ['v', ['#f77f00', W, '#009e60']], ML: ['v', ['#14b53a', '#fcd116', '#ce1126']], GN: ['v', ['#ce1126', '#fcd116', '#009460']],
+  BY: ['h', ['#c8313e', '#c8313e', '#4aa657']], EG: ['h', ['#ce1126', W, K]], IR: ['h', ['#239f40', W, '#da0000']],
+  HN: ['h', ['#0073cf', W, '#0073cf']], NI: ['h', ['#0067c6', W, '#0067c6']], SV: ['h', ['#0047ab', W, '#0047ab']],
+  GT: ['v', ['#4997d0', W, '#4997d0']], LV: ['h', ['#9e3039', '#9e3039', W, '#9e3039', '#9e3039']], SI: ['h', [W, '#005ce5', '#ed1c24']],
+  SN: ['v', ['#00853f', '#fdef42', '#e31b23']], GH: ['h', ['#ce1126', '#fcd116', '#006b3f']], GR: ['h', ['#0d5eaf', W, '#0d5eaf', W, '#0d5eaf', W, '#0d5eaf']],
+  CR: ['h', ['#002b7f', W, '#ce1126', '#ce1126', W, '#002b7f']],
 };
+
+// Banderas con un paño a la izquierda (franja vertical) y franjas horizontales a la derecha.
+function hoist(ctx, x, y, w, h, hoistColor, hoistW, colors) { stripes(ctx, x, y, w, h, 'h', colors); rect(ctx, x, y, hoistW, h, hoistColor); }
+function canton(ctx, x, y, w, h, bg, cantonColor, dot) { rect(ctx, x, y, w, h, bg); rect(ctx, x, y, Math.round(w * 0.45), h >> 1, cantonColor); if (dot) rect(ctx, x + 2, y + 1, 2, 2, dot); }
 
 function rect(ctx, x, y, w, h, c) { ctx.fillStyle = c; ctx.fillRect(x, y, w, h); }
 
@@ -39,6 +48,20 @@ function nordic(ctx, x, y, w, h, bg, cross, inner) {
 }
 
 const CUSTOM = {
+  TW(ctx, x, y, w, h) { canton(ctx, x, y, w, h, '#fe0000', '#000095', W); },
+  MY(ctx, x, y, w, h) { for (let i = 0; i < h; i++) rect(ctx, x, y + i, w, 1, i % 2 === 0 ? '#cc0001' : W); rect(ctx, x, y, Math.round(w * 0.5), Math.round(h * 0.55), '#010066'); rect(ctx, x + 2, y + 1, 2, 2, '#ffcc00'); },
+  VN(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#da251d'); rect(ctx, x + (w >> 1) - 1, y + (h >> 1) - 2, 2, 4, '#ffff00'); rect(ctx, x + (w >> 1) - 2, y + (h >> 1) - 1, 4, 2, '#ffff00'); },
+  CD(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#007fff'); for (let i = 0; i < w; i++) { const yy = Math.round(h - 1 - i * (h - 1) / (w - 1)); rect(ctx, x + i, y + yy - 1, 1, 3, '#f7d618'); rect(ctx, x + i, y + yy, 1, 1, '#ce1021'); } rect(ctx, x + 1, y + 1, 2, 2, '#f7d618'); },
+  BA(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#002395'); for (let i = 0; i < h; i++) rect(ctx, x + 3 + i, y + i, 1, 1, '#fecb00'); rect(ctx, x + 3, y, 1, 1, '#fecb00'); rect(ctx, x + 4, y, w - 7, 1, '#fecb00'); for (let i = 0; i < h; i++) rect(ctx, x + 4 + i, y + i, w - 8 - i > 0 ? 1 : 0, 1, '#fecb00'); },
+  PA(ctx, x, y, w, h) { rect(ctx, x, y, w, h, W); rect(ctx, x + (w >> 1), y, w >> 1, h >> 1, '#da121a'); rect(ctx, x, y + (h >> 1), w >> 1, h >> 1, '#072357'); rect(ctx, x + 2, y + 1, 2, 2, '#072357'); rect(ctx, x + w - 4, y + h - 3, 2, 2, '#da121a'); },
+  PR(ctx, x, y, w, h) { stripes(ctx, x, y, w, h, 'h', ['#ed0000', W, '#ed0000', W, '#ed0000']); for (let i = 0; i < h; i++) { const len = Math.round((1 - Math.abs(i - (h - 1) / 2) / (h / 2)) * w * 0.45); rect(ctx, x, y + i, len, 1, '#0050f0'); } rect(ctx, x + 1, y + (h >> 1) - 1, 1, 2, W); },
+  QA(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#8d1b3d'); rect(ctx, x, y, Math.round(w * 0.32), h, W); for (let i = 0; i < h; i += 2) rect(ctx, x + Math.round(w * 0.32), y + i, 1, 1, W); },
+  KW(ctx, x, y, w, h) { hoist(ctx, x, y, w, h, K, 3, ['#007a3d', W, '#ce1126']); },
+  JO(ctx, x, y, w, h) { hoist(ctx, x, y, w, h, '#ce1126', 4, [K, W, '#007a3d']); rect(ctx, x + 1, y + (h >> 1), 1, 1, W); },
+  OM(ctx, x, y, w, h) { hoist(ctx, x, y, w, h, '#db161b', 3, [W, '#db161b', '#008000']); rect(ctx, x, y, 3, 3, '#db161b'); },
+  SA(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#006c35'); rect(ctx, x + 2, y + 3, w - 4, 1, W); rect(ctx, x + 3, y + 5, w - 6, 1, W); },
+  LB(ctx, x, y, w, h) { stripes(ctx, x, y, w, h, 'h', ['#ed1c24', W, W, '#ed1c24']); rect(ctx, x + (w >> 1) - 1, y + 2, 2, 4, '#00a651'); },
+  TM(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#00843d'); rect(ctx, x + 2, y, 2, h, '#d22630'); rect(ctx, x + 6, y + 1, 2, 2, W); },
   KG(ctx, x, y, w, h) { rect(ctx, x, y, w, h, '#e8112d'); rect(ctx, x + (w >> 1) - 2, y + (h >> 1) - 2, 4, 4, '#ffef00'); rect(ctx, x + (w >> 1) - 1, y + (h >> 1) - 1, 2, 2, '#e8112d'); },
   PH(ctx, x, y, w, h) { rect(ctx, x, y, w, h >> 1, '#0038a8'); rect(ctx, x, y + (h >> 1), w, h - (h >> 1), '#ce1126'); for (let i = 0; i < h; i++) { const len = Math.round((1 - Math.abs(i - (h - 1) / 2) / (h / 2)) * w * 0.45); rect(ctx, x, y + i, len, 1, W); } rect(ctx, x + 1, y + (h >> 1) - 1, 2, 2, '#fcd116'); },
   TH(ctx, x, y, w, h) { for (let i = 0; i < 6; i++) { const y0 = Math.round(i * h / 6), y1 = Math.round((i + 1) * h / 6); rect(ctx, x, y + y0, w, y1 - y0, ['#a51931', W, '#2d2a4a', '#2d2a4a', W, '#a51931'][i]); } },

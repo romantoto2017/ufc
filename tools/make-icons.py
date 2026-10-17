@@ -1,48 +1,24 @@
-# Genera los iconos PWA (pixel art 32x32 escalado sin suavizado).
+# Genera los iconos de la app (PWA, favicon y apple-touch-icon) con el logo de UFC sobre fondo oscuro.
+# Uso: python3 tools/make-icons.py
 from PIL import Image
-G = [
-"................................",
-"................................",
-"................................",
-"..........#########.............",
-"........##RRRRRRRRR##...........",
-".......#RRRRRRRRRRRRR#..........",
-"......#RRRRRRRRRRRRRRR#.........",
-"......#RRRrRRRrRRRrRRR#.........",
-".....#RRRRrRRRrRRRrRRRR#........",
-".....#RRRRrRRRrRRRrRRRR#........",
-".....#RRRRRRRRRRRRRRRRR#........",
-".....#RRRRRRRRRRRRRRRRRR#.......",
-"....##RRRRRRRRRRRRRRRRRR#.......",
-"...#RRR#RRRRRRRRRRRRRRRR#.......",
-"...#RRRR#RRRRRRRRRRRRRRR#.......",
-"...#RRRRR##RRRRRRRRRRRRR#.......",
-"....#RRRRRR#RRRRRRRRRRRR#.......",
-".....#RRRRRRRRRRRRRRRRR#........",
-"......#RRRRRRRRRRRRRRRR#........",
-".......#RRRRRRRRRRRRRR#.........",
-"........#WWWWWWWWWWWW#..........",
-"........#WWWWWWWWWWWW#..........",
-"........#KKKKKKKKKKKK#..........",
-"........#KKKKKKKKKKKK#..........",
-"........#KKKKKKKKKKKK#..........",
-".........############...........",
-"................................",
-"................................",
-"................................",
-"................................",
-"................................",
-"................................",
-]
-C = {'#': (10,10,14,255), 'R': (210,10,10,255), 'r': (140,6,6,255), 'W': (255,255,255,255), 'K': (40,40,48,255), '.': None}
-def make(size, pad):
-    bg = Image.new('RGBA', (32, 32), (11,13,20,255))
-    for y,row in enumerate(G):
-        for x,ch in enumerate(row):
-            c = C[ch]
-            if c: bg.putpixel((x+4,y+2) if x+4<32 else (x,y), c)
-    img = bg.resize((size - 2*pad, size - 2*pad), Image.NEAREST)
-    out = Image.new('RGBA', (size, size), (11,13,20,255)); out.paste(img, (pad, pad)); return out
-make(192, 0).save('assets/icons/icon-192.png')
-make(512, 0).save('assets/icons/icon-512.png')
-make(512, 64).save('assets/icons/icon-maskable-512.png')
+
+LOGO = Image.open('assets/logos/ufc.png').convert('RGBA')
+LOGO = LOGO.crop(LOGO.getbbox())
+BG = (11, 13, 20, 255)
+
+
+def make(size, width_frac):
+    out = Image.new('RGBA', (size, size), BG)
+    w = round(size * width_frac)
+    h = round(LOGO.height * w / LOGO.width)
+    logo = LOGO.resize((w, h), Image.LANCZOS)
+    out.alpha_composite(logo, ((size - w) // 2, (size - h) // 2))
+    return out
+
+
+make(192, 0.84).save('assets/icons/icon-192.png')
+make(512, 0.84).save('assets/icons/icon-512.png')
+make(512, 0.62).save('assets/icons/icon-maskable-512.png')  # zona segura de los iconos adaptables
+make(180, 0.84).save('assets/icons/apple-touch-icon.png')
+make(64, 0.9).save('assets/icons/favicon-64.png')
+make(32, 0.94).save('assets/icons/favicon-32.png')

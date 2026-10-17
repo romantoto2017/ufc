@@ -161,6 +161,8 @@ function updateRankings(fighters, W, L) {
   const wRank = W.ranking == null ? Infinity : W.ranking;
   const lRank = L.ranking == null ? Infinity : L.ranking;
   if (lRank === Infinity && wRank === Infinity) return;
+  // Modo carrera: sin el recorrido necesario en UFC no se entra al ranking aunque gane.
+  if (wRank === Infinity && W.rankEligible === false) return;
 
   if (wRank > lRank) {
     // Sorpresa: el ganador ocupa el puesto del perdedor; el perdedor baja uno.
