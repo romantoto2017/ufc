@@ -280,7 +280,7 @@ export function opponentOf(c) {
 
 // ---------- entrenamiento ----------
 export function trainingGain(age, gym, current, techo, r) {
-  const youth = age <= 24 ? 1.3 : age <= 29 ? 1.0 : age <= 33 ? 0.7 : 0.4;
+  const youth = age <= 24 ? 1.3 : age <= 30 ? 1.0 : age <= 35 ? 0.75 : age <= 37 ? 0.45 : 0.25;
   const room = clamp((techo - current) / 25, 0.04, 1);
   return (1.0 + gym * 0.45) * youth * room * (0.6 + r * 0.8);
 }
@@ -420,8 +420,8 @@ export function applyCareerFight(c, ctx, result) {
   // Si el rival de UFC quedó con récord perdedor después de pelear con vos, lo cortan.
   if (!opp.generico && c.ufc.includes(opp)) cutLosers(c, opp.division, rng);
   // Retiro: a partir de los 36 se puede elegir; a los 40 es obligatorio.
-  if (p.edad >= 40) { c.retired = true; events.push({ type: 'retire_forced' }); news(c, 'news_player_retired', { name: p.nombre, record: p.record }); }
-  else if (p.edad >= 36 && !c.pendingContract) events.push({ type: 'retire_option' });
+  if (p.edad >= 42) { c.retired = true; events.push({ type: 'retire_forced' }); news(c, 'news_player_retired', { name: p.nombre, record: p.record }); }
+  else if (p.edad >= 38 && !c.pendingContract) events.push({ type: 'retire_option' });
   return events;
 }
 
@@ -606,8 +606,9 @@ function tick(c) {
     const a = ageOn(p.fechaNacimiento, c.date);
     if (a > p.edad) {
       p.edad = a;
-      if (a >= 33) { p.atributos.velocidad = Math.max(15, p.atributos.velocidad - (a - 32) * 0.8); p.atributos.cardio = Math.max(15, p.atributos.cardio - (a - 32) * 0.6); }
-      p.techo = Math.max(60, p.techo - (a >= 30 ? 1.5 : 0));
+      // Declive desde los 36-37: velocidad, aguante y mentón; el techo baja de a poco desde los 33.
+      if (a >= 36) { const d = a - 35; p.atributos.velocidad = Math.max(15, p.atributos.velocidad - d * 0.9); p.atributos.cardio = Math.max(15, p.atributos.cardio - d * 0.7); p.atributos.menton = Math.max(15, p.atributos.menton - d * 0.4); }
+      p.techo = Math.max(60, p.techo - (a >= 36 ? 2.5 : a >= 33 ? 1 : 0));
     }
   }
   // El mundo UFC avanza mes a mes
@@ -671,15 +672,15 @@ function newUfcProspect(c, div, rng) {
 // Peleadores activos por división en el mundo UFC (el top 15 tiene que ser una élite, no media división).
 const UFC_DIV_SIZE = 34;
 
-// Cada año: los veteranos se retiran (la mayoría entre los 36 y los 40) y llegan prospectos nuevos.
-const RETIRE_BY_AGE = { 34: 0.05, 35: 0.1, 36: 0.2, 37: 0.32, 38: 0.48, 39: 0.65 };
+// Cada año: los veteranos se retiran (la mayoría entre los 38 y los 42) y llegan prospectos nuevos.
+const RETIRE_BY_AGE = { 36: 0.05, 37: 0.1, 38: 0.18, 39: 0.3, 40: 0.45, 41: 0.65 };
 function yearlyTurnover(c, rng) {
   const divisions = [...new Set(c.ufc.map(f => f.division))];
   for (const f of c.ufc) {
     if (f.id === 'player' || f.retirado) continue;
     f.edad++;
     if (f.id === c.offer?.opponentId) continue; // ya tiene pelea pactada con el jugador
-    let pr = f.edad >= 40 ? 0.85 : RETIRE_BY_AGE[f.edad] || 0;
+    let pr = f.edad >= 42 ? 1 : RETIRE_BY_AGE[f.edad] || 0;
     if (f.racha <= -2) pr += 0.15;
     if (f.ranking == null && f.racha <= -3) pr += 0.3;
     if (rng() < pr) {

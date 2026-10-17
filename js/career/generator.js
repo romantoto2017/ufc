@@ -100,7 +100,7 @@ export function makeAttributes(rng, { targetStars, style, age, archetype }) {
     case 'relleno': raw.menton += 3; raw.cardio -= 4; break;
     default: raw.golpeo += 3; break;
   }
-  if (age > 33) { raw.velocidad -= (age - 33) * 1.2; raw.cardio -= (age - 33) * 0.8; }
+  if (age > 35) { raw.velocidad -= (age - 35) * 1.4; raw.cardio -= (age - 35) * 0.9; }
   if (age < 23) { raw.defensa -= 3; raw.velocidad += 2; }
   let out = { ...raw };
   for (let i = 0; i < 6; i++) {
@@ -192,7 +192,7 @@ export function generateFighter(rng, { namesDb, country, division, level, archet
   let age;
   switch (archetype) {
     case 'prospecto': age = level === 'ufc' || level === 'pfl' ? randInt(rng, 23, 30) : level === 'dwcs' ? randInt(rng, 22, 28) : randInt(rng, 19, 25); break;
-    case 'veterano': age = randInt(rng, 31, 40); break;
+    case 'veterano': age = randInt(rng, 31, 42); break;
     case 'relleno': age = randInt(rng, 24, 38); break;
     default: age = randInt(rng, 22, 33);
   }

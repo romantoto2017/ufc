@@ -31,7 +31,7 @@ En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J 
   - El mundo UFC se simula mes a mes: cambian récords, rankings, valoraciones y campeones.
 - **Carrera realista**:
   - Lo normal es ~1 pelea por año y nunca más de 3 en 12 meses.
-  - Retiro entre los 36 y los 40 (obligatorio a los 40).
+  - El físico empieza a bajar a los 36-37. Retiro entre los 38 y los 42 (obligatorio a los 42).
   - Máximo 4 peleas contra el mismo rival.
   - Promotoras por nivel (Samurai/Naciones 1,5 → LFA/Cage Warriors/KSW 3 → ONE/RIZIN 3,5): ganando, te llegan ofertas de promotoras mejores.
   - Caminos a UFC aleatorios: el campeón de una promotora fuerte puede recibir un contrato directo de 1 o 2 peleas, también hay llamados de último momento, el Contender Series o el Road to UFC, y PFL.

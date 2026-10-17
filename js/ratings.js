@@ -84,8 +84,9 @@ export function progressAfterFight(attrs, { won, expected, age }) {
   const delta = won ? k * (1 - expected) : -k * expected;
   const out = { ...attrs };
   for (const a of ATTRS) out[a] = clamp(Math.round((out[a] + delta * (a === 'menton' && !won ? 1.4 : 1)) * 10) / 10, 20, 99);
-  if (age >= 34) {
-    const decay = (age - 33) * 0.6;
+  // El declive físico arranca a los 36-37 años.
+  if (age >= 36) {
+    const decay = (age - 35) * 0.7;
     out.velocidad = clamp(out.velocidad - decay, 20, 99);
     out.cardio = clamp(out.cardio - decay * 0.8, 20, 99);
     out.menton = clamp(out.menton - decay * 0.5, 20, 99);

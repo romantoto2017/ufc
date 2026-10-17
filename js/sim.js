@@ -10,7 +10,7 @@ const logistic = x => 1 / (1 + Math.exp(-x));
 
 const takedownDefense = f => f.atributos.grappling * 0.6 + f.atributos.defensa * 0.4;
 const grapplingThreat = f => Math.max(f.atributos.grappling, f.atributos.sumisiones * 0.9);
-const agePenalty = age => (age > 34 ? (age - 34) * 0.06 : age < 23 ? 0.05 : 0);
+const agePenalty = age => (age > 36 ? (age - 36) * 0.07 : age < 23 ? 0.05 : 0);
 
 // Componentes (en logits) de la ventaja de A sobre B. Se exponen para depurar y para la UI.
 export function matchupFactors(a, b) {
