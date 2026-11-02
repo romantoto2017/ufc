@@ -30,8 +30,10 @@ En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J 
   - 18 habilidades especiales en 3 niveles (común, avanzada, legendaria) con atributos mínimos. Los puntos salen solo de pelear (+1 por victoria, +1 por KO o sumisión, +2 por título), así que en una carrera se consiguen 3 a 6: hay que elegir. Cambian la pelea jugada y también la simulación.
   - El mundo UFC se simula mes a mes: cambian récords, rankings, valoraciones y campeones.
 - **Carrera realista**:
-  - Lo normal es ~1 pelea por año y nunca más de 3 en 12 meses.
-  - El físico empieza a bajar a los 36-37. Retiro entre los 38 y los 42 (obligatorio a los 42).
+  - De joven se pelea seguido (3 o 4 por año hasta los 26); después, lo normal es 1 a 3.
+  - El físico empieza a bajar de a poco a los 36. Hasta qué edad aguanta el cuerpo se sortea en cada carrera (casi siempre 39-43, a veces 38 o hasta 46).
+  - Lesiones: un nocaut te deja parado meses (más en las divisiones pesadas, que pegan más fuerte); en el campamento te podés lesionar y se cae la pelea. También podés rechazar una pelea y esperar otra oferta.
+  - UFC es la élite: promedio ~4 estrellas y top 10 ~4,5. El Contender Series es para pocos y una sola vez; la mayoría llega con contrato directo. Los eventos siguen la numeración real (UFC 333 en octubre de 2026, ~13 por año, más Fight Nights).
   - Máximo 4 peleas contra el mismo rival.
   - Promotoras por nivel (Samurai/Naciones 1,5 → LFA/Cage Warriors/KSW 3 → ONE/RIZIN 3,5): ganando, te llegan ofertas de promotoras mejores.
   - Caminos a UFC aleatorios: el campeón de una promotora fuerte puede recibir un contrato directo de 1 o 2 peleas, también hay llamados de último momento, el Contender Series o el Road to UFC, y PFL.

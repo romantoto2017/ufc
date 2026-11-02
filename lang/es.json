@@ -356,8 +356,8 @@
  "ev_contract_fights": "Contrato por {n} pelea(s).",
  "ev_short_notice": "¡Llamado de último momento! UFC necesita un reemplazo y te ofrece la pelea.",
  "ev_renewed": "{org} te renovó el contrato.",
- "ev_retire_forced": "A los 42 años llegó el momento: te retirás.",
- "ev_retire_option": "Tenés {age} años. La mayoría se retira entre los 38 y los 42. ¿Seguís peleando?",
+ "ev_retire_forced": "Tu cuerpo dijo basta a los {age} años: te retirás.",
+ "ev_retire_option": "Tenés {age} años. La mayoría se retira entre los 38 y los 43 (algunos aguantan hasta los 46). ¿Seguís peleando?",
  "keep_fighting": "Seguir peleando",
  "retire_now": "Retirarme",
  "career_over": "Fin de la carrera",
@@ -413,5 +413,10 @@
  "tier_3": "Legendaria",
  "tech_req": "Pide: {list}",
  "req_stars": "{n} estrellas",
- "factor_tech": "Habilidades"
+ "factor_tech": "Habilidades",
+ "decline_fight": "Rechazar",
+ "fight_declined": "Rechazaste la pelea. En unas semanas llega otra oferta.",
+ "ev_injury_layoff": "Saliste lastimado: vas a estar parado unos {n} meses.",
+ "news_fight_cancelled": "{name} se lesionó en el campamento y se cae su pelea.",
+ "injury_cancel": "Lesión seria en el campamento: se cae la pelea."
 }

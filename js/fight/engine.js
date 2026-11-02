@@ -1,6 +1,6 @@
 // Motor de pelea jugada: lógica pura, sin dibujo. Se puede ejecutar en Node (tests IA vs IA).
 import { movesForStyle } from './moves.js';
-import { randomSubmission } from '../sim.js';
+import { randomSubmission, DIV_POWER } from '../sim.js';
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 export const ARENA_W = 480;          // ancho del mundo en píxeles
@@ -339,6 +339,7 @@ export class Fight {
     let koPower = dmg * m.kd * power * (0.35 + D.dmg.head / 100 * 1.3);
     if (counter) koPower *= 1.5; // el golpe que no ves venir
     if (killer) koPower *= 1.2;
+    koPower *= 1 + ((DIV_POWER[A.data.division] || 1) - 1) * 0.6; // los pesados pegan más fuerte (algo moderado en la pelea jugada)
     const p = clamp((koPower - chin * 0.95) / (chin * 4.5), 0, 0.5);
     if (this.rng() >= p) return;
     const pKO = Math.pow(D.dmg.head / 100, 2) * 0.5 + (koPower > chin * 1.6 ? 0.35 : 0);

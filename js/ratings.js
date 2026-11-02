@@ -38,9 +38,10 @@ export function stars(attrs) {
 
 // Overall objetivo para un peleador UFC según ranking (0 = campeón, null = no rankeado).
 export function targetOverallFromRanking(ranking) {
-  if (ranking === 0) return 88;
-  if (ranking == null) return 67;
-  return 85.5 - (ranking - 1) * (85.5 - 72) / 14;
+  // UFC es la élite: el no rankeado promedio ronda 3,8 estrellas, el top 10 ~4,5 y el campeón ~4,9.
+  if (ranking === 0) return 90;
+  if (ranking == null) return 76;
+  return 88.5 - (ranking - 1) * (88.5 - 79.5) / 14;
 }
 
 function parseRecord(rec) {
@@ -61,7 +62,7 @@ export function deriveAttributes({ ranking, record, streak, style, age, ajustes 
   const winPct = w + l > 0 ? w / (w + l) : 0.5;
   target += (winPct - 0.8) * 6;
   if (elite) target = Math.max(target, ELITE_OVERALL);
-  else target = Math.min(target, ELITE_OVERALL - 1.5);
+  else if (ranking !== 0) target = Math.min(target, ELITE_OVERALL - 3.2); // sin ser élite (ni campeón), como mucho 4,5 estrellas
 
   const prof = STYLE_PROFILE[style] || {};
   const raw = {};
@@ -86,7 +87,7 @@ export function progressAfterFight(attrs, { won, expected, age }) {
   for (const a of ATTRS) out[a] = clamp(Math.round((out[a] + delta * (a === 'menton' && !won ? 1.4 : 1)) * 10) / 10, 20, 99);
   // El declive físico arranca a los 36-37 años.
   if (age >= 36) {
-    const decay = (age - 35) * 0.7;
+    const decay = 0.4 + (age - 36) * 0.15; // por pelea: el declive es gradual
     out.velocidad = clamp(out.velocidad - decay, 20, 99);
     out.cardio = clamp(out.cardio - decay * 0.8, 20, 99);
     out.menton = clamp(out.menton - decay * 0.5, 20, 99);

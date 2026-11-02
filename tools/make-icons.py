@@ -22,3 +22,6 @@ make(512, 0.62).save('assets/icons/icon-maskable-512.png')  # zona segura de los
 make(180, 0.84).save('assets/icons/apple-touch-icon.png')
 make(64, 0.9).save('assets/icons/favicon-64.png')
 make(32, 0.94).save('assets/icons/favicon-32.png')
+# Safari busca estos en la raíz si no encuentra el <link>
+make(180, 0.84).save('apple-touch-icon.png')
+make(180, 0.84).save('apple-touch-icon-precomposed.png')

@@ -356,8 +356,8 @@
  "ev_contract_fights": "{n}-fight deal.",
  "ev_short_notice": "Short-notice call! The UFC needs a replacement and offers you the fight.",
  "ev_renewed": "{org} renewed your contract.",
- "ev_retire_forced": "At 42 it's time: you retire.",
- "ev_retire_option": "You're {age}. Most fighters retire between 38 and 42. Keep fighting?",
+ "ev_retire_forced": "Your body says enough at {age}: you retire.",
+ "ev_retire_option": "You're {age}. Most retire between 38 and 43 (a few last until 46). Keep fighting?",
  "keep_fighting": "Keep fighting",
  "retire_now": "Retire",
  "career_over": "Career over",
@@ -413,5 +413,10 @@
  "tier_3": "Legendary",
  "tech_req": "Requires: {list}",
  "req_stars": "{n} stars",
- "factor_tech": "Skills"
+ "factor_tech": "Skills",
+ "decline_fight": "Decline",
+ "fight_declined": "You turned the fight down. Another offer will come in a few weeks.",
+ "ev_injury_layoff": "You got hurt: you'll be out for about {n} months.",
+ "news_fight_cancelled": "{name} got injured in camp and the fight is off.",
+ "injury_cancel": "Serious injury in camp: the fight is off."
 }

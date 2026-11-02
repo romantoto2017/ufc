@@ -53,6 +53,7 @@ test('carrera completa simulada: llega a UFC y el mundo UFC cambia', () => {
     stagesSeen.add(c.stage);
     makeOffer(c, ctx);
     while (train(c, ['boxeo', 'lucha', 'cardio', 'defensa', 'fuerza', 'velocidad', 'bjj', 'patadas'][Math.floor(rng() * 8)]).ok);
+    if (!c.offer) continue; // lesión en el campamento: se cayó la pelea
     const opp = opponentOf(c);
     const r = simulateFight(c.player, opp, { rounds: c.offer.rounds, rng });
     applyCareerFight(c, ctx, r);
@@ -64,12 +65,12 @@ test('carrera completa simulada: llega a UFC y el mundo UFC cambia', () => {
   assert.equal(c.stage, 'ufc');
   assert.ok(stars(c.player.atributos) > 2);
   assert.ok(c.ufc.some(f => f.id === 'player'));
-  const changed = c.ufc.filter(f => f.id !== 'player').some(f => { const o = fighters.find(x => x.id === f.id); return o && o.record !== f.record; });
+  const changed = c.ufc.filter(f => f.id !== 'player').some(f => { const o = fighters.find(x => x.id === f.id); return f.nuevo || (o && o.record !== f.record); });
   assert.ok(changed, 'el mundo UFC simuló peleas');
   console.log('campeón welter antes/después:', champBefore, '/', rankingTable(c, 'welter')[0]?.nombre);
 });
 
-test('realismo: ~1-2 peleas por año, máx. 3 en 12 meses, retiro antes de los 43, máx. 4 vs el mismo', () => {
+test('realismo: ~1-3 peleas por año, máx. 4 en 12 meses de joven, retiro antes de los 47, máx. 4 vs el mismo', () => {
   const p = createPlayer({ nombre: 'Test', pais: 'BR', edad: 22, division: 'ligero', altura: 176, alcance: 180, estilo: 'muay_thai', postura: 'ortodoxa', cara: {} });
   const c = newCareer({ player: p, promos, fighters, seed: 21 });
   const rng = seeded(4);
@@ -77,17 +78,18 @@ test('realismo: ~1-2 peleas por año, máx. 3 en 12 meses, retiro antes de los 4
     if (c.pendingContract) acceptContract(c);
     makeOffer(c, ctx);
     while (train(c, 'boxeo').ok);
+    if (!c.offer) continue; // lesión en el campamento: se cayó la pelea
     applyCareerFight(c, ctx, simulateFight(c.player, opponentOf(c), { rounds: c.offer.rounds, rng }));
   }
   assert.ok(c.retired, 'se retira');
-  assert.ok(c.player.edad <= 42);
+  assert.ok(c.player.edad <= 46);
   const dates = c.player.historial.map(h => h.fecha).sort();
-  for (let i = 3; i < dates.length; i++) assert.ok((new Date(dates[i]) - new Date(dates[i - 3])) / 864e5 > 365, 'máximo 3 peleas en 12 meses');
+  for (let i = 4; i < dates.length; i++) assert.ok((new Date(dates[i]) - new Date(dates[i - 4])) / 864e5 > 365, 'máximo 4 peleas en 12 meses (3 desde los 27)');
   const years = (new Date(c.date) - new Date('2026-10-13')) / 3.156e10;
   const perYear = c.player.historial.length / years;
-  assert.ok(perYear > 0.9 && perYear < 2.2, `peleas/año ${perYear}`);
+  assert.ok(perYear > 0.9 && perYear < 2.8, `peleas/año ${perYear}`);
   assert.ok(Math.max(...Object.values(c.vs)) <= 4);
-  assert.ok(!c.ufc.some(f => f.id === 'joshua-van' && f.edad > 42), 'los veteranos se retiran');
+  assert.ok(!c.ufc.some(f => f.id === 'joshua-van' && f.edad > 46), 'los veteranos se retiran');
 });
 
 test('récords creíbles: nada de récord perdedor en UFC ni en promotoras fuertes, y pocas peleas en el circuito nacional', () => {
@@ -129,6 +131,7 @@ test('escalera: ~5 peleas para la primera promotora, 10+ para UFC; las habilidad
       makeOffer(c, ctx);
       const before = c.player.puntos;
       while (train(c, 'boxeo').ok);
+      if (!c.offer) continue; // lesión en el campamento: se cayó la pelea
       assert.equal(c.player.puntos, before, 'entrenar no da puntos de habilidad');
       for (const k of Object.keys(TECHNIQUES)) learnTechnique(c, k);
       applyCareerFight(c, ctx, simulateFight(c.player, opponentOf(c), { rounds: c.offer.rounds, rng }));

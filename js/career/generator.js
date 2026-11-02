@@ -6,7 +6,7 @@ const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 // Rango de estrellas por nivel (escala pedida). El overall se obtiene invirtiendo la fórmula de estrellas.
 export const LEVEL_STARS = {
-  nacional: [1, 2.5], regional: [1.5, 3], dwcs: [3, 3.5], rtu: [2.75, 3.5], pfl: [3, 4], ufc: [3, 3.5],
+  nacional: [1, 2.5], regional: [1.5, 3], dwcs: [3, 3.6], rtu: [2.75, 3.5], pfl: [3.1, 4], ufc: [2.9, 4.3],
 };
 export const starsToOverall = s => 30 + (s - 0.5) * 62 / 4.5;
 

@@ -68,7 +68,12 @@ export function drawPerson(ctx, x, y, tipo, { armUp = false, t = 0, face = null,
   else { px(ctx, x + 8, y - 31, 4, 14, OUT); px(ctx, x + 9, y - 30, 2, 12, suit); px(ctx, x + 8, y - 18, 3, 3, tipo === 'ref' ? '#2a5bd7' : skin); }
   if (tipo === 'announcer') { px(ctx, x - 13, y - 24, 2, 7, '#333'); px(ctx, x - 14, y - 27, 4, 4, '#666'); }
   // Cabeza (o retrato del peleador)
-  if (face) { drawPortrait(ctx, face, x - 16, y - 58, 1); return; }
+  if (face) {
+    // Solo cabeza y cuello: los hombros desnudos del retrato tapaban la remera.
+    ctx.save(); ctx.beginPath(); ctx.rect(x - 16, y - 58, 32, 27); ctx.clip();
+    drawPortrait(ctx, face, x - 16, y - 58, 1);
+    ctx.restore(); return;
+  }
   px(ctx, x - 7, y - 46, 14, 15, OUT);
   px(ctx, x - 6, y - 45, 12, 13, skin);
   px(ctx, x + 3, y - 45, 3, 13, skinD);

@@ -75,13 +75,13 @@
    },
    "atributos": {
     "golpeo": 97,
-    "patadas": 81,
-    "grappling": 86,
-    "sumisiones": 81,
-    "defensa": 95,
-    "cardio": 91,
-    "menton": 96,
-    "velocidad": 95
+    "patadas": 84,
+    "grappling": 89,
+    "sumisiones": 84,
+    "defensa": 97,
+    "cardio": 94,
+    "menton": 97,
+    "velocidad": 97
    },
    "cara": {
     "piel": 2,
@@ -247,14 +247,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 75,
-    "grappling": 91,
+    "golpeo": 78,
+    "patadas": 79,
+    "grappling": 95,
     "sumisiones": 97,
-    "defensa": 85,
-    "cardio": 83,
-    "menton": 84,
-    "velocidad": 80
+    "defensa": 89,
+    "cardio": 87,
+    "menton": 88,
+    "velocidad": 84
    },
    "cara": {
     "piel": 1,
@@ -305,14 +305,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 73,
-    "grappling": 89,
+    "golpeo": 79,
+    "patadas": 78,
+    "grappling": 94,
     "sumisiones": 97,
-    "defensa": 82,
-    "cardio": 82,
-    "menton": 83,
-    "velocidad": 79
+    "defensa": 87,
+    "cardio": 87,
+    "menton": 88,
+    "velocidad": 84
    },
    "cara": {
     "piel": 1,
@@ -362,14 +362,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 73,
-    "patadas": 76,
-    "grappling": 92,
+    "golpeo": 77,
+    "patadas": 80,
+    "grappling": 96,
     "sumisiones": 97,
-    "defensa": 85,
-    "cardio": 85,
-    "menton": 85,
-    "velocidad": 82
+    "defensa": 89,
+    "cardio": 89,
+    "menton": 89,
+    "velocidad": 86
    },
    "cara": {
     "piel": 2,
@@ -419,14 +419,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 85,
-    "patadas": 89,
-    "grappling": 71,
-    "sumisiones": 67,
-    "defensa": 81,
-    "cardio": 79,
-    "menton": 80,
-    "velocidad": 82
+    "golpeo": 90,
+    "patadas": 94,
+    "grappling": 76,
+    "sumisiones": 72,
+    "defensa": 86,
+    "cardio": 84,
+    "menton": 85,
+    "velocidad": 87
    },
    "cara": {
     "piel": 0,
@@ -441,7 +441,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Lone'er_Kavanagh"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "ramazan-temirov",
@@ -473,14 +473,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 92,
-    "grappling": 76,
-    "sumisiones": 64,
-    "defensa": 80,
-    "cardio": 82,
-    "menton": 88,
-    "velocidad": 79
+    "golpeo": 82,
+    "patadas": 97,
+    "grappling": 81,
+    "sumisiones": 69,
+    "defensa": 85,
+    "cardio": 87,
+    "menton": 93,
+    "velocidad": 84
    },
    "cara": {
     "piel": 3,
@@ -499,7 +499,7 @@
     "racha",
     "metodosVictoria"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "kyoji-horiguchi",
@@ -531,14 +531,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 83,
-    "patadas": 87,
-    "grappling": 69,
-    "sumisiones": 66,
-    "defensa": 79,
-    "cardio": 77,
-    "menton": 79,
-    "velocidad": 80
+    "golpeo": 89,
+    "patadas": 93,
+    "grappling": 75,
+    "sumisiones": 72,
+    "defensa": 85,
+    "cardio": 83,
+    "menton": 85,
+    "velocidad": 86
    },
    "cara": {
     "piel": 1,
@@ -556,7 +556,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Kyoji_Horiguchi"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "amir-albazi",
@@ -588,14 +588,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 67,
-    "patadas": 67,
-    "grappling": 83,
+    "golpeo": 73,
+    "patadas": 73,
+    "grappling": 89,
     "sumisiones": 97,
-    "defensa": 76,
-    "cardio": 76,
-    "menton": 79,
-    "velocidad": 73
+    "defensa": 82,
+    "cardio": 82,
+    "menton": 85,
+    "velocidad": 79
    },
    "cara": {
     "piel": 2,
@@ -613,7 +613,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Amir_Albazi"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "brandon-moreno",
@@ -645,14 +645,14 @@
     "menton": 4
    },
    "atributos": {
-    "golpeo": 67,
-    "patadas": 68,
-    "grappling": 84,
+    "golpeo": 73,
+    "patadas": 74,
+    "grappling": 90,
     "sumisiones": 97,
-    "defensa": 77,
-    "cardio": 77,
-    "menton": 79,
-    "velocidad": 74
+    "defensa": 83,
+    "cardio": 83,
+    "menton": 85,
+    "velocidad": 80
    },
    "cara": {
     "piel": 2,
@@ -672,7 +672,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Brandon_Moreno"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "su-mudaerji",
@@ -704,14 +704,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 85,
-    "patadas": 85,
-    "grappling": 66,
-    "sumisiones": 61,
-    "defensa": 77,
-    "cardio": 75,
-    "menton": 80,
-    "velocidad": 78
+    "golpeo": 91,
+    "patadas": 91,
+    "grappling": 72,
+    "sumisiones": 67,
+    "defensa": 83,
+    "cardio": 81,
+    "menton": 86,
+    "velocidad": 84
    },
    "cara": {
     "piel": 2,
@@ -729,7 +729,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Su_Mudaerji"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "mitch-raposo",
@@ -761,14 +761,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 72,
-    "patadas": 87,
-    "grappling": 71,
-    "sumisiones": 59,
-    "defensa": 75,
-    "cardio": 77,
-    "menton": 83,
-    "velocidad": 74
+    "golpeo": 79,
+    "patadas": 94,
+    "grappling": 78,
+    "sumisiones": 66,
+    "defensa": 82,
+    "cardio": 84,
+    "menton": 90,
+    "velocidad": 81
    },
    "cara": {
     "piel": 2,
@@ -787,7 +787,7 @@
     "racha",
     "metodosVictoria"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "imanol-rodriguez",
@@ -819,14 +819,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 90,
-    "patadas": 85,
-    "grappling": 67,
-    "sumisiones": 63,
-    "defensa": 77,
-    "cardio": 75,
-    "menton": 80,
-    "velocidad": 78
+    "golpeo": 97,
+    "patadas": 92,
+    "grappling": 74,
+    "sumisiones": 70,
+    "defensa": 84,
+    "cardio": 82,
+    "menton": 87,
+    "velocidad": 85
    },
    "cara": {
     "piel": 2,
@@ -846,7 +846,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Imanol_Rodríguez"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "rei-tsuruya",
@@ -878,14 +878,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 86,
-    "grappling": 70,
-    "sumisiones": 58,
-    "defensa": 74,
-    "cardio": 76,
-    "menton": 82,
-    "velocidad": 73
+    "golpeo": 79,
+    "patadas": 94,
+    "grappling": 78,
+    "sumisiones": 66,
+    "defensa": 82,
+    "cardio": 84,
+    "menton": 90,
+    "velocidad": 81
    },
    "cara": {
     "piel": 2,
@@ -904,7 +904,7 @@
     "racha",
     "metodosVictoria"
    ],
-   "estrellas": 3.5
+   "estrellas": 4.5
   },
   {
    "id": "charles-johnson",
@@ -936,14 +936,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 66,
-    "patadas": 64,
-    "grappling": 78,
-    "sumisiones": 87,
-    "defensa": 74,
-    "cardio": 71,
-    "menton": 74,
-    "velocidad": 67
+    "golpeo": 73,
+    "patadas": 71,
+    "grappling": 85,
+    "sumisiones": 94,
+    "defensa": 81,
+    "cardio": 78,
+    "menton": 81,
+    "velocidad": 74
    },
    "cara": {
     "piel": 1,
@@ -961,7 +961,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Charles_Johnson_(fighter)"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "andre-lima",
@@ -993,14 +993,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 79,
-    "grappling": 64,
-    "sumisiones": 56,
-    "defensa": 67,
-    "cardio": 69,
-    "menton": 75,
-    "velocidad": 66
+    "golpeo": 80,
+    "patadas": 88,
+    "grappling": 73,
+    "sumisiones": 65,
+    "defensa": 76,
+    "cardio": 78,
+    "menton": 84,
+    "velocidad": 75
    },
    "cara": {
     "piel": 1,
@@ -1019,7 +1019,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/André_Lima_(fighter)"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "tagir-ulanbekov",
@@ -1051,14 +1051,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 55,
-    "patadas": 55,
-    "grappling": 83,
-    "sumisiones": 74,
-    "defensa": 68,
-    "cardio": 68,
-    "menton": 71,
-    "velocidad": 61
+    "golpeo": 64,
+    "patadas": 64,
+    "grappling": 92,
+    "sumisiones": 83,
+    "defensa": 77,
+    "cardio": 77,
+    "menton": 80,
+    "velocidad": 70
    },
    "cara": {
     "piel": 1,
@@ -1073,7 +1073,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Tagir_Ulanbekov"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "ronaldo-rodriguez",
@@ -1105,14 +1105,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 68,
-    "patadas": 76,
-    "grappling": 62,
-    "sumisiones": 57,
-    "defensa": 64,
-    "cardio": 66,
-    "menton": 72,
-    "velocidad": 63
+    "golpeo": 77,
+    "patadas": 85,
+    "grappling": 71,
+    "sumisiones": 66,
+    "defensa": 73,
+    "cardio": 75,
+    "menton": 81,
+    "velocidad": 72
    },
    "cara": {
     "piel": 3,
@@ -1132,7 +1132,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ronaldo_Rodríguez"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "alex-perez",
@@ -1164,14 +1164,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 58,
-    "patadas": 54,
-    "grappling": 80,
-    "sumisiones": 67,
-    "defensa": 67,
-    "cardio": 68,
-    "menton": 68,
-    "velocidad": 61
+    "golpeo": 67,
+    "patadas": 63,
+    "grappling": 89,
+    "sumisiones": 76,
+    "defensa": 76,
+    "cardio": 77,
+    "menton": 77,
+    "velocidad": 70
    },
    "cara": {
     "piel": 5,
@@ -1190,7 +1190,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Alex_Perez_(fighter)"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "kai-kara-france",
@@ -1222,14 +1222,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 57,
-    "grappling": 70,
-    "sumisiones": 77,
-    "defensa": 66,
-    "cardio": 66,
-    "menton": 66,
-    "velocidad": 63
+    "golpeo": 69,
+    "patadas": 66,
+    "grappling": 79,
+    "sumisiones": 86,
+    "defensa": 75,
+    "cardio": 75,
+    "menton": 75,
+    "velocidad": 72
    },
    "cara": {
     "piel": 2,
@@ -1245,7 +1245,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Kai_Kara-France"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "tim-elliott",
@@ -1277,14 +1277,14 @@
     "menton": 4
    },
    "atributos": {
-    "golpeo": 56,
-    "patadas": 59,
-    "grappling": 74,
-    "sumisiones": 87,
-    "defensa": 69,
-    "cardio": 62,
-    "menton": 70,
-    "velocidad": 56
+    "golpeo": 65,
+    "patadas": 68,
+    "grappling": 83,
+    "sumisiones": 96,
+    "defensa": 78,
+    "cardio": 71,
+    "menton": 79,
+    "velocidad": 65
    },
    "cara": {
     "piel": 1,
@@ -1300,7 +1300,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Tim_Elliott"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "joseph-morales",
@@ -1332,14 +1332,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 54,
-    "patadas": 57,
-    "grappling": 74,
-    "sumisiones": 91,
-    "defensa": 66,
-    "cardio": 66,
-    "menton": 66,
-    "velocidad": 63
+    "golpeo": 63,
+    "patadas": 66,
+    "grappling": 83,
+    "sumisiones": 97,
+    "defensa": 75,
+    "cardio": 75,
+    "menton": 75,
+    "velocidad": 72
    },
    "cara": {
     "piel": 4,
@@ -1358,7 +1358,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Joseph_Morales_(fighter)"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "alessandro-costa",
@@ -1390,14 +1390,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 79,
-    "grappling": 66,
-    "sumisiones": 64,
-    "defensa": 67,
-    "cardio": 69,
-    "menton": 69,
-    "velocidad": 66
+    "golpeo": 80,
+    "patadas": 88,
+    "grappling": 75,
+    "sumisiones": 73,
+    "defensa": 76,
+    "cardio": 78,
+    "menton": 78,
+    "velocidad": 75
    },
    "cara": {
     "piel": 1,
@@ -1416,7 +1416,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Alessandro_Costa_(fighter)"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "park-hyun-sung",
@@ -1448,14 +1448,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 57,
-    "patadas": 55,
-    "grappling": 71,
-    "sumisiones": 87,
-    "defensa": 64,
-    "cardio": 64,
-    "menton": 67,
-    "velocidad": 61
+    "golpeo": 66,
+    "patadas": 64,
+    "grappling": 80,
+    "sumisiones": 96,
+    "defensa": 73,
+    "cardio": 73,
+    "menton": 76,
+    "velocidad": 70
    },
    "cara": {
     "piel": 1,
@@ -1474,7 +1474,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Park_Hyun-sung"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "steve-erceg",
@@ -1506,14 +1506,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 63,
-    "patadas": 76,
-    "grappling": 63,
-    "sumisiones": 61,
-    "defensa": 64,
-    "cardio": 66,
-    "menton": 68,
-    "velocidad": 63
+    "golpeo": 72,
+    "patadas": 85,
+    "grappling": 72,
+    "sumisiones": 70,
+    "defensa": 73,
+    "cardio": 75,
+    "menton": 77,
+    "velocidad": 72
    },
    "cara": {
     "piel": 1,
@@ -1532,7 +1532,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Steve_Erceg"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "cody-durden",
@@ -1564,14 +1564,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 58,
-    "patadas": 57,
-    "grappling": 72,
-    "sumisiones": 83,
-    "defensa": 67,
-    "cardio": 64,
-    "menton": 66,
-    "velocidad": 60
+    "golpeo": 67,
+    "patadas": 66,
+    "grappling": 81,
+    "sumisiones": 92,
+    "defensa": 76,
+    "cardio": 73,
+    "menton": 75,
+    "velocidad": 69
    },
    "cara": {
     "piel": 3,
@@ -1586,7 +1586,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Cody_Durden"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "edgar-chairez",
@@ -1618,14 +1618,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 55,
-    "patadas": 55,
-    "grappling": 72,
-    "sumisiones": 91,
-    "defensa": 64,
-    "cardio": 64,
-    "menton": 67,
-    "velocidad": 61
+    "golpeo": 64,
+    "patadas": 64,
+    "grappling": 81,
+    "sumisiones": 97,
+    "defensa": 73,
+    "cardio": 73,
+    "menton": 76,
+    "velocidad": 70
    },
    "cara": {
     "piel": 2,
@@ -1645,7 +1645,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Édgar_Cháirez"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "petr-yan",
@@ -1678,13 +1678,13 @@
    },
    "atributos": {
     "golpeo": 97,
-    "patadas": 81,
-    "grappling": 85,
-    "sumisiones": 79,
-    "defensa": 95,
-    "cardio": 91,
+    "patadas": 84,
+    "grappling": 88,
+    "sumisiones": 82,
+    "defensa": 97,
+    "cardio": 94,
     "menton": 97,
-    "velocidad": 95
+    "velocidad": 97
    },
    "cara": {
     "piel": 1,
@@ -1789,14 +1789,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 88,
-    "patadas": 96,
-    "grappling": 81,
-    "sumisiones": 73,
-    "defensa": 84,
-    "cardio": 86,
-    "menton": 89,
-    "velocidad": 83
+    "golpeo": 90,
+    "patadas": 97,
+    "grappling": 83,
+    "sumisiones": 75,
+    "defensa": 86,
+    "cardio": 88,
+    "menton": 91,
+    "velocidad": 85
    },
    "cara": {
     "piel": 1,
@@ -1846,14 +1846,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 94,
-    "patadas": 94,
-    "grappling": 75,
-    "sumisiones": 70,
-    "defensa": 86,
-    "cardio": 84,
-    "menton": 87,
-    "velocidad": 87
+    "golpeo": 96,
+    "patadas": 96,
+    "grappling": 77,
+    "sumisiones": 72,
+    "defensa": 88,
+    "cardio": 86,
+    "menton": 89,
+    "velocidad": 89
    },
    "cara": {
     "piel": 0,
@@ -1907,14 +1907,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 76,
-    "grappling": 91,
+    "golpeo": 78,
+    "patadas": 80,
+    "grappling": 95,
     "sumisiones": 97,
-    "defensa": 85,
-    "cardio": 85,
-    "menton": 86,
-    "velocidad": 82
+    "defensa": 89,
+    "cardio": 89,
+    "menton": 90,
+    "velocidad": 86
    },
    "cara": {
     "piel": 2,
@@ -1965,14 +1965,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 70,
+    "golpeo": 76,
+    "patadas": 75,
     "grappling": 97,
-    "sumisiones": 85,
-    "defensa": 82,
-    "cardio": 85,
-    "menton": 84,
-    "velocidad": 79
+    "sumisiones": 90,
+    "defensa": 87,
+    "cardio": 90,
+    "menton": 89,
+    "velocidad": 84
    },
    "cara": {
     "piel": 1,
@@ -1990,7 +1990,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Umar_Nurmagomedov"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "cory-sandhagen",
@@ -2022,14 +2022,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 84,
-    "patadas": 87,
-    "grappling": 69,
-    "sumisiones": 66,
-    "defensa": 80,
-    "cardio": 76,
-    "menton": 82,
-    "velocidad": 79
+    "golpeo": 89,
+    "patadas": 92,
+    "grappling": 74,
+    "sumisiones": 71,
+    "defensa": 85,
+    "cardio": 81,
+    "menton": 87,
+    "velocidad": 83
    },
    "cara": {
     "piel": 1,
@@ -2047,7 +2047,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Cory_Sandhagen"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "david-martinez",
@@ -2079,14 +2079,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 93,
-    "patadas": 92,
-    "grappling": 73,
-    "sumisiones": 66,
-    "defensa": 84,
-    "cardio": 82,
-    "menton": 87,
-    "velocidad": 85
+    "golpeo": 97,
+    "patadas": 96,
+    "grappling": 77,
+    "sumisiones": 70,
+    "defensa": 88,
+    "cardio": 86,
+    "menton": 91,
+    "velocidad": 89
    },
    "cara": {
     "piel": 2,
@@ -2137,14 +2137,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 72,
-    "patadas": 73,
-    "grappling": 89,
+    "golpeo": 78,
+    "patadas": 79,
+    "grappling": 95,
     "sumisiones": 97,
-    "defensa": 82,
-    "cardio": 82,
-    "menton": 85,
-    "velocidad": 79
+    "defensa": 88,
+    "cardio": 88,
+    "menton": 91,
+    "velocidad": 85
    },
    "cara": {
     "piel": 2,
@@ -2194,14 +2194,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 70,
-    "patadas": 70,
+    "golpeo": 76,
+    "patadas": 76,
     "grappling": 97,
-    "sumisiones": 86,
-    "defensa": 82,
-    "cardio": 85,
-    "menton": 86,
-    "velocidad": 79
+    "sumisiones": 92,
+    "defensa": 88,
+    "cardio": 91,
+    "menton": 92,
+    "velocidad": 85
    },
    "cara": {
     "piel": 4,
@@ -2220,7 +2220,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Farid_Basharat"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "marcus-mcghee",
@@ -2252,14 +2252,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 89,
-    "patadas": 87,
-    "grappling": 69,
-    "sumisiones": 64,
-    "defensa": 80,
-    "cardio": 74,
-    "menton": 82,
-    "velocidad": 76
+    "golpeo": 95,
+    "patadas": 93,
+    "grappling": 75,
+    "sumisiones": 70,
+    "defensa": 86,
+    "cardio": 80,
+    "menton": 88,
+    "velocidad": 82
    },
    "cara": {
     "piel": 4,
@@ -2278,7 +2278,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Marcus_McGhee"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "payton-talbott",
@@ -2310,14 +2310,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 88,
-    "patadas": 87,
-    "grappling": 69,
-    "sumisiones": 64,
-    "defensa": 79,
-    "cardio": 77,
-    "menton": 82,
-    "velocidad": 80
+    "golpeo": 94,
+    "patadas": 93,
+    "grappling": 75,
+    "sumisiones": 70,
+    "defensa": 85,
+    "cardio": 83,
+    "menton": 88,
+    "velocidad": 86
    },
    "cara": {
     "piel": 3,
@@ -2336,7 +2336,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Payton_Talbott"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "montel-jackson",
@@ -2368,14 +2368,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 72,
-    "patadas": 67,
-    "grappling": 79,
-    "sumisiones": 85,
-    "defensa": 77,
-    "cardio": 75,
-    "menton": 79,
-    "velocidad": 72
+    "golpeo": 79,
+    "patadas": 74,
+    "grappling": 86,
+    "sumisiones": 92,
+    "defensa": 84,
+    "cardio": 82,
+    "menton": 86,
+    "velocidad": 78
    },
    "cara": {
     "piel": 5,
@@ -2394,7 +2394,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Montel_Jackson"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "aiemann-zahabi",
@@ -2426,14 +2426,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 69,
-    "patadas": 66,
-    "grappling": 79,
-    "sumisiones": 87,
-    "defensa": 76,
-    "cardio": 70,
-    "menton": 73,
-    "velocidad": 65
+    "golpeo": 76,
+    "patadas": 73,
+    "grappling": 86,
+    "sumisiones": 94,
+    "defensa": 83,
+    "cardio": 77,
+    "menton": 80,
+    "velocidad": 72
    },
    "cara": {
     "piel": 0,
@@ -2451,7 +2451,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Aiemann_Zahabi"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "marlon-vera",
@@ -2483,14 +2483,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 65,
-    "patadas": 63,
-    "grappling": 78,
-    "sumisiones": 92,
-    "defensa": 72,
-    "cardio": 72,
-    "menton": 75,
-    "velocidad": 69
+    "golpeo": 73,
+    "patadas": 71,
+    "grappling": 86,
+    "sumisiones": 97,
+    "defensa": 80,
+    "cardio": 80,
+    "menton": 83,
+    "velocidad": 77
    },
    "cara": {
     "piel": 2,
@@ -2509,7 +2509,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Marlon_Vera"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "bryce-mitchell",
@@ -2541,14 +2541,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 61,
-    "patadas": 65,
-    "grappling": 81,
+    "golpeo": 69,
+    "patadas": 73,
+    "grappling": 89,
     "sumisiones": 97,
-    "defensa": 74,
-    "cardio": 74,
-    "menton": 75,
-    "velocidad": 71
+    "defensa": 82,
+    "cardio": 82,
+    "menton": 83,
+    "velocidad": 79
    },
    "cara": {
     "piel": 1,
@@ -2563,7 +2563,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Bryce_Mitchell"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "kai-asakura",
@@ -2595,14 +2595,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 66,
-    "patadas": 59,
-    "grappling": 72,
-    "sumisiones": 79,
-    "defensa": 68,
-    "cardio": 68,
-    "menton": 67,
-    "velocidad": 65
+    "golpeo": 75,
+    "patadas": 68,
+    "grappling": 81,
+    "sumisiones": 88,
+    "defensa": 77,
+    "cardio": 77,
+    "menton": 76,
+    "velocidad": 74
    },
    "cara": {
     "piel": 1,
@@ -2618,7 +2618,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Kai_Asakura"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "cristian-quinonez",
@@ -2650,14 +2650,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 72,
-    "patadas": 78,
-    "grappling": 63,
-    "sumisiones": 55,
-    "defensa": 66,
-    "cardio": 68,
-    "menton": 70,
-    "velocidad": 65
+    "golpeo": 81,
+    "patadas": 87,
+    "grappling": 72,
+    "sumisiones": 64,
+    "defensa": 75,
+    "cardio": 77,
+    "menton": 79,
+    "velocidad": 74
    },
    "cara": {
     "piel": 2,
@@ -2677,7 +2677,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Cristian_Quiñónez"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "juan-diaz",
@@ -2709,14 +2709,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 63,
-    "patadas": 59,
-    "grappling": 85,
-    "sumisiones": 69,
-    "defensa": 71,
-    "cardio": 74,
-    "menton": 75,
-    "velocidad": 68
+    "golpeo": 72,
+    "patadas": 68,
+    "grappling": 94,
+    "sumisiones": 78,
+    "defensa": 80,
+    "cardio": 83,
+    "menton": 84,
+    "velocidad": 77
    },
    "cara": {
     "piel": 2,
@@ -2736,7 +2736,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Juan_Díaz_(fighter)"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "victor-henry",
@@ -2768,14 +2768,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 69,
-    "patadas": 79,
-    "grappling": 66,
-    "sumisiones": 61,
-    "defensa": 68,
-    "cardio": 63,
-    "menton": 75,
-    "velocidad": 57
+    "golpeo": 78,
+    "patadas": 88,
+    "grappling": 75,
+    "sumisiones": 70,
+    "defensa": 77,
+    "cardio": 72,
+    "menton": 84,
+    "velocidad": 66
    },
    "cara": {
     "piel": 0,
@@ -2793,7 +2793,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Victor_Henry_(fighter)"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "deiveson-figueiredo",
@@ -2825,14 +2825,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 57,
-    "patadas": 56,
-    "grappling": 71,
-    "sumisiones": 83,
-    "defensa": 66,
-    "cardio": 60,
-    "menton": 64,
-    "velocidad": 55
+    "golpeo": 66,
+    "patadas": 65,
+    "grappling": 80,
+    "sumisiones": 92,
+    "defensa": 75,
+    "cardio": 69,
+    "menton": 73,
+    "velocidad": 64
    },
    "cara": {
     "piel": 2,
@@ -2852,7 +2852,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Deiveson_Figueiredo"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "jakub-wikacz",
@@ -2884,14 +2884,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 56,
-    "patadas": 61,
-    "grappling": 78,
-    "sumisiones": 96,
-    "defensa": 70,
-    "cardio": 70,
-    "menton": 69,
-    "velocidad": 67
+    "golpeo": 66,
+    "patadas": 71,
+    "grappling": 88,
+    "sumisiones": 97,
+    "defensa": 80,
+    "cardio": 80,
+    "menton": 79,
+    "velocidad": 77
    },
    "cara": {
     "piel": 2,
@@ -2906,7 +2906,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jakub_Wikłacz"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "raoni-barcelos",
@@ -2938,14 +2938,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 61,
-    "patadas": 56,
-    "grappling": 81,
-    "sumisiones": 65,
-    "defensa": 69,
-    "cardio": 65,
-    "menton": 69,
-    "velocidad": 56
+    "golpeo": 70,
+    "patadas": 65,
+    "grappling": 90,
+    "sumisiones": 74,
+    "defensa": 78,
+    "cardio": 74,
+    "menton": 78,
+    "velocidad": 65
    },
    "cara": {
     "piel": 3,
@@ -2960,7 +2960,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Raoni_Barcelos"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "chris-gutierrez",
@@ -2992,14 +2992,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 58,
-    "grappling": 70,
-    "sumisiones": 76,
-    "defensa": 68,
-    "cardio": 65,
-    "menton": 70,
-    "velocidad": 61
+    "golpeo": 69,
+    "patadas": 67,
+    "grappling": 79,
+    "sumisiones": 85,
+    "defensa": 77,
+    "cardio": 74,
+    "menton": 79,
+    "velocidad": 70
    },
    "cara": {
     "piel": 2,
@@ -3018,7 +3018,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Chris_Gutiérrez"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "ricky-simon",
@@ -3050,14 +3050,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 59,
-    "patadas": 58,
-    "grappling": 71,
-    "sumisiones": 80,
-    "defensa": 68,
-    "cardio": 66,
-    "menton": 66,
-    "velocidad": 62
+    "golpeo": 68,
+    "patadas": 67,
+    "grappling": 80,
+    "sumisiones": 89,
+    "defensa": 77,
+    "cardio": 75,
+    "menton": 75,
+    "velocidad": 71
    },
    "cara": {
     "piel": 0,
@@ -3076,7 +3076,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ricky_Simón"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "alateng-heili",
@@ -3108,14 +3108,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 56,
-    "grappling": 81,
-    "sumisiones": 65,
-    "defensa": 69,
-    "cardio": 70,
-    "menton": 68,
-    "velocidad": 63
+    "golpeo": 69,
+    "patadas": 65,
+    "grappling": 90,
+    "sumisiones": 74,
+    "defensa": 78,
+    "cardio": 79,
+    "menton": 77,
+    "velocidad": 72
    },
    "cara": {
     "piel": 1,
@@ -3133,7 +3133,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Alateng_Heili"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "said-nurmagomedov",
@@ -3165,14 +3165,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 64,
-    "patadas": 75,
-    "grappling": 62,
-    "sumisiones": 57,
-    "defensa": 64,
-    "cardio": 64,
-    "menton": 71,
-    "velocidad": 61
+    "golpeo": 73,
+    "patadas": 84,
+    "grappling": 71,
+    "sumisiones": 66,
+    "defensa": 73,
+    "cardio": 73,
+    "menton": 80,
+    "velocidad": 70
    },
    "cara": {
     "piel": 1,
@@ -3191,7 +3191,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Said_Nurmagomedov"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "jonathan-martinez",
@@ -3223,14 +3223,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 59,
-    "patadas": 56,
-    "grappling": 69,
-    "sumisiones": 76,
-    "defensa": 65,
-    "cardio": 65,
-    "menton": 66,
-    "velocidad": 62
+    "golpeo": 68,
+    "patadas": 65,
+    "grappling": 78,
+    "sumisiones": 85,
+    "defensa": 74,
+    "cardio": 74,
+    "menton": 75,
+    "velocidad": 71
    },
    "cara": {
     "piel": 1,
@@ -3249,7 +3249,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jonathan_Martinez"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "alexander-volkanovski",
@@ -3283,12 +3283,12 @@
    "atributos": {
     "golpeo": 97,
     "patadas": 97,
-    "grappling": 84,
-    "sumisiones": 80,
-    "defensa": 95,
-    "cardio": 87,
-    "menton": 93,
-    "velocidad": 87
+    "grappling": 85,
+    "sumisiones": 81,
+    "defensa": 96,
+    "cardio": 88,
+    "menton": 94,
+    "velocidad": 89
    },
    "cara": {
     "piel": 1,
@@ -3335,14 +3335,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 82,
-    "patadas": 80,
+    "golpeo": 85,
+    "patadas": 83,
     "grappling": 97,
-    "sumisiones": 91,
-    "defensa": 92,
-    "cardio": 95,
-    "menton": 96,
-    "velocidad": 89
+    "sumisiones": 94,
+    "defensa": 95,
+    "cardio": 97,
+    "menton": 97,
+    "velocidad": 92
    },
    "cara": {
     "piel": 1,
@@ -3392,14 +3392,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 79,
-    "patadas": 76,
-    "grappling": 91,
+    "golpeo": 82,
+    "patadas": 79,
+    "grappling": 94,
     "sumisiones": 97,
-    "defensa": 85,
-    "cardio": 85,
-    "menton": 86,
-    "velocidad": 82
+    "defensa": 88,
+    "cardio": 88,
+    "menton": 89,
+    "velocidad": 85
    },
    "cara": {
     "piel": 2,
@@ -3447,14 +3447,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 79,
-    "patadas": 76,
-    "grappling": 88,
-    "sumisiones": 92,
-    "defensa": 86,
-    "cardio": 83,
-    "menton": 88,
-    "velocidad": 79
+    "golpeo": 82,
+    "patadas": 79,
+    "grappling": 91,
+    "sumisiones": 95,
+    "defensa": 89,
+    "cardio": 86,
+    "menton": 91,
+    "velocidad": 82
    },
    "cara": {
     "piel": 3,
@@ -3504,14 +3504,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 75,
-    "patadas": 78,
-    "grappling": 92,
+    "golpeo": 78,
+    "patadas": 81,
+    "grappling": 95,
     "sumisiones": 97,
-    "defensa": 88,
-    "cardio": 83,
-    "menton": 87,
-    "velocidad": 78
+    "defensa": 91,
+    "cardio": 86,
+    "menton": 90,
+    "velocidad": 81
    },
    "cara": {
     "piel": 4,
@@ -3558,14 +3558,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 92,
-    "patadas": 91,
-    "grappling": 74,
-    "sumisiones": 72,
-    "defensa": 83,
-    "cardio": 81,
-    "menton": 84,
-    "velocidad": 84
+    "golpeo": 96,
+    "patadas": 95,
+    "grappling": 78,
+    "sumisiones": 76,
+    "defensa": 87,
+    "cardio": 85,
+    "menton": 88,
+    "velocidad": 88
    },
    "cara": {
     "piel": 2,
@@ -3618,14 +3618,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 73,
-    "grappling": 87,
-    "sumisiones": 95,
-    "defensa": 82,
-    "cardio": 82,
-    "menton": 85,
-    "velocidad": 79
+    "golpeo": 79,
+    "patadas": 78,
+    "grappling": 92,
+    "sumisiones": 97,
+    "defensa": 87,
+    "cardio": 87,
+    "menton": 90,
+    "velocidad": 84
    },
    "cara": {
     "piel": 1,
@@ -3643,7 +3643,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Arnold_Allen"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "pat-sabatini",
@@ -3675,14 +3675,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 75,
-    "grappling": 91,
+    "golpeo": 77,
+    "patadas": 81,
+    "grappling": 97,
     "sumisiones": 97,
-    "defensa": 85,
-    "cardio": 82,
-    "menton": 82,
-    "velocidad": 78
+    "defensa": 91,
+    "cardio": 88,
+    "menton": 88,
+    "velocidad": 84
    },
    "cara": {
     "piel": 1,
@@ -3732,14 +3732,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 78,
-    "patadas": 93,
-    "grappling": 77,
-    "sumisiones": 65,
-    "defensa": 81,
-    "cardio": 83,
-    "menton": 89,
-    "velocidad": 80
+    "golpeo": 83,
+    "patadas": 97,
+    "grappling": 82,
+    "sumisiones": 70,
+    "defensa": 86,
+    "cardio": 88,
+    "menton": 94,
+    "velocidad": 85
    },
    "cara": {
     "piel": 1,
@@ -3758,7 +3758,7 @@
     "racha",
     "metodosVictoria"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "youssef-zalal",
@@ -3790,14 +3790,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 66,
-    "patadas": 67,
-    "grappling": 83,
+    "golpeo": 72,
+    "patadas": 73,
+    "grappling": 89,
     "sumisiones": 97,
-    "defensa": 76,
-    "cardio": 76,
-    "menton": 79,
-    "velocidad": 73
+    "defensa": 82,
+    "cardio": 82,
+    "menton": 85,
+    "velocidad": 79
    },
    "cara": {
     "piel": 2,
@@ -3812,7 +3812,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Youssef_Zalal"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "kevin-vallejos",
@@ -3844,14 +3844,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 90,
-    "patadas": 88,
-    "grappling": 70,
-    "sumisiones": 66,
-    "defensa": 80,
-    "cardio": 78,
-    "menton": 83,
-    "velocidad": 81
+    "golpeo": 96,
+    "patadas": 94,
+    "grappling": 76,
+    "sumisiones": 72,
+    "defensa": 86,
+    "cardio": 84,
+    "menton": 89,
+    "velocidad": 87
    },
    "cara": {
     "piel": 2,
@@ -3870,7 +3870,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Kevin_Vallejos"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "joanderson-brito",
@@ -3902,14 +3902,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 80,
-    "patadas": 87,
-    "grappling": 74,
-    "sumisiones": 72,
-    "defensa": 75,
-    "cardio": 77,
-    "menton": 81,
-    "velocidad": 74
+    "golpeo": 86,
+    "patadas": 93,
+    "grappling": 80,
+    "sumisiones": 78,
+    "defensa": 81,
+    "cardio": 83,
+    "menton": 87,
+    "velocidad": 80
    },
    "cara": {
     "piel": 2,
@@ -3928,7 +3928,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Joanderson_Brito"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "melquizael-costa",
@@ -3960,14 +3960,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 66,
-    "patadas": 65,
-    "grappling": 79,
-    "sumisiones": 91,
-    "defensa": 74,
-    "cardio": 74,
-    "menton": 74,
-    "velocidad": 71
+    "golpeo": 73,
+    "patadas": 72,
+    "grappling": 86,
+    "sumisiones": 97,
+    "defensa": 81,
+    "cardio": 81,
+    "menton": 81,
+    "velocidad": 78
    },
    "cara": {
     "piel": 4,
@@ -3982,7 +3982,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Melquizael_Costa"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "steve-garcia",
@@ -4014,14 +4014,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 84,
-    "patadas": 81,
-    "grappling": 62,
-    "sumisiones": 55,
-    "defensa": 74,
-    "cardio": 70,
-    "menton": 73,
-    "velocidad": 73
+    "golpeo": 91,
+    "patadas": 88,
+    "grappling": 69,
+    "sumisiones": 62,
+    "defensa": 81,
+    "cardio": 77,
+    "menton": 80,
+    "velocidad": 80
    },
    "cara": {
     "piel": 1,
@@ -4040,7 +4040,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Steve_Garcia"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "aaron-pico",
@@ -4072,14 +4072,14 @@
     "menton": -4
    },
    "atributos": {
-    "golpeo": 72,
-    "patadas": 62,
-    "grappling": 87,
-    "sumisiones": 71,
-    "defensa": 74,
-    "cardio": 77,
-    "menton": 69,
-    "velocidad": 71
+    "golpeo": 79,
+    "patadas": 69,
+    "grappling": 94,
+    "sumisiones": 78,
+    "defensa": 81,
+    "cardio": 84,
+    "menton": 76,
+    "velocidad": 78
    },
    "cara": {
     "piel": 2,
@@ -4099,7 +4099,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Aaron_Pico"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "jamall-emmers",
@@ -4131,14 +4131,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 69,
-    "patadas": 66,
-    "grappling": 79,
-    "sumisiones": 86,
-    "defensa": 76,
-    "cardio": 71,
-    "menton": 74,
-    "velocidad": 66
+    "golpeo": 77,
+    "patadas": 74,
+    "grappling": 87,
+    "sumisiones": 94,
+    "defensa": 84,
+    "cardio": 79,
+    "menton": 82,
+    "velocidad": 74
    },
    "cara": {
     "piel": 0,
@@ -4156,7 +4156,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jamall_Emmers"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "vinicius-oliveira",
@@ -4188,14 +4188,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 78,
-    "patadas": 76,
-    "grappling": 58,
-    "sumisiones": 53,
-    "defensa": 68,
-    "cardio": 66,
-    "menton": 67,
-    "velocidad": 69
+    "golpeo": 87,
+    "patadas": 85,
+    "grappling": 67,
+    "sumisiones": 62,
+    "defensa": 77,
+    "cardio": 75,
+    "menton": 76,
+    "velocidad": 78
    },
    "cara": {
     "piel": 3,
@@ -4214,7 +4214,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Vinicius_Oliveira"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "patricio-pitbull",
@@ -4246,14 +4246,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 61,
-    "patadas": 60,
-    "grappling": 75,
-    "sumisiones": 86,
-    "defensa": 70,
-    "cardio": 63,
-    "menton": 70,
-    "velocidad": 57
+    "golpeo": 70,
+    "patadas": 69,
+    "grappling": 84,
+    "sumisiones": 95,
+    "defensa": 79,
+    "cardio": 72,
+    "menton": 79,
+    "velocidad": 66
    },
    "cara": {
     "piel": 2,
@@ -4273,7 +4273,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Patrício_Pitbull"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "felipe-lima",
@@ -4305,14 +4305,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 56,
-    "grappling": 82,
-    "sumisiones": 67,
-    "defensa": 68,
-    "cardio": 71,
-    "menton": 72,
-    "velocidad": 65
+    "golpeo": 69,
+    "patadas": 65,
+    "grappling": 91,
+    "sumisiones": 76,
+    "defensa": 77,
+    "cardio": 80,
+    "menton": 81,
+    "velocidad": 74
    },
    "cara": {
     "piel": 2,
@@ -4330,7 +4330,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Felipe_Lima_(fighter)"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "sean-woodson",
@@ -4362,14 +4362,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 61,
-    "patadas": 61,
-    "grappling": 74,
-    "sumisiones": 80,
-    "defensa": 71,
-    "cardio": 69,
-    "menton": 70,
-    "velocidad": 65
+    "golpeo": 70,
+    "patadas": 70,
+    "grappling": 83,
+    "sumisiones": 89,
+    "defensa": 80,
+    "cardio": 78,
+    "menton": 79,
+    "velocidad": 74
    },
    "cara": {
     "piel": 5,
@@ -4387,7 +4387,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Sean_Woodson"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "douglas-silva-de-andrade",
@@ -4419,14 +4419,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 81,
-    "patadas": 56,
-    "grappling": 61,
-    "sumisiones": 55,
-    "defensa": 71,
-    "cardio": 58,
-    "menton": 71,
-    "velocidad": 58
+    "golpeo": 90,
+    "patadas": 65,
+    "grappling": 70,
+    "sumisiones": 64,
+    "defensa": 80,
+    "cardio": 67,
+    "menton": 80,
+    "velocidad": 67
    },
    "cara": {
     "piel": 3,
@@ -4445,7 +4445,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Douglas_Silva_de_Andrade"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "andre-fili",
@@ -4477,14 +4477,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 62,
-    "patadas": 56,
-    "grappling": 81,
-    "sumisiones": 64,
-    "defensa": 69,
-    "cardio": 68,
-    "menton": 67,
-    "velocidad": 61
+    "golpeo": 71,
+    "patadas": 65,
+    "grappling": 90,
+    "sumisiones": 73,
+    "defensa": 78,
+    "cardio": 77,
+    "menton": 76,
+    "velocidad": 70
    },
    "cara": {
     "piel": 1,
@@ -4504,7 +4504,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Andre_Fili"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "miles-johns",
@@ -4536,14 +4536,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 56,
-    "grappling": 81,
-    "sumisiones": 64,
-    "defensa": 68,
-    "cardio": 71,
-    "menton": 70,
-    "velocidad": 65
+    "golpeo": 69,
+    "patadas": 65,
+    "grappling": 90,
+    "sumisiones": 73,
+    "defensa": 77,
+    "cardio": 80,
+    "menton": 79,
+    "velocidad": 74
    },
    "cara": {
     "piel": 1,
@@ -4561,7 +4561,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Miles_Johns"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "losene-keita",
@@ -4593,14 +4593,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 77,
-    "grappling": 58,
-    "sumisiones": 51,
-    "defensa": 69,
-    "cardio": 67,
-    "menton": 70,
-    "velocidad": 70
+    "golpeo": 86,
+    "patadas": 86,
+    "grappling": 67,
+    "sumisiones": 60,
+    "defensa": 78,
+    "cardio": 76,
+    "menton": 79,
+    "velocidad": 79
    },
    "cara": {
     "piel": 2,
@@ -4620,7 +4620,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Losene_Keita"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "nathaniel-wood",
@@ -4652,14 +4652,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 59,
-    "patadas": 58,
-    "grappling": 72,
-    "sumisiones": 81,
-    "defensa": 67,
-    "cardio": 67,
-    "menton": 67,
-    "velocidad": 64
+    "golpeo": 68,
+    "patadas": 67,
+    "grappling": 81,
+    "sumisiones": 90,
+    "defensa": 76,
+    "cardio": 76,
+    "menton": 76,
+    "velocidad": 73
    },
    "cara": {
     "piel": 1,
@@ -4678,7 +4678,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Nathaniel_Wood_(fighter)"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "julian-erosa",
@@ -4710,14 +4710,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 59,
-    "patadas": 57,
-    "grappling": 73,
-    "sumisiones": 87,
-    "defensa": 67,
-    "cardio": 62,
-    "menton": 62,
-    "velocidad": 57
+    "golpeo": 68,
+    "patadas": 66,
+    "grappling": 82,
+    "sumisiones": 96,
+    "defensa": 76,
+    "cardio": 71,
+    "menton": 71,
+    "velocidad": 66
    },
    "cara": {
     "piel": 1,
@@ -4735,7 +4735,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Julian_Erosa"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "calvin-kattar",
@@ -4767,14 +4767,14 @@
     "menton": 4
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 53,
-    "grappling": 78,
-    "sumisiones": 60,
-    "defensa": 66,
-    "cardio": 63,
-    "menton": 68,
-    "velocidad": 55
+    "golpeo": 69,
+    "patadas": 62,
+    "grappling": 87,
+    "sumisiones": 69,
+    "defensa": 75,
+    "cardio": 72,
+    "menton": 77,
+    "velocidad": 64
    },
    "cara": {
     "piel": 1,
@@ -4792,7 +4792,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Calvin_Kattar"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "david-onama",
@@ -4824,14 +4824,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 70,
-    "patadas": 76,
-    "grappling": 62,
-    "sumisiones": 57,
-    "defensa": 64,
-    "cardio": 66,
-    "menton": 69,
-    "velocidad": 63
+    "golpeo": 79,
+    "patadas": 85,
+    "grappling": 71,
+    "sumisiones": 66,
+    "defensa": 73,
+    "cardio": 75,
+    "menton": 78,
+    "velocidad": 72
    },
    "cara": {
     "piel": 3,
@@ -4851,7 +4851,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/David_Onama"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "justin-gaethje",
@@ -4885,12 +4885,12 @@
    "atributos": {
     "golpeo": 97,
     "patadas": 97,
-    "grappling": 89,
-    "sumisiones": 69,
-    "defensa": 89,
-    "cardio": 89,
+    "grappling": 92,
+    "sumisiones": 72,
+    "defensa": 92,
+    "cardio": 92,
     "menton": 97,
-    "velocidad": 90
+    "velocidad": 93
    },
    "cara": {
     "piel": 1,
@@ -5047,14 +5047,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 77,
-    "grappling": 94,
+    "golpeo": 80,
+    "patadas": 80,
+    "grappling": 97,
     "sumisiones": 97,
-    "defensa": 87,
-    "cardio": 83,
-    "menton": 85,
-    "velocidad": 79
+    "defensa": 90,
+    "cardio": 86,
+    "menton": 88,
+    "velocidad": 82
    },
    "cara": {
     "piel": 2,
@@ -5105,14 +5105,14 @@
     "menton": 4
    },
    "atributos": {
-    "golpeo": 93,
-    "patadas": 72,
-    "grappling": 77,
-    "sumisiones": 71,
-    "defensa": 87,
-    "cardio": 81,
-    "menton": 88,
-    "velocidad": 85
+    "golpeo": 97,
+    "patadas": 76,
+    "grappling": 81,
+    "sumisiones": 75,
+    "defensa": 91,
+    "cardio": 85,
+    "menton": 92,
+    "velocidad": 89
    },
    "cara": {
     "piel": 3,
@@ -5163,14 +5163,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 74,
-    "grappling": 90,
+    "golpeo": 78,
+    "patadas": 78,
+    "grappling": 94,
     "sumisiones": 97,
-    "defensa": 83,
-    "cardio": 83,
-    "menton": 86,
-    "velocidad": 80
+    "defensa": 87,
+    "cardio": 87,
+    "menton": 90,
+    "velocidad": 84
    },
    "cara": {
     "piel": 0,
@@ -5217,14 +5217,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 75,
-    "grappling": 90,
+    "golpeo": 81,
+    "patadas": 79,
+    "grappling": 94,
     "sumisiones": 97,
-    "defensa": 84,
-    "cardio": 84,
-    "menton": 87,
-    "velocidad": 81
+    "defensa": 88,
+    "cardio": 88,
+    "menton": 91,
+    "velocidad": 85
    },
    "cara": {
     "piel": 1,
@@ -5271,14 +5271,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 70,
-    "grappling": 87,
+    "golpeo": 76,
+    "patadas": 75,
+    "grappling": 92,
     "sumisiones": 97,
-    "defensa": 79,
-    "cardio": 79,
-    "menton": 78,
-    "velocidad": 76
+    "defensa": 84,
+    "cardio": 84,
+    "menton": 83,
+    "velocidad": 81
    },
    "cara": {
     "piel": 1,
@@ -5293,7 +5293,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Benoît_Saint_Denis"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "renato-moicano",
@@ -5325,14 +5325,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 69,
-    "patadas": 72,
-    "grappling": 88,
+    "golpeo": 75,
+    "patadas": 78,
+    "grappling": 94,
     "sumisiones": 97,
-    "defensa": 82,
-    "cardio": 77,
-    "menton": 80,
-    "velocidad": 72
+    "defensa": 88,
+    "cardio": 83,
+    "menton": 86,
+    "velocidad": 78
    },
    "cara": {
     "piel": 2,
@@ -5348,7 +5348,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Renato_Moicano"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "mateusz-gamrot",
@@ -5380,14 +5380,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 70,
-    "patadas": 66,
-    "grappling": 92,
-    "sumisiones": 77,
-    "defensa": 79,
-    "cardio": 79,
-    "menton": 82,
-    "velocidad": 72
+    "golpeo": 75,
+    "patadas": 71,
+    "grappling": 97,
+    "sumisiones": 82,
+    "defensa": 84,
+    "cardio": 84,
+    "menton": 87,
+    "velocidad": 77
    },
    "cara": {
     "piel": 1,
@@ -5402,7 +5402,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Mateusz_Gamrot"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "mauricio-ruffy",
@@ -5434,14 +5434,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 90,
-    "patadas": 84,
-    "grappling": 65,
-    "sumisiones": 58,
-    "defensa": 76,
-    "cardio": 74,
-    "menton": 74,
-    "velocidad": 77
+    "golpeo": 96,
+    "patadas": 90,
+    "grappling": 71,
+    "sumisiones": 64,
+    "defensa": 82,
+    "cardio": 80,
+    "menton": 80,
+    "velocidad": 83
    },
    "cara": {
     "piel": 2,
@@ -5491,14 +5491,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 75,
-    "patadas": 68,
-    "grappling": 93,
-    "sumisiones": 75,
-    "defensa": 80,
-    "cardio": 83,
-    "menton": 80,
-    "velocidad": 77
+    "golpeo": 81,
+    "patadas": 74,
+    "grappling": 97,
+    "sumisiones": 81,
+    "defensa": 86,
+    "cardio": 89,
+    "menton": 86,
+    "velocidad": 83
    },
    "cara": {
     "piel": 3,
@@ -5517,7 +5517,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Tom_Nolan_(fighter)"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "rafael-fiziev",
@@ -5549,14 +5549,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 82,
-    "patadas": 86,
-    "grappling": 71,
-    "sumisiones": 61,
-    "defensa": 74,
-    "cardio": 76,
-    "menton": 75,
-    "velocidad": 73
+    "golpeo": 88,
+    "patadas": 92,
+    "grappling": 77,
+    "sumisiones": 67,
+    "defensa": 80,
+    "cardio": 82,
+    "menton": 81,
+    "velocidad": 79
    },
    "cara": {
     "piel": 1,
@@ -5603,14 +5603,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 87,
-    "patadas": 84,
-    "grappling": 66,
-    "sumisiones": 61,
-    "defensa": 77,
-    "cardio": 71,
-    "menton": 77,
-    "velocidad": 72
+    "golpeo": 94,
+    "patadas": 91,
+    "grappling": 73,
+    "sumisiones": 68,
+    "defensa": 84,
+    "cardio": 78,
+    "menton": 84,
+    "velocidad": 79
    },
    "cara": {
     "piel": 2,
@@ -5629,7 +5629,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Tofiq_Musayev"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "grant-dawson",
@@ -5661,14 +5661,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 64,
-    "patadas": 65,
-    "grappling": 82,
+    "golpeo": 72,
+    "patadas": 73,
+    "grappling": 90,
     "sumisiones": 97,
-    "defensa": 74,
-    "cardio": 74,
-    "menton": 72,
-    "velocidad": 71
+    "defensa": 82,
+    "cardio": 82,
+    "menton": 80,
+    "velocidad": 79
    },
    "cara": {
     "piel": 1,
@@ -5686,7 +5686,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Grant_Dawson"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "esteban-ribovics",
@@ -5718,14 +5718,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 83,
-    "grappling": 69,
-    "sumisiones": 64,
-    "defensa": 71,
-    "cardio": 73,
-    "menton": 79,
-    "velocidad": 70
+    "golpeo": 85,
+    "patadas": 91,
+    "grappling": 77,
+    "sumisiones": 72,
+    "defensa": 79,
+    "cardio": 81,
+    "menton": 87,
+    "velocidad": 78
    },
    "cara": {
     "piel": 3,
@@ -5743,7 +5743,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Esteban_Ribovics"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "salahdine-parnasse",
@@ -5775,14 +5775,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 79,
-    "patadas": 59,
-    "grappling": 65,
-    "sumisiones": 64,
-    "defensa": 73,
-    "cardio": 69,
-    "menton": 74,
-    "velocidad": 73
+    "golpeo": 88,
+    "patadas": 68,
+    "grappling": 74,
+    "sumisiones": 73,
+    "defensa": 82,
+    "cardio": 78,
+    "menton": 83,
+    "velocidad": 82
    },
    "cara": {
     "piel": 1,
@@ -5797,7 +5797,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Salahdine_Parnasse"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "rong-zhu",
@@ -5829,14 +5829,14 @@
     "menton": 4
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 78,
-    "grappling": 61,
-    "sumisiones": 59,
-    "defensa": 70,
-    "cardio": 68,
-    "menton": 72,
-    "velocidad": 71
+    "golpeo": 86,
+    "patadas": 87,
+    "grappling": 70,
+    "sumisiones": 68,
+    "defensa": 79,
+    "cardio": 77,
+    "menton": 81,
+    "velocidad": 80
    },
    "cara": {
     "piel": 1,
@@ -5855,7 +5855,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Rong_Zhu"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "mateusz-rebecki",
@@ -5887,14 +5887,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 78,
-    "grappling": 65,
-    "sumisiones": 60,
-    "defensa": 67,
-    "cardio": 67,
-    "menton": 71,
-    "velocidad": 63
+    "golpeo": 80,
+    "patadas": 87,
+    "grappling": 74,
+    "sumisiones": 69,
+    "defensa": 76,
+    "cardio": 76,
+    "menton": 80,
+    "velocidad": 72
    },
    "cara": {
     "piel": 2,
@@ -5913,7 +5913,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Mateusz_Rębecki"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "carlos-diego-ferreira",
@@ -5945,14 +5945,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 61,
-    "patadas": 62,
-    "grappling": 77,
-    "sumisiones": 89,
-    "defensa": 72,
-    "cardio": 62,
-    "menton": 68,
-    "velocidad": 54
+    "golpeo": 70,
+    "patadas": 71,
+    "grappling": 86,
+    "sumisiones": 97,
+    "defensa": 81,
+    "cardio": 71,
+    "menton": 77,
+    "velocidad": 63
    },
    "cara": {
     "piel": 1,
@@ -5971,7 +5971,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Carlos_Diego_Ferreira"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "chase-hooper",
@@ -6003,14 +6003,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 58,
-    "patadas": 59,
-    "grappling": 75,
-    "sumisiones": 91,
-    "defensa": 68,
-    "cardio": 68,
-    "menton": 65,
-    "velocidad": 65
+    "golpeo": 67,
+    "patadas": 68,
+    "grappling": 84,
+    "sumisiones": 97,
+    "defensa": 77,
+    "cardio": 77,
+    "menton": 74,
+    "velocidad": 74
    },
    "cara": {
     "piel": 0,
@@ -6028,7 +6028,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Chase_Hooper"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "nurullo-aliev",
@@ -6060,14 +6060,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 62,
-    "patadas": 60,
-    "grappling": 84,
-    "sumisiones": 64,
-    "defensa": 72,
-    "cardio": 75,
-    "menton": 76,
-    "velocidad": 69
+    "golpeo": 71,
+    "patadas": 69,
+    "grappling": 93,
+    "sumisiones": 73,
+    "defensa": 81,
+    "cardio": 84,
+    "menton": 85,
+    "velocidad": 78
    },
    "cara": {
     "piel": 2,
@@ -6086,7 +6086,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Nurullo_Aliev"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "ludovit-klein",
@@ -6118,14 +6118,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 68,
-    "patadas": 76,
-    "grappling": 63,
-    "sumisiones": 58,
-    "defensa": 64,
-    "cardio": 66,
-    "menton": 69,
-    "velocidad": 63
+    "golpeo": 77,
+    "patadas": 85,
+    "grappling": 72,
+    "sumisiones": 67,
+    "defensa": 73,
+    "cardio": 75,
+    "menton": 78,
+    "velocidad": 72
    },
    "cara": {
     "piel": 1,
@@ -6143,7 +6143,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ľudovít_Klein"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "mason-jones",
@@ -6175,14 +6175,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 61,
-    "patadas": 58,
-    "grappling": 71,
-    "sumisiones": 79,
-    "defensa": 67,
-    "cardio": 67,
-    "menton": 68,
-    "velocidad": 64
+    "golpeo": 70,
+    "patadas": 67,
+    "grappling": 80,
+    "sumisiones": 88,
+    "defensa": 76,
+    "cardio": 76,
+    "menton": 77,
+    "velocidad": 73
    },
    "cara": {
     "piel": 1,
@@ -6200,7 +6200,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Mason_Jones_(fighter)"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "magomed-zaynukov",
@@ -6232,14 +6232,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 81,
-    "grappling": 65,
-    "sumisiones": 53,
-    "defensa": 69,
-    "cardio": 71,
-    "menton": 77,
-    "velocidad": 68
+    "golpeo": 86,
+    "patadas": 90,
+    "grappling": 74,
+    "sumisiones": 62,
+    "defensa": 78,
+    "cardio": 80,
+    "menton": 86,
+    "velocidad": 77
    },
    "cara": {
     "piel": 2,
@@ -6254,7 +6254,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Magomed_Zaynukov"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "alexander-hernandez",
@@ -6286,14 +6286,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 62,
-    "patadas": 59,
-    "grappling": 72,
-    "sumisiones": 79,
-    "defensa": 69,
-    "cardio": 67,
-    "menton": 67,
-    "velocidad": 63
+    "golpeo": 71,
+    "patadas": 68,
+    "grappling": 81,
+    "sumisiones": 88,
+    "defensa": 78,
+    "cardio": 76,
+    "menton": 76,
+    "velocidad": 72
    },
    "cara": {
     "piel": 5,
@@ -6311,7 +6311,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Alexander_Hernandez"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "milos-janicic",
@@ -6343,14 +6343,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 73,
-    "patadas": 74,
-    "grappling": 58,
-    "sumisiones": 61,
-    "defensa": 66,
-    "cardio": 64,
-    "menton": 67,
-    "velocidad": 67
+    "golpeo": 82,
+    "patadas": 83,
+    "grappling": 67,
+    "sumisiones": 70,
+    "defensa": 75,
+    "cardio": 73,
+    "menton": 76,
+    "velocidad": 76
    },
    "cara": {
     "piel": 2,
@@ -6369,7 +6369,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Miloš_Janičić"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "chris-duncan",
@@ -6401,14 +6401,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 70,
-    "patadas": 77,
-    "grappling": 63,
-    "sumisiones": 57,
-    "defensa": 65,
-    "cardio": 67,
-    "menton": 70,
-    "velocidad": 64
+    "golpeo": 79,
+    "patadas": 86,
+    "grappling": 72,
+    "sumisiones": 66,
+    "defensa": 74,
+    "cardio": 76,
+    "menton": 79,
+    "velocidad": 73
    },
    "cara": {
     "piel": 2,
@@ -6428,7 +6428,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Chris_Duncan_(fighter)"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "islam-makhachev",
@@ -6460,14 +6460,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 83,
-    "patadas": 81,
+    "golpeo": 86,
+    "patadas": 84,
     "grappling": 97,
     "sumisiones": 97,
-    "defensa": 94,
-    "cardio": 95,
-    "menton": 95,
-    "velocidad": 89
+    "defensa": 97,
+    "cardio": 97,
+    "menton": 97,
+    "velocidad": 92
    },
    "cara": {
     "piel": 1,
@@ -6570,13 +6570,13 @@
    },
    "atributos": {
     "golpeo": 97,
-    "patadas": 72,
-    "grappling": 77,
-    "sumisiones": 72,
-    "defensa": 86,
-    "cardio": 82,
-    "menton": 85,
-    "velocidad": 86
+    "patadas": 75,
+    "grappling": 80,
+    "sumisiones": 75,
+    "defensa": 89,
+    "cardio": 85,
+    "menton": 88,
+    "velocidad": 89
    },
    "cara": {
     "piel": 1,
@@ -6627,14 +6627,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 75,
-    "grappling": 87,
-    "sumisiones": 93,
-    "defensa": 84,
-    "cardio": 84,
-    "menton": 87,
-    "velocidad": 81
+    "golpeo": 81,
+    "patadas": 79,
+    "grappling": 91,
+    "sumisiones": 97,
+    "defensa": 88,
+    "cardio": 88,
+    "menton": 91,
+    "velocidad": 85
    },
    "cara": {
     "piel": 0,
@@ -6684,14 +6684,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 96,
-    "patadas": 94,
-    "grappling": 75,
-    "sumisiones": 70,
-    "defensa": 86,
-    "cardio": 84,
-    "menton": 89,
-    "velocidad": 87
+    "golpeo": 97,
+    "patadas": 96,
+    "grappling": 77,
+    "sumisiones": 72,
+    "defensa": 88,
+    "cardio": 86,
+    "menton": 91,
+    "velocidad": 89
    },
    "cara": {
     "piel": 3,
@@ -6743,14 +6743,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 73,
-    "patadas": 75,
-    "grappling": 90,
+    "golpeo": 78,
+    "patadas": 80,
+    "grappling": 95,
     "sumisiones": 97,
-    "defensa": 84,
-    "cardio": 84,
-    "menton": 83,
-    "velocidad": 81
+    "defensa": 89,
+    "cardio": 89,
+    "menton": 88,
+    "velocidad": 86
    },
    "cara": {
     "piel": 0,
@@ -6797,14 +6797,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 75,
-    "patadas": 76,
-    "grappling": 93,
+    "golpeo": 78,
+    "patadas": 79,
+    "grappling": 96,
     "sumisiones": 97,
-    "defensa": 85,
-    "cardio": 85,
-    "menton": 86,
-    "velocidad": 82
+    "defensa": 88,
+    "cardio": 88,
+    "menton": 89,
+    "velocidad": 85
    },
    "cara": {
     "piel": 2,
@@ -6855,14 +6855,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 68,
-    "grappling": 92,
-    "sumisiones": 74,
-    "defensa": 81,
-    "cardio": 78,
-    "menton": 82,
-    "velocidad": 69
+    "golpeo": 76,
+    "patadas": 73,
+    "grappling": 97,
+    "sumisiones": 79,
+    "defensa": 86,
+    "cardio": 83,
+    "menton": 87,
+    "velocidad": 74
    },
    "cara": {
     "piel": 2,
@@ -6880,7 +6880,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Belal_Muhammad"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "joaquin-buckley",
@@ -6912,14 +6912,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 87,
-    "patadas": 85,
-    "grappling": 66,
-    "sumisiones": 59,
-    "defensa": 77,
-    "cardio": 75,
-    "menton": 74,
-    "velocidad": 78
+    "golpeo": 93,
+    "patadas": 91,
+    "grappling": 72,
+    "sumisiones": 65,
+    "defensa": 83,
+    "cardio": 81,
+    "menton": 80,
+    "velocidad": 84
    },
    "cara": {
     "piel": 5,
@@ -6939,7 +6939,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Joaquin_Buckley"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "uros-medic",
@@ -6971,14 +6971,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 81,
-    "patadas": 71,
-    "grappling": 84,
-    "sumisiones": 92,
-    "defensa": 80,
-    "cardio": 80,
-    "menton": 80,
-    "velocidad": 77
+    "golpeo": 86,
+    "patadas": 76,
+    "grappling": 89,
+    "sumisiones": 97,
+    "defensa": 85,
+    "cardio": 85,
+    "menton": 85,
+    "velocidad": 82
    },
    "cara": {
     "piel": 1,
@@ -6993,7 +6993,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Uroš_Medić"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "leon-edwards",
@@ -7025,14 +7025,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 78,
-    "patadas": 83,
-    "grappling": 65,
-    "sumisiones": 62,
-    "defensa": 76,
-    "cardio": 71,
-    "menton": 76,
-    "velocidad": 73
+    "golpeo": 84,
+    "patadas": 89,
+    "grappling": 71,
+    "sumisiones": 68,
+    "defensa": 82,
+    "cardio": 77,
+    "menton": 82,
+    "velocidad": 79
    },
    "cara": {
     "piel": 4,
@@ -7050,7 +7050,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Leon_Edwards"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "mike-malott",
@@ -7082,14 +7082,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 73,
-    "patadas": 70,
-    "grappling": 85,
+    "golpeo": 80,
+    "patadas": 77,
+    "grappling": 92,
     "sumisiones": 97,
-    "defensa": 80,
-    "cardio": 78,
-    "menton": 77,
-    "velocidad": 74
+    "defensa": 87,
+    "cardio": 85,
+    "menton": 84,
+    "velocidad": 81
    },
    "cara": {
     "piel": 0,
@@ -7107,7 +7107,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Mike_Malott"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "kamaru-usman",
@@ -7139,14 +7139,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 64,
-    "grappling": 88,
-    "sumisiones": 70,
-    "defensa": 77,
-    "cardio": 73,
-    "menton": 78,
-    "velocidad": 64
+    "golpeo": 78,
+    "patadas": 71,
+    "grappling": 95,
+    "sumisiones": 77,
+    "defensa": 84,
+    "cardio": 80,
+    "menton": 85,
+    "velocidad": 71
    },
    "cara": {
     "piel": 5,
@@ -7161,7 +7161,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Kamaru_Usman"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "yaroslav-amosov",
@@ -7193,14 +7193,14 @@
     "menton": 4
    },
    "atributos": {
-    "golpeo": 68,
-    "patadas": 64,
-    "grappling": 91,
-    "sumisiones": 82,
-    "defensa": 76,
-    "cardio": 79,
-    "menton": 79,
-    "velocidad": 73
+    "golpeo": 75,
+    "patadas": 71,
+    "grappling": 97,
+    "sumisiones": 89,
+    "defensa": 83,
+    "cardio": 86,
+    "menton": 86,
+    "velocidad": 80
    },
    "cara": {
     "piel": 1,
@@ -7219,7 +7219,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Yaroslav_Amosov"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "kevin-holland",
@@ -7251,14 +7251,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 78,
-    "patadas": 81,
-    "grappling": 64,
-    "sumisiones": 65,
-    "defensa": 73,
-    "cardio": 71,
-    "menton": 74,
-    "velocidad": 74
+    "golpeo": 85,
+    "patadas": 88,
+    "grappling": 71,
+    "sumisiones": 72,
+    "defensa": 80,
+    "cardio": 78,
+    "menton": 81,
+    "velocidad": 81
    },
    "cara": {
     "piel": 4,
@@ -7274,7 +7274,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Kevin_Holland"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "daniel-rodriguez",
@@ -7306,14 +7306,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 67,
-    "patadas": 64,
-    "grappling": 78,
-    "sumisiones": 87,
-    "defensa": 74,
-    "cardio": 67,
-    "menton": 73,
-    "velocidad": 61
+    "golpeo": 74,
+    "patadas": 71,
+    "grappling": 85,
+    "sumisiones": 94,
+    "defensa": 81,
+    "cardio": 74,
+    "menton": 80,
+    "velocidad": 68
    },
    "cara": {
     "piel": 1,
@@ -7328,7 +7328,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Daniel_Rodriguez_(fighter)"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "roberto-soldic",
@@ -7360,14 +7360,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 81,
-    "patadas": 77,
-    "grappling": 58,
-    "sumisiones": 53,
-    "defensa": 69,
-    "cardio": 67,
-    "menton": 69,
-    "velocidad": 70
+    "golpeo": 90,
+    "patadas": 86,
+    "grappling": 67,
+    "sumisiones": 62,
+    "defensa": 78,
+    "cardio": 76,
+    "menton": 78,
+    "velocidad": 79
    },
    "cara": {
     "piel": 0,
@@ -7385,7 +7385,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Roberto_Soldić"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "shavkat-rakhmonov",
@@ -7417,14 +7417,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 63,
-    "patadas": 57,
-    "grappling": 85,
-    "sumisiones": 77,
-    "defensa": 69,
-    "cardio": 72,
-    "menton": 73,
-    "velocidad": 66
+    "golpeo": 72,
+    "patadas": 66,
+    "grappling": 94,
+    "sumisiones": 86,
+    "defensa": 78,
+    "cardio": 81,
+    "menton": 82,
+    "velocidad": 75
    },
    "cara": {
     "piel": 1,
@@ -7442,7 +7442,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Shavkat_Rakhmonov"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "neil-magny",
@@ -7474,14 +7474,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 61,
-    "patadas": 61,
-    "grappling": 74,
-    "sumisiones": 82,
-    "defensa": 71,
-    "cardio": 64,
-    "menton": 69,
-    "velocidad": 58
+    "golpeo": 70,
+    "patadas": 70,
+    "grappling": 83,
+    "sumisiones": 91,
+    "defensa": 80,
+    "cardio": 73,
+    "menton": 78,
+    "velocidad": 67
    },
    "cara": {
     "piel": 4,
@@ -7499,7 +7499,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Neil_Magny"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "chidi-njokuani",
@@ -7531,14 +7531,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 79,
-    "grappling": 63,
-    "sumisiones": 53,
-    "defensa": 68,
-    "cardio": 65,
-    "menton": 70,
-    "velocidad": 60
+    "golpeo": 83,
+    "patadas": 88,
+    "grappling": 72,
+    "sumisiones": 62,
+    "defensa": 77,
+    "cardio": 74,
+    "menton": 79,
+    "velocidad": 69
    },
    "cara": {
     "piel": 4,
@@ -7553,7 +7553,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Chidi_Njokuani"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "joel-alvarez",
@@ -7585,14 +7585,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 54,
-    "patadas": 55,
-    "grappling": 73,
-    "sumisiones": 94,
-    "defensa": 64,
-    "cardio": 64,
-    "menton": 64,
-    "velocidad": 61
+    "golpeo": 64,
+    "patadas": 65,
+    "grappling": 83,
+    "sumisiones": 97,
+    "defensa": 74,
+    "cardio": 74,
+    "menton": 74,
+    "velocidad": 71
    },
    "cara": {
     "piel": 1,
@@ -7608,7 +7608,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Joel_Álvarez"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "nicolas-dalby",
@@ -7640,14 +7640,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 73,
-    "patadas": 79,
-    "grappling": 61,
-    "sumisiones": 58,
-    "defensa": 72,
-    "cardio": 61,
-    "menton": 72,
-    "velocidad": 60
+    "golpeo": 82,
+    "patadas": 88,
+    "grappling": 70,
+    "sumisiones": 67,
+    "defensa": 81,
+    "cardio": 70,
+    "menton": 81,
+    "velocidad": 69
    },
    "cara": {
     "piel": 1,
@@ -7662,7 +7662,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Nicolas_Dalby"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "ignacio-bahamondes",
@@ -7694,14 +7694,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 75,
-    "patadas": 75,
-    "grappling": 57,
-    "sumisiones": 53,
-    "defensa": 67,
-    "cardio": 65,
-    "menton": 70,
-    "velocidad": 68
+    "golpeo": 84,
+    "patadas": 84,
+    "grappling": 66,
+    "sumisiones": 62,
+    "defensa": 76,
+    "cardio": 74,
+    "menton": 79,
+    "velocidad": 77
    },
    "cara": {
     "piel": 1,
@@ -7719,7 +7719,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ignacio_Bahamondes"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "jeremiah-wells",
@@ -7751,14 +7751,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 62,
-    "patadas": 61,
-    "grappling": 76,
-    "sumisiones": 88,
-    "defensa": 71,
-    "cardio": 64,
-    "menton": 73,
-    "velocidad": 58
+    "golpeo": 71,
+    "patadas": 70,
+    "grappling": 85,
+    "sumisiones": 97,
+    "defensa": 80,
+    "cardio": 73,
+    "menton": 82,
+    "velocidad": 67
    },
    "cara": {
     "piel": 1,
@@ -7773,7 +7773,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jeremiah_Wells"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "santiago-ponzinibbio",
@@ -7805,14 +7805,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 63,
-    "patadas": 58,
-    "grappling": 72,
-    "sumisiones": 81,
-    "defensa": 68,
-    "cardio": 60,
-    "menton": 64,
-    "velocidad": 54
+    "golpeo": 72,
+    "patadas": 67,
+    "grappling": 81,
+    "sumisiones": 90,
+    "defensa": 77,
+    "cardio": 69,
+    "menton": 73,
+    "velocidad": 63
    },
    "cara": {
     "piel": 1,
@@ -7831,7 +7831,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Santiago_Ponzinibbio"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "islam-dulatov",
@@ -7863,14 +7863,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 67,
-    "patadas": 60,
-    "grappling": 75,
-    "sumisiones": 86,
-    "defensa": 69,
-    "cardio": 69,
-    "menton": 72,
-    "velocidad": 66
+    "golpeo": 76,
+    "patadas": 69,
+    "grappling": 84,
+    "sumisiones": 95,
+    "defensa": 78,
+    "cardio": 78,
+    "menton": 81,
+    "velocidad": 75
    },
    "cara": {
     "piel": 0,
@@ -7888,7 +7888,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Islam_Dulatov"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "conor-mcgregor",
@@ -7920,14 +7920,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 66,
-    "patadas": 56,
-    "grappling": 68,
-    "sumisiones": 74,
-    "defensa": 66,
-    "cardio": 60,
-    "menton": 64,
-    "velocidad": 55
+    "golpeo": 75,
+    "patadas": 65,
+    "grappling": 77,
+    "sumisiones": 83,
+    "defensa": 75,
+    "cardio": 69,
+    "menton": 73,
+    "velocidad": 64
    },
    "cara": {
     "piel": 1,
@@ -7944,7 +7944,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Conor_McGregor"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "muslim-salikhov",
@@ -7976,14 +7976,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 76,
-    "grappling": 58,
-    "sumisiones": 53,
-    "defensa": 69,
-    "cardio": 57,
-    "menton": 67,
-    "velocidad": 55
+    "golpeo": 86,
+    "patadas": 85,
+    "grappling": 67,
+    "sumisiones": 62,
+    "defensa": 78,
+    "cardio": 66,
+    "menton": 76,
+    "velocidad": 64
    },
    "cara": {
     "piel": 2,
@@ -8001,7 +8001,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Muslim_Salikhov"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "sean-strickland",
@@ -8034,13 +8034,13 @@
    },
    "atributos": {
     "golpeo": 97,
-    "patadas": 81,
-    "grappling": 86,
-    "sumisiones": 81,
-    "defensa": 96,
-    "cardio": 89,
-    "menton": 96,
-    "velocidad": 92
+    "patadas": 82,
+    "grappling": 87,
+    "sumisiones": 82,
+    "defensa": 97,
+    "cardio": 90,
+    "menton": 97,
+    "velocidad": 93
    },
    "cara": {
     "piel": 0,
@@ -8142,14 +8142,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 89,
-    "patadas": 93,
-    "grappling": 78,
-    "sumisiones": 81,
-    "defensa": 85,
-    "cardio": 83,
-    "menton": 86,
-    "velocidad": 86
+    "golpeo": 91,
+    "patadas": 95,
+    "grappling": 80,
+    "sumisiones": 83,
+    "defensa": 87,
+    "cardio": 85,
+    "menton": 88,
+    "velocidad": 88
    },
    "cara": {
     "piel": 0,
@@ -8197,14 +8197,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 88,
-    "patadas": 96,
-    "grappling": 82,
-    "sumisiones": 76,
-    "defensa": 84,
-    "cardio": 86,
-    "menton": 92,
-    "velocidad": 83
+    "golpeo": 89,
+    "patadas": 97,
+    "grappling": 83,
+    "sumisiones": 77,
+    "defensa": 85,
+    "cardio": 87,
+    "menton": 93,
+    "velocidad": 84
    },
    "cara": {
     "piel": 1,
@@ -8254,14 +8254,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 93,
-    "patadas": 93,
-    "grappling": 76,
-    "sumisiones": 75,
-    "defensa": 85,
-    "cardio": 83,
-    "menton": 86,
-    "velocidad": 86
+    "golpeo": 95,
+    "patadas": 95,
+    "grappling": 78,
+    "sumisiones": 77,
+    "defensa": 87,
+    "cardio": 85,
+    "menton": 88,
+    "velocidad": 88
    },
    "cara": {
     "piel": 0,
@@ -8313,14 +8313,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 75,
-    "patadas": 76,
-    "grappling": 92,
+    "golpeo": 78,
+    "patadas": 79,
+    "grappling": 95,
     "sumisiones": 97,
-    "defensa": 85,
-    "cardio": 85,
-    "menton": 86,
-    "velocidad": 82
+    "defensa": 88,
+    "cardio": 88,
+    "menton": 89,
+    "velocidad": 85
    },
    "cara": {
     "piel": 0,
@@ -8368,14 +8368,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 73,
-    "patadas": 73,
-    "grappling": 87,
-    "sumisiones": 96,
-    "defensa": 82,
-    "cardio": 82,
-    "menton": 85,
-    "velocidad": 79
+    "golpeo": 78,
+    "patadas": 78,
+    "grappling": 92,
+    "sumisiones": 97,
+    "defensa": 87,
+    "cardio": 87,
+    "menton": 90,
+    "velocidad": 84
    },
    "cara": {
     "piel": 2,
@@ -8390,7 +8390,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Caio_Borralho"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "gregory-rodrigues",
@@ -8422,14 +8422,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 80,
-    "patadas": 74,
-    "grappling": 87,
-    "sumisiones": 95,
-    "defensa": 84,
-    "cardio": 82,
-    "menton": 80,
-    "velocidad": 78
+    "golpeo": 85,
+    "patadas": 79,
+    "grappling": 92,
+    "sumisiones": 97,
+    "defensa": 89,
+    "cardio": 87,
+    "menton": 85,
+    "velocidad": 83
    },
    "cara": {
     "piel": 2,
@@ -8477,14 +8477,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 66,
-    "patadas": 68,
-    "grappling": 85,
+    "golpeo": 72,
+    "patadas": 74,
+    "grappling": 91,
     "sumisiones": 97,
-    "defensa": 77,
-    "cardio": 77,
-    "menton": 76,
-    "velocidad": 74
+    "defensa": 83,
+    "cardio": 83,
+    "menton": 82,
+    "velocidad": 80
    },
    "cara": {
     "piel": 2,
@@ -8500,7 +8500,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Anthony_Hernandez"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "israel-adesanya",
@@ -8532,14 +8532,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 86,
-    "patadas": 85,
-    "grappling": 66,
-    "sumisiones": 59,
-    "defensa": 78,
-    "cardio": 71,
-    "menton": 76,
-    "velocidad": 72
+    "golpeo": 91,
+    "patadas": 90,
+    "grappling": 71,
+    "sumisiones": 64,
+    "defensa": 83,
+    "cardio": 76,
+    "menton": 81,
+    "velocidad": 77
    },
    "cara": {
     "piel": 4,
@@ -8587,14 +8587,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 85,
-    "patadas": 84,
-    "grappling": 66,
-    "sumisiones": 60,
-    "defensa": 76,
-    "cardio": 74,
-    "menton": 79,
-    "velocidad": 77
+    "golpeo": 91,
+    "patadas": 90,
+    "grappling": 72,
+    "sumisiones": 66,
+    "defensa": 82,
+    "cardio": 80,
+    "menton": 85,
+    "velocidad": 83
    },
    "cara": {
     "piel": 1,
@@ -8613,7 +8613,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Christian_Leroy_Duncan"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "ikram-aliskerov",
@@ -8645,14 +8645,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 72,
-    "patadas": 66,
-    "grappling": 92,
-    "sumisiones": 79,
-    "defensa": 78,
-    "cardio": 81,
-    "menton": 78,
-    "velocidad": 75
+    "golpeo": 79,
+    "patadas": 73,
+    "grappling": 97,
+    "sumisiones": 86,
+    "defensa": 85,
+    "cardio": 88,
+    "menton": 85,
+    "velocidad": 82
    },
    "cara": {
     "piel": 2,
@@ -8667,7 +8667,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ikram_Aliskerov"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "bo-nickal",
@@ -8699,14 +8699,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 64,
-    "grappling": 92,
-    "sumisiones": 82,
-    "defensa": 76,
-    "cardio": 79,
-    "menton": 76,
-    "velocidad": 73
+    "golpeo": 78,
+    "patadas": 71,
+    "grappling": 97,
+    "sumisiones": 89,
+    "defensa": 83,
+    "cardio": 86,
+    "menton": 83,
+    "velocidad": 80
    },
    "cara": {
     "piel": 0,
@@ -8721,7 +8721,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Bo_Nickal"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "abusupiyan-magomedov",
@@ -8753,14 +8753,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 78,
-    "patadas": 85,
-    "grappling": 71,
-    "sumisiones": 66,
-    "defensa": 74,
-    "cardio": 72,
-    "menton": 79,
-    "velocidad": 68
+    "golpeo": 85,
+    "patadas": 92,
+    "grappling": 78,
+    "sumisiones": 73,
+    "defensa": 81,
+    "cardio": 79,
+    "menton": 86,
+    "velocidad": 75
    },
    "cara": {
     "piel": 1,
@@ -8779,7 +8779,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Abusupiyan_Magomedov"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "roman-kopylov",
@@ -8811,14 +8811,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 86,
-    "patadas": 83,
-    "grappling": 64,
-    "sumisiones": 57,
-    "defensa": 76,
-    "cardio": 71,
-    "menton": 78,
-    "velocidad": 73
+    "golpeo": 93,
+    "patadas": 90,
+    "grappling": 71,
+    "sumisiones": 64,
+    "defensa": 83,
+    "cardio": 78,
+    "menton": 85,
+    "velocidad": 80
    },
    "cara": {
     "piel": 1,
@@ -8836,7 +8836,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Roman_Kopylov"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "edmen-shahbazyan",
@@ -8868,14 +8868,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 84,
-    "patadas": 81,
-    "grappling": 62,
-    "sumisiones": 57,
-    "defensa": 73,
-    "cardio": 71,
-    "menton": 71,
-    "velocidad": 74
+    "golpeo": 91,
+    "patadas": 88,
+    "grappling": 69,
+    "sumisiones": 64,
+    "defensa": 80,
+    "cardio": 78,
+    "menton": 78,
+    "velocidad": 81
    },
    "cara": {
     "piel": 1,
@@ -8893,7 +8893,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Edmen_Shahbazyan"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "sharabutdin-magomedov",
@@ -8925,14 +8925,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 79,
-    "grappling": 63,
-    "sumisiones": 51,
-    "defensa": 67,
-    "cardio": 69,
-    "menton": 75,
-    "velocidad": 66
+    "golpeo": 86,
+    "patadas": 88,
+    "grappling": 72,
+    "sumisiones": 60,
+    "defensa": 76,
+    "cardio": 78,
+    "menton": 84,
+    "velocidad": 75
    },
    "cara": {
     "piel": 2,
@@ -8950,7 +8950,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Sharabutdin_Magomedov"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "ismail-naurdiev",
@@ -8982,14 +8982,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 64,
-    "patadas": 56,
-    "grappling": 82,
-    "sumisiones": 67,
-    "defensa": 68,
-    "cardio": 71,
-    "menton": 69,
-    "velocidad": 65
+    "golpeo": 73,
+    "patadas": 65,
+    "grappling": 91,
+    "sumisiones": 76,
+    "defensa": 77,
+    "cardio": 80,
+    "menton": 78,
+    "velocidad": 74
    },
    "cara": {
     "piel": 0,
@@ -9007,7 +9007,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ismail_Naurdiev"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "damian-pinas",
@@ -9039,14 +9039,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 83,
-    "patadas": 78,
-    "grappling": 60,
-    "sumisiones": 55,
-    "defensa": 70,
-    "cardio": 68,
-    "menton": 73,
-    "velocidad": 71
+    "golpeo": 92,
+    "patadas": 87,
+    "grappling": 69,
+    "sumisiones": 64,
+    "defensa": 79,
+    "cardio": 77,
+    "menton": 82,
+    "velocidad": 80
    },
    "cara": {
     "piel": 2,
@@ -9065,7 +9065,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Damian_Pinas"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "nursulton-ruziboev",
@@ -9097,14 +9097,14 @@
     "menton": 4
    },
    "atributos": {
-    "golpeo": 57,
-    "patadas": 56,
-    "grappling": 73,
-    "sumisiones": 90,
-    "defensa": 65,
-    "cardio": 65,
-    "menton": 67,
-    "velocidad": 62
+    "golpeo": 66,
+    "patadas": 65,
+    "grappling": 82,
+    "sumisiones": 97,
+    "defensa": 74,
+    "cardio": 74,
+    "menton": 76,
+    "velocidad": 71
    },
    "cara": {
     "piel": 2,
@@ -9119,7 +9119,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Nursulton_Ruziboev"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "vicente-luque",
@@ -9151,14 +9151,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 59,
-    "patadas": 56,
-    "grappling": 71,
-    "sumisiones": 85,
-    "defensa": 66,
-    "cardio": 64,
-    "menton": 66,
-    "velocidad": 60
+    "golpeo": 68,
+    "patadas": 65,
+    "grappling": 80,
+    "sumisiones": 94,
+    "defensa": 75,
+    "cardio": 73,
+    "menton": 75,
+    "velocidad": 69
    },
    "cara": {
     "piel": 2,
@@ -9177,7 +9177,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Vicente_Luque"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "azamat-bekoev",
@@ -9209,14 +9209,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 67,
-    "patadas": 75,
-    "grappling": 62,
-    "sumisiones": 60,
-    "defensa": 63,
-    "cardio": 65,
-    "menton": 69,
-    "velocidad": 62
+    "golpeo": 76,
+    "patadas": 84,
+    "grappling": 71,
+    "sumisiones": 69,
+    "defensa": 72,
+    "cardio": 74,
+    "menton": 78,
+    "velocidad": 71
    },
    "cara": {
     "piel": 2,
@@ -9234,7 +9234,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Azamat_Bekoev"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "dustin-stoltzfus",
@@ -9266,14 +9266,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 57,
-    "patadas": 59,
-    "grappling": 74,
-    "sumisiones": 88,
-    "defensa": 69,
-    "cardio": 67,
-    "menton": 68,
-    "velocidad": 63
+    "golpeo": 65,
+    "patadas": 67,
+    "grappling": 82,
+    "sumisiones": 96,
+    "defensa": 77,
+    "cardio": 75,
+    "menton": 76,
+    "velocidad": 72
    },
    "cara": {
     "piel": 3,
@@ -9291,7 +9291,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Dustin_Stoltzfus"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "jackson-mcvey",
@@ -9323,14 +9323,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 62,
-    "patadas": 58,
-    "grappling": 74,
-    "sumisiones": 90,
-    "defensa": 67,
-    "cardio": 67,
-    "menton": 70,
-    "velocidad": 64
+    "golpeo": 71,
+    "patadas": 67,
+    "grappling": 83,
+    "sumisiones": 97,
+    "defensa": 76,
+    "cardio": 76,
+    "menton": 79,
+    "velocidad": 73
    },
    "cara": {
     "piel": 1,
@@ -9349,7 +9349,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jackson_McVey"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "rodolfo-vieira",
@@ -9381,14 +9381,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 55,
-    "patadas": 59,
-    "grappling": 77,
+    "golpeo": 65,
+    "patadas": 69,
+    "grappling": 87,
     "sumisiones": 97,
-    "defensa": 69,
-    "cardio": 64,
-    "menton": 68,
-    "velocidad": 59
+    "defensa": 79,
+    "cardio": 74,
+    "menton": 78,
+    "velocidad": 69
    },
    "cara": {
     "piel": 2,
@@ -9403,7 +9403,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Rodolfo_Vieira"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "kyle-daukaus",
@@ -9435,14 +9435,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 54,
-    "patadas": 57,
-    "grappling": 75,
-    "sumisiones": 95,
-    "defensa": 66,
-    "cardio": 66,
-    "menton": 63,
-    "velocidad": 63
+    "golpeo": 63,
+    "patadas": 66,
+    "grappling": 84,
+    "sumisiones": 97,
+    "defensa": 75,
+    "cardio": 75,
+    "menton": 72,
+    "velocidad": 72
    },
    "cara": {
     "piel": 5,
@@ -9460,7 +9460,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Kyle_Daukaus"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "micha-oleksiejczuk",
@@ -9492,14 +9492,14 @@
     "menton": 4
    },
    "atributos": {
-    "golpeo": 64,
-    "patadas": 56,
-    "grappling": 68,
-    "sumisiones": 74,
-    "defensa": 65,
-    "cardio": 65,
-    "menton": 67,
-    "velocidad": 62
+    "golpeo": 73,
+    "patadas": 65,
+    "grappling": 77,
+    "sumisiones": 83,
+    "defensa": 74,
+    "cardio": 74,
+    "menton": 76,
+    "velocidad": 71
    },
    "cara": {
     "piel": 0,
@@ -9517,7 +9517,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Michał_Oleksiejczuk"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "ateba-gautier",
@@ -9549,14 +9549,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 79,
-    "patadas": 75,
-    "grappling": 56,
-    "sumisiones": 49,
-    "defensa": 67,
-    "cardio": 65,
-    "menton": 67,
-    "velocidad": 68
+    "golpeo": 88,
+    "patadas": 84,
+    "grappling": 65,
+    "sumisiones": 58,
+    "defensa": 76,
+    "cardio": 74,
+    "menton": 76,
+    "velocidad": 77
    },
    "cara": {
     "piel": 4,
@@ -9574,7 +9574,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ateba_Gautier"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "carlos-ulberg",
@@ -9608,12 +9608,12 @@
    "atributos": {
     "golpeo": 97,
     "patadas": 97,
-    "grappling": 84,
-    "sumisiones": 79,
-    "defensa": 95,
-    "cardio": 90,
-    "menton": 94,
-    "velocidad": 92
+    "grappling": 86,
+    "sumisiones": 81,
+    "defensa": 97,
+    "cardio": 92,
+    "menton": 96,
+    "velocidad": 94
    },
    "cara": {
     "piel": 3,
@@ -9722,14 +9722,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 83,
-    "patadas": 75,
+    "golpeo": 85,
+    "patadas": 77,
     "grappling": 97,
-    "sumisiones": 79,
-    "defensa": 88,
-    "cardio": 89,
-    "menton": 89,
-    "velocidad": 83
+    "sumisiones": 81,
+    "defensa": 90,
+    "cardio": 91,
+    "menton": 91,
+    "velocidad": 84
    },
    "cara": {
     "piel": 1,
@@ -9776,14 +9776,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 96,
-    "patadas": 91,
-    "grappling": 73,
-    "sumisiones": 68,
-    "defensa": 83,
-    "cardio": 81,
-    "menton": 81,
-    "velocidad": 84
+    "golpeo": 97,
+    "patadas": 95,
+    "grappling": 77,
+    "sumisiones": 72,
+    "defensa": 87,
+    "cardio": 85,
+    "menton": 85,
+    "velocidad": 88
    },
    "cara": {
     "piel": 0,
@@ -9831,14 +9831,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 83,
-    "patadas": 75,
-    "grappling": 87,
-    "sumisiones": 93,
-    "defensa": 85,
-    "cardio": 82,
-    "menton": 85,
-    "velocidad": 78
+    "golpeo": 87,
+    "patadas": 79,
+    "grappling": 91,
+    "sumisiones": 97,
+    "defensa": 89,
+    "cardio": 86,
+    "menton": 89,
+    "velocidad": 82
    },
    "cara": {
     "piel": 2,
@@ -9888,14 +9888,14 @@
     "menton": -3
    },
    "atributos": {
-    "golpeo": 90,
-    "patadas": 90,
-    "grappling": 71,
-    "sumisiones": 64,
-    "defensa": 83,
-    "cardio": 77,
-    "menton": 77,
-    "velocidad": 79
+    "golpeo": 95,
+    "patadas": 95,
+    "grappling": 76,
+    "sumisiones": 69,
+    "defensa": 88,
+    "cardio": 82,
+    "menton": 82,
+    "velocidad": 83
    },
    "cara": {
     "piel": 4,
@@ -9914,7 +9914,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Khalil_Rountree_Jr."
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "navajo-stirling",
@@ -9946,14 +9946,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 93,
-    "patadas": 93,
-    "grappling": 74,
-    "sumisiones": 67,
-    "defensa": 85,
-    "cardio": 83,
-    "menton": 88,
-    "velocidad": 86
+    "golpeo": 96,
+    "patadas": 96,
+    "grappling": 77,
+    "sumisiones": 70,
+    "defensa": 88,
+    "cardio": 86,
+    "menton": 91,
+    "velocidad": 89
    },
    "cara": {
     "piel": 4,
@@ -10000,14 +10000,14 @@
     "menton": -3
    },
    "atributos": {
-    "golpeo": 79,
-    "patadas": 73,
-    "grappling": 86,
-    "sumisiones": 93,
-    "defensa": 83,
-    "cardio": 79,
-    "menton": 77,
-    "velocidad": 74
+    "golpeo": 84,
+    "patadas": 78,
+    "grappling": 91,
+    "sumisiones": 97,
+    "defensa": 88,
+    "cardio": 84,
+    "menton": 82,
+    "velocidad": 79
    },
    "cara": {
     "piel": 3,
@@ -10023,7 +10023,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Dominick_Reyes"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "reinier-de-ridder",
@@ -10055,14 +10055,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 72,
-    "patadas": 72,
-    "grappling": 89,
+    "golpeo": 78,
+    "patadas": 78,
+    "grappling": 95,
     "sumisiones": 97,
-    "defensa": 82,
-    "cardio": 78,
-    "menton": 79,
-    "velocidad": 73
+    "defensa": 88,
+    "cardio": 84,
+    "menton": 85,
+    "velocidad": 79
    },
    "cara": {
     "piel": 0,
@@ -10081,7 +10081,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Reinier_de_Ridder"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "azamat-murzakanov",
@@ -10113,14 +10113,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 89,
-    "patadas": 87,
-    "grappling": 68,
-    "sumisiones": 63,
-    "defensa": 80,
-    "cardio": 73,
-    "menton": 79,
-    "velocidad": 74
+    "golpeo": 95,
+    "patadas": 93,
+    "grappling": 74,
+    "sumisiones": 69,
+    "defensa": 86,
+    "cardio": 79,
+    "menton": 85,
+    "velocidad": 80
    },
    "cara": {
     "piel": 1,
@@ -10138,7 +10138,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Azamat_Murzakanov"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "alonzo-menifield",
@@ -10170,14 +10170,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 87,
-    "patadas": 88,
-    "grappling": 70,
-    "sumisiones": 67,
-    "defensa": 81,
-    "cardio": 73,
-    "menton": 76,
-    "velocidad": 74
+    "golpeo": 93,
+    "patadas": 94,
+    "grappling": 76,
+    "sumisiones": 73,
+    "defensa": 87,
+    "cardio": 79,
+    "menton": 82,
+    "velocidad": 80
    },
    "cara": {
     "piel": 1,
@@ -10196,7 +10196,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Alonzo_Menifield"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "bogdan-guskov",
@@ -10228,14 +10228,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 76,
-    "patadas": 66,
-    "grappling": 79,
-    "sumisiones": 87,
-    "defensa": 76,
-    "cardio": 74,
-    "menton": 74,
-    "velocidad": 70
+    "golpeo": 82,
+    "patadas": 72,
+    "grappling": 85,
+    "sumisiones": 93,
+    "defensa": 82,
+    "cardio": 80,
+    "menton": 80,
+    "velocidad": 76
    },
    "cara": {
     "piel": 3,
@@ -10282,14 +10282,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 79,
-    "patadas": 83,
-    "grappling": 65,
-    "sumisiones": 63,
-    "defensa": 76,
-    "cardio": 71,
-    "menton": 74,
-    "velocidad": 73
+    "golpeo": 86,
+    "patadas": 90,
+    "grappling": 72,
+    "sumisiones": 70,
+    "defensa": 83,
+    "cardio": 78,
+    "menton": 81,
+    "velocidad": 80
    },
    "cara": {
     "piel": 2,
@@ -10305,7 +10305,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Robert_Whittaker_(fighter)"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "muhammad-saidov",
@@ -10337,14 +10337,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 73,
-    "patadas": 88,
-    "grappling": 72,
-    "sumisiones": 60,
-    "defensa": 76,
-    "cardio": 78,
-    "menton": 84,
-    "velocidad": 75
+    "golpeo": 80,
+    "patadas": 95,
+    "grappling": 79,
+    "sumisiones": 67,
+    "defensa": 83,
+    "cardio": 85,
+    "menton": 91,
+    "velocidad": 82
    },
    "cara": {
     "piel": 2,
@@ -10363,7 +10363,7 @@
     "racha",
     "metodosVictoria"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "modestas-bukauskas",
@@ -10395,14 +10395,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 82,
-    "patadas": 83,
-    "grappling": 65,
-    "sumisiones": 62,
-    "defensa": 75,
-    "cardio": 73,
-    "menton": 71,
-    "velocidad": 76
+    "golpeo": 89,
+    "patadas": 90,
+    "grappling": 72,
+    "sumisiones": 69,
+    "defensa": 82,
+    "cardio": 80,
+    "menton": 78,
+    "velocidad": 83
    },
    "cara": {
     "piel": 1,
@@ -10421,7 +10421,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Modestas_Bukauskas"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "abdul-rakhman-yakhyaev",
@@ -10453,14 +10453,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 70,
-    "patadas": 85,
-    "grappling": 69,
-    "sumisiones": 57,
-    "defensa": 73,
-    "cardio": 75,
-    "menton": 81,
-    "velocidad": 72
+    "golpeo": 78,
+    "patadas": 93,
+    "grappling": 77,
+    "sumisiones": 65,
+    "defensa": 81,
+    "cardio": 83,
+    "menton": 89,
+    "velocidad": 80
    },
    "cara": {
     "piel": 2,
@@ -10479,7 +10479,7 @@
     "racha",
     "metodosVictoria"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "nikita-krylov",
@@ -10511,14 +10511,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 71,
-    "patadas": 75,
-    "grappling": 60,
-    "sumisiones": 65,
-    "defensa": 68,
-    "cardio": 64,
-    "menton": 65,
-    "velocidad": 67
+    "golpeo": 80,
+    "patadas": 84,
+    "grappling": 69,
+    "sumisiones": 74,
+    "defensa": 77,
+    "cardio": 73,
+    "menton": 74,
+    "velocidad": 76
    },
    "cara": {
     "piel": 0,
@@ -10538,7 +10538,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Nikita_Krylov"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "jan-bachowicz",
@@ -10570,14 +10570,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 60,
-    "grappling": 74,
-    "sumisiones": 86,
-    "defensa": 70,
-    "cardio": 59,
-    "menton": 69,
-    "velocidad": 51
+    "golpeo": 69,
+    "patadas": 69,
+    "grappling": 83,
+    "sumisiones": 95,
+    "defensa": 79,
+    "cardio": 68,
+    "menton": 78,
+    "velocidad": 60
    },
    "cara": {
     "piel": 0,
@@ -10592,7 +10592,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jan_Błachowicz"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "dustin-jacoby",
@@ -10624,14 +10624,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 77,
-    "patadas": 76,
-    "grappling": 57,
-    "sumisiones": 52,
-    "defensa": 69,
-    "cardio": 61,
-    "menton": 67,
-    "velocidad": 61
+    "golpeo": 86,
+    "patadas": 85,
+    "grappling": 66,
+    "sumisiones": 61,
+    "defensa": 78,
+    "cardio": 70,
+    "menton": 76,
+    "velocidad": 70
    },
    "cara": {
     "piel": 1,
@@ -10646,7 +10646,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Dustin_Jacoby"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "volkan-oezdemir",
@@ -10678,14 +10678,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 78,
-    "patadas": 77,
-    "grappling": 59,
-    "sumisiones": 54,
-    "defensa": 70,
-    "cardio": 63,
-    "menton": 69,
-    "velocidad": 64
+    "golpeo": 87,
+    "patadas": 86,
+    "grappling": 68,
+    "sumisiones": 63,
+    "defensa": 79,
+    "cardio": 72,
+    "menton": 78,
+    "velocidad": 73
    },
    "cara": {
     "piel": 1,
@@ -10700,7 +10700,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Volkan_Oezdemir"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "iwo-baraniewski",
@@ -10732,14 +10732,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 66,
-    "patadas": 57,
-    "grappling": 71,
-    "sumisiones": 80,
-    "defensa": 66,
-    "cardio": 66,
-    "menton": 69,
-    "velocidad": 63
+    "golpeo": 75,
+    "patadas": 66,
+    "grappling": 80,
+    "sumisiones": 89,
+    "defensa": 75,
+    "cardio": 75,
+    "menton": 78,
+    "velocidad": 72
    },
    "cara": {
     "piel": 1,
@@ -10754,7 +10754,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Iwo_Baraniewski"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "liu-ce",
@@ -10786,14 +10786,14 @@
     "menton": -3
    },
    "atributos": {
-    "golpeo": 84,
-    "patadas": 77,
-    "grappling": 58,
-    "sumisiones": 51,
-    "defensa": 69,
-    "cardio": 67,
-    "menton": 64,
-    "velocidad": 70
+    "golpeo": 93,
+    "patadas": 86,
+    "grappling": 67,
+    "sumisiones": 60,
+    "defensa": 78,
+    "cardio": 76,
+    "menton": 73,
+    "velocidad": 79
    },
    "cara": {
     "piel": 0,
@@ -10808,7 +10808,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Liu_Ce"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "jamahal-hill",
@@ -10840,14 +10840,14 @@
     "menton": -3
    },
    "atributos": {
-    "golpeo": 61,
-    "patadas": 57,
-    "grappling": 69,
-    "sumisiones": 73,
-    "defensa": 67,
-    "cardio": 64,
-    "menton": 61,
-    "velocidad": 60
+    "golpeo": 70,
+    "patadas": 66,
+    "grappling": 78,
+    "sumisiones": 82,
+    "defensa": 76,
+    "cardio": 73,
+    "menton": 70,
+    "velocidad": 69
    },
    "cara": {
     "piel": 5,
@@ -10866,7 +10866,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jamahal_Hill"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "zhang-mingyang",
@@ -10898,14 +10898,14 @@
     "menton": -3
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 73,
-    "grappling": 57,
-    "sumisiones": 57,
-    "defensa": 65,
-    "cardio": 63,
-    "menton": 60,
-    "velocidad": 66
+    "golpeo": 83,
+    "patadas": 82,
+    "grappling": 66,
+    "sumisiones": 66,
+    "defensa": 74,
+    "cardio": 72,
+    "menton": 69,
+    "velocidad": 75
    },
    "cara": {
     "piel": 1,
@@ -10923,7 +10923,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Zhang_Mingyang"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "jimmy-crute",
@@ -10955,14 +10955,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 59,
-    "grappling": 74,
-    "sumisiones": 88,
-    "defensa": 68,
-    "cardio": 68,
-    "menton": 66,
-    "velocidad": 65
+    "golpeo": 69,
+    "patadas": 68,
+    "grappling": 83,
+    "sumisiones": 97,
+    "defensa": 77,
+    "cardio": 77,
+    "menton": 75,
+    "velocidad": 74
    },
    "cara": {
     "piel": 1,
@@ -10977,7 +10977,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jimmy_Crute"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "ibo-aslan",
@@ -11009,14 +11009,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 79,
-    "patadas": 72,
-    "grappling": 53,
-    "sumisiones": 46,
-    "defensa": 64,
-    "cardio": 62,
-    "menton": 65,
-    "velocidad": 65
+    "golpeo": 88,
+    "patadas": 81,
+    "grappling": 62,
+    "sumisiones": 55,
+    "defensa": 73,
+    "cardio": 71,
+    "menton": 74,
+    "velocidad": 74
    },
    "cara": {
     "piel": 1,
@@ -11034,7 +11034,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/İbo_Aslan"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "billy-elekana",
@@ -11066,14 +11066,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 60,
-    "patadas": 60,
-    "grappling": 74,
-    "sumisiones": 85,
-    "defensa": 69,
-    "cardio": 69,
-    "menton": 72,
-    "velocidad": 66
+    "golpeo": 69,
+    "patadas": 69,
+    "grappling": 83,
+    "sumisiones": 94,
+    "defensa": 78,
+    "cardio": 78,
+    "menton": 81,
+    "velocidad": 75
    },
    "cara": {
     "piel": 4,
@@ -11088,7 +11088,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Billy_Elekana"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "roman-dolidze",
@@ -11120,14 +11120,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 69,
-    "patadas": 75,
-    "grappling": 61,
-    "sumisiones": 54,
-    "defensa": 64,
-    "cardio": 60,
-    "menton": 69,
-    "velocidad": 54
+    "golpeo": 78,
+    "patadas": 84,
+    "grappling": 70,
+    "sumisiones": 63,
+    "defensa": 73,
+    "cardio": 69,
+    "menton": 78,
+    "velocidad": 63
    },
    "cara": {
     "piel": 1,
@@ -11145,7 +11145,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Roman_Dolidze"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "ciryl-gane",
@@ -11184,7 +11184,7 @@
     "defensa": 91,
     "cardio": 89,
     "menton": 97,
-    "velocidad": 84
+    "velocidad": 85
    },
    "cara": {
     "piel": 3,
@@ -11286,12 +11286,12 @@
    },
    "atributos": {
     "golpeo": 97,
-    "patadas": 77,
-    "grappling": 81,
-    "sumisiones": 73,
-    "defensa": 92,
-    "cardio": 86,
-    "menton": 90,
+    "patadas": 78,
+    "grappling": 82,
+    "sumisiones": 74,
+    "defensa": 93,
+    "cardio": 87,
+    "menton": 91,
     "velocidad": 90
    },
    "cara": {
@@ -11339,14 +11339,14 @@
     "menton": 3
    },
    "atributos": {
-    "golpeo": 93,
-    "patadas": 93,
-    "grappling": 75,
-    "sumisiones": 71,
-    "defensa": 86,
-    "cardio": 79,
-    "menton": 86,
-    "velocidad": 80
+    "golpeo": 97,
+    "patadas": 97,
+    "grappling": 79,
+    "sumisiones": 75,
+    "defensa": 90,
+    "cardio": 83,
+    "menton": 90,
+    "velocidad": 84
    },
    "cara": {
     "piel": 0,
@@ -11396,14 +11396,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 87,
-    "patadas": 93,
-    "grappling": 78,
-    "sumisiones": 70,
-    "defensa": 82,
-    "cardio": 82,
-    "menton": 89,
-    "velocidad": 79
+    "golpeo": 92,
+    "patadas": 97,
+    "grappling": 83,
+    "sumisiones": 75,
+    "defensa": 87,
+    "cardio": 87,
+    "menton": 94,
+    "velocidad": 83
    },
    "cara": {
     "piel": 1,
@@ -11453,14 +11453,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 92,
-    "patadas": 92,
-    "grappling": 75,
-    "sumisiones": 75,
-    "defensa": 84,
-    "cardio": 82,
-    "menton": 87,
-    "velocidad": 85
+    "golpeo": 95,
+    "patadas": 95,
+    "grappling": 78,
+    "sumisiones": 78,
+    "defensa": 87,
+    "cardio": 85,
+    "menton": 90,
+    "velocidad": 88
    },
    "cara": {
     "piel": 1,
@@ -11511,14 +11511,14 @@
     "menton": -3
    },
    "atributos": {
-    "golpeo": 80,
-    "patadas": 70,
-    "grappling": 94,
-    "sumisiones": 74,
-    "defensa": 83,
-    "cardio": 83,
-    "menton": 78,
-    "velocidad": 76
+    "golpeo": 85,
+    "patadas": 75,
+    "grappling": 97,
+    "sumisiones": 79,
+    "defensa": 88,
+    "cardio": 88,
+    "menton": 83,
+    "velocidad": 81
    },
    "cara": {
     "piel": 5,
@@ -11533,7 +11533,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Curtis_Blaydes"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "waldo-cortes-acosta",
@@ -11565,14 +11565,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 73,
-    "patadas": 69,
-    "grappling": 81,
-    "sumisiones": 87,
-    "defensa": 79,
-    "cardio": 76,
-    "menton": 81,
-    "velocidad": 72
+    "golpeo": 78,
+    "patadas": 74,
+    "grappling": 86,
+    "sumisiones": 92,
+    "defensa": 84,
+    "cardio": 81,
+    "menton": 86,
+    "velocidad": 77
    },
    "cara": {
     "piel": 3,
@@ -11587,7 +11587,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Waldo_Cortes-Acosta"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "vitor-petrino",
@@ -11619,14 +11619,14 @@
     "menton": 2
    },
    "atributos": {
-    "golpeo": 85,
-    "patadas": 91,
-    "grappling": 76,
-    "sumisiones": 67,
-    "defensa": 79,
-    "cardio": 81,
-    "menton": 84,
-    "velocidad": 78
+    "golpeo": 91,
+    "patadas": 97,
+    "grappling": 82,
+    "sumisiones": 73,
+    "defensa": 85,
+    "cardio": 87,
+    "menton": 90,
+    "velocidad": 84
    },
    "cara": {
     "piel": 4,
@@ -11646,7 +11646,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Vitor_Petrino"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "mario-pinto",
@@ -11678,14 +11678,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 89,
-    "patadas": 89,
-    "grappling": 71,
-    "sumisiones": 66,
-    "defensa": 81,
-    "cardio": 79,
-    "menton": 84,
-    "velocidad": 82
+    "golpeo": 95,
+    "patadas": 95,
+    "grappling": 77,
+    "sumisiones": 72,
+    "defensa": 87,
+    "cardio": 85,
+    "menton": 90,
+    "velocidad": 88
    },
    "cara": {
     "piel": 2,
@@ -11705,7 +11705,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Mario_Pinto"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "valter-walker",
@@ -11737,14 +11737,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 81,
-    "patadas": 89,
-    "grappling": 76,
-    "sumisiones": 73,
-    "defensa": 77,
-    "cardio": 79,
-    "menton": 85,
-    "velocidad": 76
+    "golpeo": 87,
+    "patadas": 95,
+    "grappling": 82,
+    "sumisiones": 79,
+    "defensa": 83,
+    "cardio": 85,
+    "menton": 91,
+    "velocidad": 82
    },
    "cara": {
     "piel": 2,
@@ -11763,7 +11763,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Valter_Walker"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "johnny-walker",
@@ -11795,14 +11795,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 75,
-    "patadas": 66,
-    "grappling": 79,
-    "sumisiones": 86,
-    "defensa": 76,
-    "cardio": 74,
-    "menton": 71,
-    "velocidad": 71
+    "golpeo": 82,
+    "patadas": 73,
+    "grappling": 86,
+    "sumisiones": 93,
+    "defensa": 83,
+    "cardio": 81,
+    "menton": 78,
+    "velocidad": 77
    },
    "cara": {
     "piel": 2,
@@ -11821,7 +11821,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Johnny_Walker_(fighter)"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "brando-pericic",
@@ -11853,14 +11853,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 88,
-    "patadas": 84,
-    "grappling": 66,
-    "sumisiones": 63,
-    "defensa": 76,
-    "cardio": 74,
-    "menton": 79,
-    "velocidad": 77
+    "golpeo": 95,
+    "patadas": 91,
+    "grappling": 73,
+    "sumisiones": 70,
+    "defensa": 83,
+    "cardio": 81,
+    "menton": 86,
+    "velocidad": 84
    },
    "cara": {
     "piel": 1,
@@ -11879,7 +11879,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Brando_Peričić"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "serghei-spivac",
@@ -11911,14 +11911,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 65,
-    "patadas": 63,
-    "grappling": 79,
-    "sumisiones": 93,
-    "defensa": 72,
-    "cardio": 72,
-    "menton": 68,
-    "velocidad": 69
+    "golpeo": 72,
+    "patadas": 70,
+    "grappling": 86,
+    "sumisiones": 97,
+    "defensa": 79,
+    "cardio": 79,
+    "menton": 75,
+    "velocidad": 76
    },
    "cara": {
     "piel": 0,
@@ -11936,7 +11936,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Serghei_Spivac"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "anthony-wint",
@@ -11968,14 +11968,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 63,
-    "grappling": 89,
-    "sumisiones": 74,
-    "defensa": 75,
-    "cardio": 78,
-    "menton": 79,
-    "velocidad": 72
+    "golpeo": 81,
+    "patadas": 70,
+    "grappling": 96,
+    "sumisiones": 81,
+    "defensa": 82,
+    "cardio": 85,
+    "menton": 86,
+    "velocidad": 79
    },
    "cara": {
     "piel": 3,
@@ -11993,7 +11993,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Anthony_Wint"
    ],
-   "estrellas": 4
+   "estrellas": 4.5
   },
   {
    "id": "ante-delija",
@@ -12025,14 +12025,14 @@
     "menton": 0
    },
    "atributos": {
-    "golpeo": 70,
-    "patadas": 76,
-    "grappling": 62,
-    "sumisiones": 55,
-    "defensa": 65,
-    "cardio": 63,
-    "menton": 67,
-    "velocidad": 58
+    "golpeo": 79,
+    "patadas": 85,
+    "grappling": 71,
+    "sumisiones": 64,
+    "defensa": 74,
+    "cardio": 72,
+    "menton": 76,
+    "velocidad": 67
    },
    "cara": {
     "piel": 0,
@@ -12052,7 +12052,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ante_Delija"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "aleksandar-rakic",
@@ -12084,14 +12084,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 65,
-    "patadas": 59,
-    "grappling": 72,
-    "sumisiones": 77,
-    "defensa": 69,
-    "cardio": 67,
-    "menton": 65,
-    "velocidad": 64
+    "golpeo": 74,
+    "patadas": 68,
+    "grappling": 81,
+    "sumisiones": 86,
+    "defensa": 78,
+    "cardio": 76,
+    "menton": 74,
+    "velocidad": 73
    },
    "cara": {
     "piel": 0,
@@ -12107,7 +12107,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Aleksandar_Rakić"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "tyrell-fortune",
@@ -12139,14 +12139,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 76,
-    "patadas": 76,
-    "grappling": 57,
-    "sumisiones": 52,
-    "defensa": 69,
-    "cardio": 63,
-    "menton": 67,
-    "velocidad": 64
+    "golpeo": 85,
+    "patadas": 85,
+    "grappling": 66,
+    "sumisiones": 61,
+    "defensa": 78,
+    "cardio": 72,
+    "menton": 76,
+    "velocidad": 73
    },
    "cara": {
     "piel": 1,
@@ -12165,7 +12165,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Tyrell_Fortune"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "marcin-tybura",
@@ -12197,14 +12197,14 @@
     "menton": -1
    },
    "atributos": {
-    "golpeo": 58,
-    "patadas": 57,
-    "grappling": 71,
-    "sumisiones": 81,
-    "defensa": 67,
-    "cardio": 59,
-    "menton": 63,
-    "velocidad": 53
+    "golpeo": 67,
+    "patadas": 66,
+    "grappling": 80,
+    "sumisiones": 90,
+    "defensa": 76,
+    "cardio": 68,
+    "menton": 72,
+    "velocidad": 62
    },
    "cara": {
     "piel": 0,
@@ -12223,7 +12223,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Marcin_Tybura"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "shamil-gaziev",
@@ -12255,14 +12255,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 78,
-    "patadas": 77,
-    "grappling": 60,
-    "sumisiones": 58,
-    "defensa": 70,
-    "cardio": 64,
-    "menton": 65,
-    "velocidad": 66
+    "golpeo": 87,
+    "patadas": 86,
+    "grappling": 69,
+    "sumisiones": 67,
+    "defensa": 79,
+    "cardio": 73,
+    "menton": 74,
+    "velocidad": 75
    },
    "cara": {
     "piel": 1,
@@ -12280,7 +12280,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Shamil_Gaziev"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "derrick-lewis",
@@ -12312,14 +12312,14 @@
     "menton": -4
    },
    "atributos": {
-    "golpeo": 68,
-    "patadas": 58,
-    "grappling": 70,
-    "sumisiones": 76,
-    "defensa": 68,
-    "cardio": 59,
-    "menton": 61,
-    "velocidad": 52
+    "golpeo": 77,
+    "patadas": 67,
+    "grappling": 79,
+    "sumisiones": 85,
+    "defensa": 77,
+    "cardio": 68,
+    "menton": 70,
+    "velocidad": 61
    },
    "cara": {
     "piel": 5,
@@ -12334,7 +12334,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Derrick_Lewis"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "robelis-despaigne",
@@ -12366,14 +12366,14 @@
     "menton": 5
    },
    "atributos": {
-    "golpeo": 82,
-    "patadas": 78,
-    "grappling": 59,
-    "sumisiones": 52,
-    "defensa": 71,
-    "cardio": 63,
-    "menton": 73,
-    "velocidad": 63
+    "golpeo": 91,
+    "patadas": 87,
+    "grappling": 68,
+    "sumisiones": 61,
+    "defensa": 80,
+    "cardio": 72,
+    "menton": 82,
+    "velocidad": 72
    },
    "cara": {
     "piel": 3,
@@ -12391,7 +12391,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Robelis_Despaigne"
    ],
-   "estrellas": 3.5
+   "estrellas": 4
   },
   {
    "id": "ryan-spann",
@@ -12423,14 +12423,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 57,
-    "patadas": 57,
-    "grappling": 74,
-    "sumisiones": 91,
-    "defensa": 67,
-    "cardio": 64,
-    "menton": 62,
-    "velocidad": 60
+    "golpeo": 66,
+    "patadas": 66,
+    "grappling": 83,
+    "sumisiones": 97,
+    "defensa": 76,
+    "cardio": 73,
+    "menton": 71,
+    "velocidad": 69
    },
    "cara": {
     "piel": 1,
@@ -12448,7 +12448,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Ryan_Spann"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "tanner-boser",
@@ -12480,14 +12480,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 74,
-    "patadas": 75,
-    "grappling": 57,
-    "sumisiones": 52,
-    "defensa": 68,
-    "cardio": 63,
-    "menton": 66,
-    "velocidad": 65
+    "golpeo": 83,
+    "patadas": 84,
+    "grappling": 66,
+    "sumisiones": 61,
+    "defensa": 77,
+    "cardio": 72,
+    "menton": 75,
+    "velocidad": 74
    },
    "cara": {
     "piel": 2,
@@ -12502,7 +12502,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Tanner_Boser"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "mick-parkin",
@@ -12534,14 +12534,14 @@
     "menton": 1
    },
    "atributos": {
-    "golpeo": 63,
-    "patadas": 57,
-    "grappling": 70,
-    "sumisiones": 77,
-    "defensa": 66,
-    "cardio": 66,
-    "menton": 65,
-    "velocidad": 63
+    "golpeo": 72,
+    "patadas": 66,
+    "grappling": 79,
+    "sumisiones": 86,
+    "defensa": 75,
+    "cardio": 75,
+    "menton": 74,
+    "velocidad": 72
    },
    "cara": {
     "piel": 1,
@@ -12560,7 +12560,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Mick_Parkin"
    ],
-   "estrellas": 3
+   "estrellas": 3.5
   },
   {
    "id": "jhonata-diniz",
@@ -12592,14 +12592,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 79,
-    "patadas": 76,
-    "grappling": 57,
-    "sumisiones": 50,
-    "defensa": 69,
-    "cardio": 64,
-    "menton": 64,
-    "velocidad": 66
+    "golpeo": 88,
+    "patadas": 85,
+    "grappling": 66,
+    "sumisiones": 59,
+    "defensa": 78,
+    "cardio": 73,
+    "menton": 73,
+    "velocidad": 75
    },
    "cara": {
     "piel": 3,
@@ -12617,7 +12617,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Jhonata_Diniz"
    ],
-   "estrellas": 3
+   "estrellas": 4
   },
   {
    "id": "tallison-teixeira",
@@ -12649,14 +12649,14 @@
     "menton": -2
    },
    "atributos": {
-    "golpeo": 78,
-    "patadas": 75,
-    "grappling": 57,
-    "sumisiones": 53,
-    "defensa": 67,
-    "cardio": 65,
-    "menton": 63,
-    "velocidad": 68
+    "golpeo": 87,
+    "patadas": 84,
+    "grappling": 66,
+    "sumisiones": 62,
+    "defensa": 76,
+    "cardio": 74,
+    "menton": 72,
+    "velocidad": 77
    },
    "cara": {
     "piel": 1,
@@ -12674,7 +12674,7 @@
    "fuentes": [
     "https://en.wikipedia.org/wiki/Tallison_Teixeira"
    ],
-   "estrellas": 3
+   "estrellas": 4
   }
  ]
 }

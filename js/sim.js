@@ -3,7 +3,9 @@ import { starsExact, progressAfterFight } from './ratings.js';
 import { techSimBonus } from './fight/techniques.js';
 
 export const MAX_FAVORITE = 0.92;
-const K_STARS = 1.45; // pendiente logística por estrella de diferencia
+// Pegada por división: cuanto más pesado, más nocauts (y más lesiones).
+export const DIV_POWER = { mosca: 0.78, gallo: 0.85, pluma: 0.92, ligero: 1, welter: 1.08, medio: 1.2, semipesado: 1.38, pesado: 1.6 };
+const K_STARS = 2.0; // pendiente logística por estrella de diferencia (UFC es parejo: poca diferencia de estrellas pesa mucho)
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 const logistic = x => 1 / (1 + Math.exp(-x));
@@ -85,10 +87,10 @@ export function simulateFight(a, b, { rounds = 3, roundSeconds = 300, rng = Math
   const gap = Math.abs(pA - 0.5) * 2; // 0 = parejos, ~0.84 = máxima diferencia
 
   const wa = W.atributos, la = L.atributos;
-  const power = ((wa.golpeo + wa.patadas) / 2) / 75;
+  const power = ((wa.golpeo + wa.patadas) / 2) / 75 * (DIV_POWER[W.division] || 1);
   const koW = 0.30 * power * ((100 - la.menton + 30) / 80) * (1 + gap);
   const subW = 0.17 * (wa.sumisiones / 75) * ((130 - (la.grappling + la.defensa) / 2) / 80) * (1 + gap);
-  const decW = 0.5 * (1 - gap * 0.4);
+  const decW = 0.5 * (1 - gap * 0.4) / (DIV_POWER[W.division] || 1); // los livianos van más a decisión
   const method = pickWeighted(rng, [['ko', koW], ['sub', subW], ['dec', decW]]);
 
   const res = { winnerId: W.id, loserId: L.id, probA: pA, rounds };

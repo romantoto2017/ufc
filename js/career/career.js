@@ -1,7 +1,7 @@
 // Modo carrera: estado, escalera (nacional → regional → DWCS/Road to UFC → UFC, con PFL como alternativa),
 // ofertas de pelea, contratos, entrenamiento, dinero y simulación del mundo UFC. Módulo puro (testeable en Node).
 import { ATTRS, STYLE_PROFILE, stars, starsExact, overall } from '../ratings.js';
-import { simulateFight, applyResult, winProbability } from '../sim.js';
+import { simulateFight, applyResult, winProbability, DIV_POWER } from '../sim.js';
 import { generateFighter, makeAttributes, starsToOverall, namesFor, orgStars, plausibleRecord, ADVANCED_TIER } from './generator.js';
 import { TECHNIQUES } from '../fight/techniques.js';
 export { TECHNIQUES };
@@ -69,6 +69,12 @@ export const REGIONAL_TITLE_STREAK = 3;
 export const NATIONAL_SAME_COUNTRY_FIGHTS = 3;
 
 // Experiencia mínima sorteada por carrera: ~5 peleas para la primera promotora y ~10-12 para UFC.
+// Hasta qué edad aguanta el cuerpo (sorteado por carrera): casi siempre 39-43, a veces 38 o hasta 46.
+export function maxAge(c) {
+  if (!c.maxAge) { const r = rngOf(c)(); c.maxAge = r < 0.06 ? 38 : r < 0.16 ? 39 : r < 0.32 ? 40 : r < 0.5 ? 41 : r < 0.66 ? 42 : r < 0.79 ? 43 : r < 0.88 ? 44 : r < 0.95 ? 45 : 46; }
+  return c.maxAge;
+}
+
 export function careerNeeds(c) {
   if (!c.needs) { const r = rngOf(c); c.needs = { org: 4 + Math.floor(r() * 3), ufc: 10 + Math.floor(r() * 3) }; }
   return c.needs;
@@ -111,7 +117,8 @@ export function createPlayer(opts) {
   const reachAdv = clamp((alcance - altura) / 4, -3, 3);
   attrs.golpeo = clamp(Math.round(attrs.golpeo + reachAdv), 15, 95);
   // Techo (potencial): aleatorio, mayor cuanto más joven empieza.
-  const techo = clamp(Math.round(84 + rng() * 11 - Math.max(0, edad - 24) * 1.5), 70, 95);
+  // Techo (potencial) muy variable: la mayoría tope de ~4-4,5 estrellas; pocos tienen para ser campeones.
+  const techo = clamp(Math.round(78 + (rng() + rng()) * 8.5 - Math.max(0, edad - 24) * 1.5), 70, 95);
   const [Y] = START_DATE.split('-').map(Number);
   return {
     id: 'player', jugador: true, nombre, apodo: apodo || null, pais, edad, fechaNacimiento: `${Y - edad}-03-01`,
@@ -144,7 +151,14 @@ export function newCareer({ player, promos, fighters, existing = false, seed = D
 function news(c, key, vars = {}) { c.news.unshift({ date: c.date, key, vars }); c.news.length = Math.min(c.news.length, 40); }
 
 // ---------- ofertas de pelea ----------
-function eventName(c, org, promos) {
+function eventName(c, org, promos, fecha, big) {
+  if (org.id === 'ufc') {
+    // UFC numera ~13 eventos por año (UFC 333 en octubre de 2026); el resto son Fight Nights sin número.
+    if (!big && rngOf(c)() < 0.6) return { key: 'event_ufc_fn' };
+    const months = (new Date(fecha) - new Date(START_DATE)) / (30.44 * 864e5);
+    c.eventNo.ufc = Math.max((c.eventNo.ufc || 333) + 1, 333 + Math.round(months * 13 / 12));
+    return { key: 'event_ufc', n: c.eventNo.ufc };
+  }
   c.eventNo[org.id] = (c.eventNo[org.id] || (org.id === 'ufc' ? 333 : org.id === 'dwcs' ? 0 : org.nacional ? 0 : 40 + Math.floor(rngOf(c)() * 200))) + 1;
   const n = c.eventNo[org.id];
   if (org.nacional) return { key: 'event_national', n };
@@ -214,14 +228,16 @@ export function makeOffer(c, ctx) {
     if (opponent.ranking === 0 || p.ranking === 0) { rounds = 5; title = true; }
     else if (opponent.ranking != null && opponent.ranking <= 5 && rng() < 0.5) rounds = 5; // evento estelar
   }
-  const ev = eventName(c, org, promos);
+  const fecha = nextFightDate(c, rng);
+  const big = title || (opponent.ranking != null && opponent.ranking <= 10) || (p.ranking != null && p.ranking <= 10);
+  const ev = eventName(c, org, promos, fecha, big);
   const base = PURSE[c.stage === 'regional' ? 'regional' : c.stage] || 1000;
   const rankBonus = c.stage === 'ufc' && p.ranking != null ? (16 - p.ranking) * 6000 : 0;
   const show = Math.round((base + rankBonus) * (title ? 2.5 : 1));
   c.offer = {
     opponentId: opponent.id, org: org.id, event: ev, rounds, title, kind,
     purse: { show, win: show },
-    fecha: nextFightDate(c, rng),
+    fecha,
     country: c.stage === 'nacional' ? p.pais : org.pais,
   };
   c.camp = { sessions: 0, max: 5 + 2 * p.gimnasio };
@@ -230,6 +246,8 @@ export function makeOffer(c, ctx) {
 
 // Calendario realista: lo normal es ~1 pelea por año; nunca más de 3 en 12 meses.
 const MONTHS_GAP = { nacional: [3, 7], regional: [4, 9], pfl: [4, 8], ufc: [5, 11], rtu: [3, 5] };
+// De joven se pelea mucho más seguido (3 o hasta 4 por año); con los años cada vez menos.
+const youthPace = age => (age <= 24 ? 0.5 : age <= 27 ? 0.65 : age <= 30 ? 0.85 : 1);
 function nextFightDate(c, rng) {
   let date;
   if (c.stage === 'dwcs') {
@@ -238,10 +256,12 @@ function nextFightDate(c, rng) {
     date = M >= 8 && M <= 9 ? addDays(c.date, 21 + Math.floor(rng() * 21)) : `${M >= 10 ? Y + 1 : Y}-08-${String(5 + Math.floor(rng() * 20)).padStart(2, '0')}`;
   } else {
     const [lo, hi] = MONTHS_GAP[c.stage] || [4, 9];
-    date = addDays(c.date, Math.round((lo + rng() * (hi - lo)) * 30.4));
+    date = addDays(c.date, Math.round((lo + rng() * (hi - lo)) * 30.4 * youthPace(c.player.edad)));
   }
+  if (c.layoffUntil && date < c.layoffUntil) date = c.layoffUntil; // lesión: no puede pelear antes
+  const perYear = c.player.edad <= 26 ? 4 : 3;
   const recent = c.player.historial.map(h => h.fecha).filter(f => f > addDays(date, -365)).sort();
-  if (recent.length >= 3) date = addDays(recent[recent.length - 3], 366);
+  if (recent.length >= perYear) date = addDays(recent[recent.length - perYear], 366);
   return date;
 }
 
@@ -282,7 +302,7 @@ export function opponentOf(c) {
 export function trainingGain(age, gym, current, techo, r) {
   const youth = age <= 24 ? 1.3 : age <= 30 ? 1.0 : age <= 35 ? 0.75 : age <= 37 ? 0.45 : 0.25;
   const room = clamp((techo - current) / 25, 0.04, 1);
-  return (1.0 + gym * 0.45) * youth * room * (0.6 + r * 0.8);
+  return (0.7 + gym * 0.3) * youth * room * (0.3 + r * 1.2); // progreso lento y con mucha variación
 }
 
 export function train(c, focus) {
@@ -299,10 +319,18 @@ export function train(c, focus) {
   }
   c.camp.sessions++;
   c.date = addDays(c.date, 7);
-  let injury = false;
-  if (rng() < 0.03) { injury = true; c.date = addDays(c.date, 14); p.atributos.cardio = Math.max(15, p.atributos.cardio - 1); news(c, 'news_injury', {}); }
+  let injury = false, cancelled = false;
+  if (rng() < 0.04) {
+    injury = true; p.atributos.cardio = Math.max(15, p.atributos.cardio - 1); news(c, 'news_injury', {});
+    if (rng() < 0.35) {
+      // Lesión seria: se cae la pelea y hay que esperar una nueva oferta.
+      cancelled = true; c.offer = null; c.camp = null;
+      c.layoffUntil = addDays(c.date, Math.round((1 + rng() * 3) * 30));
+      c.date = c.layoffUntil; news(c, 'news_fight_cancelled', { name: p.nombre });
+    } else c.date = addDays(c.date, 14);
+  }
   tick(c);
-  return { ok: true, gains, injury };
+  return { ok: true, gains, injury, cancelled };
 }
 
 // ¿Se puede aprender? Pide puntos, atributos mínimos y (las legendarias) 4 estrellas.
@@ -315,6 +343,14 @@ export function techniqueStatus(c, key) {
   if (t.stars && stars(p.atributos) < t.stars) return { ok: false, reason: 'stars' };
   if (p.puntos < t.cost) return { ok: false, reason: 'points' };
   return { ok: true };
+}
+
+// Rechazar la pelea ofrecida: pasa un tiempo y llega otra oferta.
+export function declineOffer(c) {
+  const rng = rngOf(c);
+  c.offer = null; c.camp = null;
+  c.date = addDays(c.date, Math.round(20 + rng() * 40));
+  tick(c);
 }
 
 export function learnTechnique(c, key) {
@@ -372,6 +408,13 @@ export function applyCareerFight(c, ctx, result) {
   // Puntos de habilidad: solo peleando. Ganar 1, por nocaut o sumisión +1, ganar un título +2.
   const finished = ['ko', 'tko', 'sub'].includes(result.method);
   p.puntos += won ? 1 + (finished ? 1 : 0) + (offer.title ? 2 : 0) : 0;
+  // Lesiones: un nocaut te deja parado meses (más en las divisiones pesadas); a veces te lastimás aunque ganes.
+  const power = DIV_POWER[p.division] || 1;
+  const ko = result.method === 'ko' || result.method === 'tko';
+  let layoff = 0;
+  if (!won && ko) layoff = (2 + rng() * 4) * power;
+  else if (rng() < 0.12 * power) layoff = 1 + rng() * 3;
+  if (layoff >= 1) { c.layoffUntil = addDays(c.date, Math.round(layoff * 30)); events.push({ type: 'injury_layoff', months: Math.round(layoff) }); }
 
   // Bolsa
   const earned = offer.purse.show + (won ? offer.purse.win : 0);
@@ -420,7 +463,7 @@ export function applyCareerFight(c, ctx, result) {
   // Si el rival de UFC quedó con récord perdedor después de pelear con vos, lo cortan.
   if (!opp.generico && c.ufc.includes(opp)) cutLosers(c, opp.division, rng);
   // Retiro: a partir de los 36 se puede elegir; a los 40 es obligatorio.
-  if (p.edad >= 42) { c.retired = true; events.push({ type: 'retire_forced' }); news(c, 'news_player_retired', { name: p.nombre, record: p.record }); }
+  if (p.edad >= maxAge(c)) { c.retired = true; events.push({ type: 'retire_forced' }); news(c, 'news_player_retired', { name: p.nombre, record: p.record }); }
   else if (p.edad >= 38 && !c.pendingContract) events.push({ type: 'retire_option' });
   return events;
 }
@@ -482,11 +525,16 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
       } else if (hot && rng() < 0.45 && higherOrg(c, promos, rng)) {
         offer(higherOrg(c, promos, rng).id, 'regional', 3 + Math.floor(rng() * 2));
       } else if (ready && nFights >= need.ufc - 1 && r.w > r.l && ((champ && won) || p.racha >= 3 || (r.w >= 8 && st >= 2.8 && won) || (overdue && won)) && rng() < (overdue ? 0.9 : 0.65)) {
-        // Asiáticos: Road to UFC; tras 2 torneos perdidos también pueden ir al Contender Series.
-        const asian = isAsian(promos, p.pais) && (c.rtuFails || 0) < 2;
-        c.stage = asian ? 'rtu' : 'dwcs'; c.prevOrg = c.org; c.org = c.stage; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0; c.rtuRound = 0; c.contract = null;
-        events.push({ type: 'invite', org: c.stage });
-        news(c, asian ? 'news_rtu' : 'news_dwcs', { name: p.nombre });
+        // La mayoría llega a UFC con un contrato directo. El Contender Series (o Road to UFC para asiáticos)
+        // es para pocos y se va una sola vez en la carrera.
+        const asian = isAsian(promos, p.pais) && !c.rtuDone;
+        const show = asian ? 'rtu' : !c.dwcsDone && rng() < 0.3 ? 'dwcs' : null;
+        if (show) {
+          if (show === 'rtu') c.rtuDone = true; else c.dwcsDone = true;
+          c.stage = show; c.prevOrg = c.org; c.org = c.stage; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0; c.rtuRound = 0; c.contract = null;
+          events.push({ type: 'invite', org: c.stage });
+          news(c, show === 'rtu' ? 'news_rtu' : 'news_dwcs', { name: p.nombre });
+        } else if (ufcReady) { offer('ufc', 'ufc', 2 + Math.floor(rng() * 3)); news(c, 'news_ufc_contract', { name: p.nombre }); }
       } else if (r.w > r.l && won && champ && org.nivel >= 2.5 && rng() < 0.12) {
         offer('pfl', 'pfl', 3);
       } else if (p.racha <= -3 || (org.nivel >= ADVANCED_TIER && r.l > r.w)) {
@@ -607,8 +655,9 @@ function tick(c) {
     if (a > p.edad) {
       p.edad = a;
       // Declive desde los 36-37: velocidad, aguante y mentón; el techo baja de a poco desde los 33.
-      if (a >= 36) { const d = a - 35; p.atributos.velocidad = Math.max(15, p.atributos.velocidad - d * 0.9); p.atributos.cardio = Math.max(15, p.atributos.cardio - d * 0.7); p.atributos.menton = Math.max(15, p.atributos.menton - d * 0.4); }
-      p.techo = Math.max(60, p.techo - (a >= 36 ? 2.5 : a >= 33 ? 1 : 0));
+      // Declive gradual desde los 36: cada año un poco menos de velocidad, aguante y mentón.
+      if (a >= 36) { const d = a >= 40 ? 1.6 : 1; p.atributos.velocidad = Math.max(15, p.atributos.velocidad - 1.2 * d); p.atributos.cardio = Math.max(15, p.atributos.cardio - 1 * d); p.atributos.menton = Math.max(15, p.atributos.menton - 0.6 * d); }
+      p.techo = Math.max(60, p.techo - (a >= 38 ? 1.5 : a >= 34 ? 0.7 : 0));
     }
   }
   // El mundo UFC avanza mes a mes
@@ -621,9 +670,9 @@ export function simulateWorld(c, months) {
   const divisions = [...new Set(c.ufc.map(f => f.division))];
   for (let m = 0; m < months; m++) {
     for (const div of divisions) {
-      const pool = c.ufc.filter(f => f.division === div && f.id !== 'player' && !f.retirado);
+      const pool = c.ufc.filter(f => f.division === div && f.id !== 'player' && !f.retirado && !(f.outUntil > (c.worldMonths || 0)));
       if (pool.length < 4) continue;
-      const fights = 3;
+      const fights = 2; // ~1,5 peleas por año para cada uno, como en la realidad
       const used = new Set(c.offer ? [c.offer.opponentId] : []);
       // Pelea por el título aproximadamente cada 4 meses
       if (rng() < 0.25) {
@@ -661,9 +710,23 @@ function cutLosers(c, div, rng) {
   }
 }
 
+// De dónde vienen los que firman con UFC: proporciones parecidas al roster real (EE. UU., Brasil y Rusia
+// dominan); el resto de los países aparece de vez en cuando.
+const UFC_COUNTRIES = { US: 60, BR: 30, RU: 19, ENG: 8, AU: 8, MX: 7, PL: 7, CN: 6, CA: 5, JP: 4, FR: 4, KZ: 4, GE: 4, UZ: 4, KR: 4,
+  NZ: 3, AR: 3, DE: 3, IE: 3, SE: 3, KG: 3, AZ: 3, AM: 3, UA: 3, CZ: 3, TJ: 2, EC: 2, PE: 2, CO: 2, CL: 2, VE: 2, NL: 2, ES: 2,
+  IT: 2, MD: 2, HR: 2, RS: 2, AT: 2, TR: 2, NG: 2, ZA: 2, CM: 1, SCO: 1, WAL: 1, NIR: 1, DK: 1, NO: 1, FI: 1, BE: 1, CH: 1, SK: 1,
+  LT: 1, BG: 1, RO: 1, CU: 1, DO: 1, PR: 1, PH: 1, TH: 1, IN: 1, MN: 1, IR: 1, IQ: 1, MA: 1, EG: 1, AF: 1, AO: 1, CD: 1 };
+function ufcCountry(rng) {
+  const extra = Object.keys(NAMES).filter(k => /^[A-Z]{2,3}$/.test(k) && !UFC_COUNTRIES[k]);
+  const entries = [...Object.entries(UFC_COUNTRIES), ...extra.map(k => [k, 0.15])];
+  const total = entries.reduce((s, [, w]) => s + w, 0);
+  let r = rng() * total;
+  for (const [k, w] of entries) { r -= w; if (r <= 0) return k; }
+  return 'US';
+}
+
 function newUfcProspect(c, div, rng) {
-  const countries = Object.keys(NAMES).filter(k => /^[A-Z]{2,3}$/.test(k));
-  const nf = generateFighter(rng, { namesDb: NAMES, country: pick(rng, countries), division: div, level: 'ufc', archetype: 'prospecto', idPrefix: 'ufc' });
+  const nf = generateFighter(rng, { namesDb: NAMES, country: ufcCountry(rng), division: div, level: 'ufc', archetype: 'prospecto', idPrefix: 'ufc' });
   nf.generico = false; nf.nuevo = true; nf.ufcW = 0;
   if (rng() < 0.06) nf.exChampDef = 2 + Math.floor(rng() * 3); // ex campeón con defensas en otra promotora
   return nf;
@@ -672,15 +735,18 @@ function newUfcProspect(c, div, rng) {
 // Peleadores activos por división en el mundo UFC (el top 15 tiene que ser una élite, no media división).
 const UFC_DIV_SIZE = 34;
 
-// Cada año: los veteranos se retiran (la mayoría entre los 38 y los 42) y llegan prospectos nuevos.
-const RETIRE_BY_AGE = { 36: 0.05, 37: 0.1, 38: 0.18, 39: 0.3, 40: 0.45, 41: 0.65 };
+// Cada año: los veteranos se retiran (casi todos entre los 37 y los 43, alguno sigue hasta los 46)
+// y llegan prospectos nuevos. Los que acumulan muchas peleas se retiran antes (récords tipo 45-22 no existen).
+const RETIRE_BY_AGE = { 35: 0.03, 36: 0.06, 37: 0.1, 38: 0.16, 39: 0.22, 40: 0.3, 41: 0.38, 42: 0.48, 43: 0.58, 44: 0.68, 45: 0.8 };
 function yearlyTurnover(c, rng) {
   const divisions = [...new Set(c.ufc.map(f => f.division))];
   for (const f of c.ufc) {
     if (f.id === 'player' || f.retirado) continue;
     f.edad++;
     if (f.id === c.offer?.opponentId) continue; // ya tiene pelea pactada con el jugador
-    let pr = f.edad >= 42 ? 1 : RETIRE_BY_AGE[f.edad] || 0;
+    let pr = f.edad >= 46 ? 1 : RETIRE_BY_AGE[f.edad] || 0;
+    const total = rec(f).w + rec(f).l;
+    if (total > 34) pr += (total - 34) * 0.04;
     if (f.racha <= -2) pr += 0.15;
     if (f.ranking == null && f.racha <= -3) pr += 0.3;
     if (rng() < pr) {
@@ -688,6 +754,12 @@ function yearlyTurnover(c, rng) {
       if (f.ranking != null) news(c, f.ranking === 0 ? 'news_champ_retired' : 'news_retired', { name: f.nombre, record: f.record, div: f.division });
       f.ranking = null;
     }
+  }
+  // Los jóvenes todavía mejoran (algunos mucho, otros se estancan): más variedad en el mundo UFC.
+  for (const f of c.ufc) {
+    if (f.id === 'player' || f.retirado || f.edad > 31) continue;
+    const growth = rng() < 0.15 ? 0 : (f.edad <= 25 ? 1.6 : f.edad <= 28 ? 1.1 : 0.5) * (0.4 + rng() * 1.2);
+    for (const a of ATTRS) f.atributos[a] = Math.min(96, Math.round((f.atributos[a] + growth * (0.6 + rng() * 0.8)) * 10) / 10);
   }
   for (const div of divisions) {
     rerank(c, div);
@@ -723,6 +795,9 @@ function fightAI(c, a, b, rounds, rng) {
   const res = simulateFight(a, b, { rounds, rng });
   const wasChamp = [a, b].find(f => f.ranking === 0);
   if (res.winnerId) countUfcWin(c.ufc.find(f => f.id === res.winnerId), c.ufc.find(f => f.id === res.loserId));
+  // Noqueado: unos meses sin pelear (más tiempo en las divisiones pesadas).
+  const L = c.ufc.find(f => f.id === res.loserId);
+  if (L && (res.method === 'ko' || res.method === 'tko')) L.outUntil = (c.worldMonths || 0) + Math.round((2 + rng() * 4) * (DIV_POWER[L.division] || 1));
   applyResult(c.ufc, res);
   const W = c.ufc.find(f => f.id === res.winnerId);
   if (wasChamp && W !== wasChamp && W.ranking === 0) news(c, 'news_new_champ', { name: W.nombre, div: W.division });
@@ -761,6 +836,7 @@ export function load() {
 export function relink(c) {
   // v2 de habilidades: los puntos se ganan solo peleando; las partidas viejas tenían cientos acumulados.
   if ((c.techV || 1) < 2) { c.techV = 2; if (c.player) c.player.puntos = Math.min(c.player.puntos || 0, 8); }
+  if (c.player?.historial?.some(h => h.org === 'dwcs')) c.dwcsDone = true; // el Contender Series es una sola vez
   const i = c.ufc.findIndex(f => f.id === 'player');
   if (i >= 0) c.ufc[i] = c.player;
   return c;

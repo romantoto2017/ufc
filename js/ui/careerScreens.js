@@ -48,6 +48,7 @@ function eventText(ev) {
     case 'event_dwcs': return t('event_dwcs', { season: ev.season, n: ev.n });
     case 'event_rtu': return t('event_rtu', { n: ev.n });
     case 'event_ufc': return `UFC ${ev.n}`;
+    case 'event_ufc_fn': return 'UFC Fight Night';
     default: return `${ev.org} ${ev.n}`;
   }
 }
@@ -230,6 +231,8 @@ async function renderHub() {
   const simBtn = el('button', { class: 'btn', text: t('mode_sim') });
   playBtn.addEventListener('click', () => fightNow('play'));
   simBtn.addEventListener('click', () => fightNow('sim'));
+  const declineBtn = el('button', { class: 'btn btn-small', text: t('decline_fight') });
+  declineBtn.addEventListener('click', () => { audio.play('ui'); C.declineOffer(c); persist(); toast(t('fight_declined')); renderHub(); });
   const col2 = el('div', { class: 'hub-card fight-card' },
     el('div', { class: 'event-title', text: eventText(off.event) }),
     el('div', { class: 'note', text: `${off.fecha} · ${off.rounds} ${t('rounds').toLowerCase()}${off.title ? ' · ' + t('title_fight') : ''}` }),
@@ -241,7 +244,7 @@ async function renderHub() {
     el('div', { class: 'win-prob' }, el('span', { class: 'r', style: `width:${prob * 100}%`, text: `${Math.round(prob * 100)}%` }), el('span', { class: 'b', style: `width:${(1 - prob) * 100}%`, text: `${Math.round((1 - prob) * 100)}%` })),
     el('div', { class: 'note', text: `${t('purse')}: ${money(off.purse.show)} + ${money(off.purse.win)} ${t('win_bonus')}` }),
     el('div', { class: 'note', text: t('camp_status', { n: c.camp.sessions, max: c.camp.max }) }),
-    el('div', { class: 'row-actions' }, simBtn, playBtn));
+    el('div', { class: 'row-actions' }, declineBtn, simBtn, playBtn));
 
   // Columna 3: pestañas
   const tabs = [['train', 'tab_train'], ['tech', 'tab_tech'], ['rank', 'tab_rank'], ['hist', 'tab_hist'], ['news', 'tab_news']];
@@ -300,7 +303,7 @@ function renderTab(panel) {
         const r = C.train(c, focus);
         if (!r.ok) { toast(t(r.reason === 'no_time' ? 'no_time' : 'camp_full')); return; }
         audio.play('ui'); persist();
-        toast(Object.entries(r.gains).map(([k, v]) => `+${v} ${t('attr_' + k)}`).join('  ') + (r.injury ? ' · ' + t('injury') : ''));
+        toast(r.cancelled ? t('injury_cancel') : Object.entries(r.gains).map(([k, v]) => `+${v} ${t('attr_' + k)}`).join('  ') + (r.injury ? ' · ' + t('injury') : ''));
         renderHub();
       });
       grid.append(b);
@@ -407,7 +410,8 @@ function showEvents(events) {
       case 'rtu_advance': text = t('ev_rtu_advance', { n: e.round }); break;
       case 'short_notice': text = t('ev_short_notice'); break;
       case 'renewed': text = t('ev_renewed', { org: orgName(e.org) }); break;
-      case 'retire_forced': text = t('ev_retire_forced'); break;
+      case 'injury_layoff': text = t('ev_injury_layoff', { n: e.months }); break;
+      case 'retire_forced': text = t('ev_retire_forced', { age: career.player.edad }); break;
       case 'retire_option': {
         box.innerHTML = '';
         const keep = el('button', { class: 'btn btn-primary', text: t('keep_fighting') });
