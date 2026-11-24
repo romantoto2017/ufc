@@ -11,7 +11,7 @@ npm test             # tests: simulación, motor IA vs IA, roster y carrera comp
 
 Para el celular: GitHub Pages (Settings → Pages → rama `claude/bold-wozniak-8a0tk5`, carpeta raíz). Después lo abrís en el teléfono y lo instalás ("Agregar a pantalla principal").
 
-**Controles (clásico, por defecto):** un botón por golpe (jab, recto, gancho, codazo, patada baja, media, alta, giratoria y derribo). En Configuración se puede elegir el esquema de 2 botones: PUÑO (1 toque jab, 2 recto, 3 gancho, 4 codazo, siempre tocando seguido) y PATADA (baja, media, alta y giratoria). Hay un **Tutorial** en el menú, que se adapta al esquema elegido.
+**Controles (clásico, por defecto):** un botón por golpe (jab, recto, gancho, codazo, patada baja, media, alta, giratoria, rodilla y derribo). En Configuración se puede elegir el esquema de 2 botones: PUÑO (1 toque jab, 2 recto, 3 gancho, 4 codazo, siempre tocando seguido) y PATADA (baja, media, alta y giratoria). Hay un **Tutorial** en el menú, que se adapta al esquema elegido.
 
 **Pelea:** spamear golpes no sirve. Cada golpe suma "carga" y, si tirás sin pausa, el rival te esquiva y te contragolpea con el doble de daño (con buena pegada te puede noquear). Además pegás más flojo, te cansás más y tardás más en recuperarte. Los puños noquean más que antes y la pegada (golpeo) pesa en el knockdown. Cuando tirás a alguien, te le tirás encima solo para rematarlo con ground and pound: si no se cubre, el árbitro para la pelea por TKO.
 
@@ -33,6 +33,10 @@ En el ordenador: A/D o las flechas para moverse, W/S para bloquear alto/bajo, J 
   - De joven se pelea seguido (3 o 4 por año hasta los 26); después, lo normal es 1 a 3.
   - El físico empieza a bajar de a poco a los 36. Hasta qué edad aguanta el cuerpo se sortea en cada carrera (casi siempre 39-43, a veces 38 o hasta 46).
   - Lesiones: un nocaut te deja parado meses (más en las divisiones pesadas, que pegan más fuerte); en el campamento te podés lesionar y se cae la pelea. También podés rechazar una pelea y esperar otra oferta.
+  - Techo por estilo: tu arte marcial puede superar tu potencial general (+7), lo parecido un poco menos y lo opuesto queda por debajo y se entrena más lento.
+  - Equipo: con la plata contratás sparrings, entrenadores, nutricionista y fisio (mejoras reales), campamentos en altura y lujos (lentes, sombrero, cadenas) que se lucen en las conferencias.
+  - Conferencias de prensa con insultos antes de las peleas de título y del BMF (título simbólico de pluma a wélter). Podés cambiar de división (de a una, según tu altura) y ser doble campeón.
+  - Si UFC te corta, es muy difícil que te vuelva a contratar.
   - UFC es la élite: promedio ~4 estrellas y top 10 ~4,5. El Contender Series es para pocos y una sola vez; la mayoría llega con contrato directo. Los eventos siguen la numeración real (UFC 333 en octubre de 2026, ~13 por año, más Fight Nights).
   - Máximo 4 peleas contra el mismo rival.
   - Promotoras por nivel (Samurai/Naciones 1,5 → LFA/Cage Warriors/KSW 3 → ONE/RIZIN 3,5): ganando, te llegan ofertas de promotoras mejores.

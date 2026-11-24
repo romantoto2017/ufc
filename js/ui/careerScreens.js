@@ -8,7 +8,7 @@ import { simulateFight } from '../sim.js';
 import { portraitCanvas, drawPortrait } from '../gfx/face.js';
 import { flagCanvas } from '../gfx/flag.js';
 import { loadLogo, placeholderLogo } from '../gfx/logo.js';
-import { drawPressConference, drawHandSignature, SIGNATURE_FONT, drawBelt } from '../gfx/scenes.js';
+import { drawPressConference, drawHandSignature, SIGNATURE_FONT, drawBelt, drawTitlePresser, drawPerson } from '../gfx/scenes.js';
 import { show, el, starsEl, rankLabel, fmtTime, segmented, resetHistory } from './common.js';
 import { showResult, showVS } from './screens.js';
 import { startFight } from './fightScreen.js';
@@ -30,6 +30,7 @@ export function countryName(code) {
 
 // pais: necesario cuando todavía no hay carrera activa (pantalla de inicio recién abierta la app).
 function orgName(id, pais = career?.player?.pais) {
+  if (id === 'bmf') return 'BMF';
   if (id === 'nacional' || !id) return t('national_circuit', { country: countryName(pais) });
   return C.promoById(state.promotionsDb, id)?.nombre || id;
 }
@@ -199,7 +200,8 @@ async function renderHub() {
   hub.innerHTML = '';
 
   // Columna 1: jugador
-  const pc = portraitCanvas(p.cara, 3); pc.classList.add('portrait');
+  let pc = portraitCanvas(p.cara, 3); pc.classList.add('portrait');
+  if (ufcBelts(c) >= 2) pc = champCanvas(p, 2); // doble campeón: un cinturón en cada hombro
   const logo = await orgLogo(c.stage === 'nacional' ? 'nacional' : c.org, 120, 32);
   logo.classList?.add('org-logo');
   const menuBtn = el('button', { class: 'btn btn-small', text: t('to_menu') });
@@ -247,7 +249,7 @@ async function renderHub() {
     el('div', { class: 'row-actions' }, declineBtn, simBtn, playBtn));
 
   // Columna 3: pestañas
-  const tabs = [['train', 'tab_train'], ['tech', 'tab_tech'], ['rank', 'tab_rank'], ['hist', 'tab_hist'], ['news', 'tab_news']];
+  const tabs = [['train', 'tab_train'], ['tech', 'tab_tech'], ['shop', 'tab_shop'], ['rank', 'tab_rank'], ['hist', 'tab_hist'], ['news', 'tab_news']];
   const tabBar = el('div', { class: 'seg tabs' });
   segmented(tabBar, tabs.map(([v, k]) => ({ value: v, label: t(k) })), hubTab, v => { hubTab = v; renderTab(panel); });
   const panel = el('div', { class: 'tab-panel' });
@@ -297,7 +299,7 @@ function renderTab(panel) {
     for (const [focus, map] of Object.entries(C.TRAINING)) {
       const main = Object.keys(map)[0];
       const b = el('button', { class: 'btn btn-small', disabled: c.camp.sessions >= c.camp.max },
-        el('span', { text: t('train_' + focus) }), el('small', { text: String(Math.round(p.atributos[main])) }));
+        el('span', { text: t('train_' + focus) }), el('small', { text: `${Math.round(p.atributos[main])}/${C.attrCap(p, main)}` }));
       b.title = `${t('attr_' + main)} ${Math.round(p.atributos[main])}`;
       b.addEventListener('click', () => {
         const r = C.train(c, focus);
@@ -309,6 +311,29 @@ function renderTab(panel) {
       grid.append(b);
     }
     panel.append(el('p', { class: 'note', text: t('train_note', { techo: p.techo, pts: p.puntos }) }), grid);
+  } else if (hubTab === 'shop') {
+    panel.append(el('p', { class: 'note', text: t('shop_note', { money: money(p.dinero) }) }));
+    for (const kind of ['staff', 'camp', 'lujo']) {
+      panel.append(el('div', { class: 'tech-tier', text: t('shop_' + kind) }));
+      for (const [k, it] of Object.entries(C.SHOP).filter(([, x]) => x.kind === kind)) {
+        const st = C.shopStatus(c, k);
+        const b = el('button', { class: 'btn btn-small', disabled: st !== 'ok' }, el('span', { text: t('item_' + k) }), el('small', { text: st === 'owned' ? t('owned') : money(it.cost) }));
+        b.addEventListener('click', () => { if (C.buy(c, k)) { audio.play('ui'); persist(); renderHub(); } });
+        panel.append(el('div', { class: 'tech-row' + (st === 'owned' ? ' has' : '') }, b, el('span', { class: 'note', text: t('itemdesc_' + k) })));
+      }
+    }
+    // Cambio de división (de a una, pocas veces en la carrera)
+    const mv = C.divisionMoves(c);
+    panel.append(el('div', { class: 'tech-tier', text: t('shop_division', { n: mv.left }) }));
+    const row = el('div', { class: 'row-actions' });
+    for (const [dir, div] of [['down', mv.down], ['up', mv.up]]) {
+      if (!div) continue;
+      const b = el('button', { class: 'btn btn-small', text: t('div_' + dir, { div: t('div_' + div) }) });
+      b.addEventListener('click', () => { if (C.changeDivision(c, div)) { audio.play('ui'); persist(); toast(t('div_changed', { div: t('div_' + div) })); renderHub(); } });
+      row.append(b);
+    }
+    if (!mv.up && !mv.down) row.append(el('span', { class: 'note', text: '—' }));
+    panel.append(row);
   } else if (hubTab === 'tech') {
     panel.append(el('p', { class: 'note', text: t('tech_points', { n: p.puntos }) }));
     for (const tier of [1, 2, 3]) {
@@ -365,6 +390,10 @@ function toast(text) {
 async function fightNow(mode) {
   const c = career, p = c.player, opp = C.opponentOf(c), off = c.offer;
   audio.play('ui');
+  if (c.stage === 'ufc' && (off.title || off.bmf) && !off.presserDone) {
+    off.presserDone = true; persist();
+    return titlePresser(p, opp, () => fightNow(mode));
+  }
   const after = result => {
     const events = C.applyCareerFight(c, ctx(), result);
     persist();
@@ -387,6 +416,44 @@ async function fightNow(mode) {
         after(result);
       },
     });
+  });
+}
+
+// ---------- CONFERENCIA DE PRENSA (peleas de título y BMF) ----------
+const LUXURY = ['lentes', 'sombrero', 'cadenaOro', 'cadenaDiamantes'];
+function ufcBelts(c) { return (c.stage === 'ufc' && c.player.ranking === 0 ? 1 : 0) + Object.keys(c.heldBelts || {}).length; }
+function champCanvas(p, belts) {
+  const cv = el('canvas', { class: 'pixel portrait', width: 40, height: 64 });
+  const g = cv.getContext('2d'); g.imageSmoothingEnabled = false;
+  drawPerson(g, 20, 62, 'fighter', { face: p.cara, shirt: '#8c1414', belts, acc: (p.compras || []).filter(k => LUXURY.includes(k)) });
+  return cv;
+}
+function titlePresser(p, opp, done) {
+  show('screen-contract', { push: false });
+  const box = document.getElementById('contract');
+  box.innerHTML = '';
+  const canvas = el('canvas', { class: 'pixel press-canvas', width: 240, height: 120, 'aria-hidden': 'true' });
+  // El rival a veces aparece con lujos; los tuyos se compran en Equipo.
+  const seed = [...String(opp.id)].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 3);
+  const accR = LUXURY.filter((_, i) => (seed >> (i * 3)) % 3 === 0).slice(0, 2);
+  const accL = (p.compras || []).filter(k => LUXURY.includes(k));
+  const vars = { me: p.nombre.split(' ').pop(), opp: opp.nombre.split(' ').pop(), country: countryName(opp.pais), mycountry: countryName(p.pais) };
+  const pickLine = (pool, n) => t(`${pool}_${1 + Math.floor(Math.random() * n)}`, vars);
+  const lines = [[2, t(career.offer.bmf ? 'presser_dana_bmf' : 'presser_dana', vars)], [0, pickLine('tt_me', 14)], [1, pickLine('tt_opp', 14)], [0, pickLine('tt_me', 14)], [1, pickLine('tt_opp', 14)], [2, t('presser_dana_end', vars)]];
+  let i = 0;
+  const who = s => (s === 2 ? 'Dana White' : s === 0 ? p.nombre : opp.nombre);
+  const bubble = el('div', { class: 'bubble' }, el('b', { text: who(lines[0][0]) + ': ' }), el('span', { text: lines[0][1] }));
+  const nextBtn = el('button', { class: 'btn btn-primary', text: t('continue') });
+  box.append(el('div', { class: 'press' }, canvas, bubble, nextBtn));
+  const g = canvas.getContext('2d'); g.imageSmoothingEnabled = false;
+  const t0 = performance.now(); let raf;
+  const frame = now => { raf = requestAnimationFrame(frame); drawTitlePresser(g, 240, 120, { t: (now - t0) / 1000, logo: ufcLogo, faceL: p.cara, faceR: opp.cara, accL, accR, speaker: lines[i][0] }); };
+  raf = requestAnimationFrame(frame);
+  audio.roar(0.6);
+  nextBtn.addEventListener('click', () => {
+    audio.play('ui'); i++;
+    if (i < lines.length) { bubble.firstChild.textContent = who(lines[i][0]) + ': '; bubble.lastChild.textContent = lines[i][1]; if (lines[i][0] !== 2) audio.roar(0.3); }
+    else { cancelAnimationFrame(raf); done(); }
   });
 }
 
@@ -445,13 +512,16 @@ function showBelt(e, done) {
   audio.play('bell', { times: 3 }); audio.roar(1);
   let t0 = performance.now(), raf;
   const label = e.org === 'ufc' ? 'UFC' : orgName(e.org).toUpperCase();
+  const double = e.org === 'ufc' && ufcBelts(career) >= 2;
+  if (double) document.getElementById('belt-text').textContent = t('belt_double');
   const frame = now => {
     raf = requestAnimationFrame(frame);
     const tt = (now - t0) / 1000;
     g.fillStyle = '#0b0d14'; g.fillRect(0, 0, W, H);
     g.fillStyle = 'rgba(242,194,48,0.08)'; for (let i = 0; i < 8; i++) { g.beginPath(); g.moveTo(W / 2, H / 2); const a = tt * 0.3 + i * Math.PI / 4; g.lineTo(W / 2 + Math.cos(a) * 200, H / 2 + Math.sin(a) * 200); g.lineTo(W / 2 + Math.cos(a + 0.2) * 200, H / 2 + Math.sin(a + 0.2) * 200); g.fill(); }
     const s = Math.min(2, 0.4 + tt * 1.6);
-    drawBelt(g, W / 2, H / 2, s, tt, { label });
+    if (double) { g.save(); g.translate(W / 2 - 40, H / 2 - 60); g.scale(1.9, 1.9); drawPerson(g, 21, 62, 'fighter', { face: career.player.cara, shirt: '#8c1414', belts: 2, t: tt }); g.restore(); }
+    else drawBelt(g, W / 2, H / 2, s, tt, { label, bmf: e.org === 'bmf' });
     for (const p of confetti) { p.y += p.v / 60; if (p.y > H) p.y = -4; g.fillStyle = p.c; g.fillRect(Math.round(p.x + Math.sin(tt * 3 + p.y) * 3), Math.round(p.y), 2, 2); }
   };
   raf = requestAnimationFrame(frame);

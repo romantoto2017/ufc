@@ -9,7 +9,8 @@ export const BASE_MOVES = {
   lowKick:  { key: 'lowKick',  type: 'kick',  zone: 'legs', dmg: 6,   stam: 3,   startup: 0.20, active: 0.08, recovery: 0.28, range: 39, kd: 0,    pose: 'lowKick' },
   bodyKick: { key: 'bodyKick', type: 'kick',  zone: 'body', dmg: 8.5, stam: 4.5, startup: 0.26, active: 0.08, recovery: 0.34, range: 41, kd: 0,    pose: 'bodyKick' },
   highKick: { key: 'highKick', type: 'kick',  zone: 'head', dmg: 15,  stam: 7,   startup: 0.36, active: 0.09, recovery: 0.46, range: 43, kd: 1.25, pose: 'highKick' },
-  spinKick: { key: 'spinKick', type: 'kick',  zone: 'head', dmg: 17,  stam: 8.5, startup: 0.42, active: 0.09, recovery: 0.5,  range: 43, kd: 1.4,  pose: 'highKick', spin: true },
+  spinKick: { key: 'spinKick', type: 'kick',  zone: 'head', dmg: 13,  stam: 10,  startup: 0.5,  active: 0.08, recovery: 0.62, range: 42, kd: 1.0,  pose: 'highKick', spin: true },
+  knee:     { key: 'knee',     type: 'kick',  zone: 'head', dmg: 9,   stam: 3.8, startup: 0.18, active: 0.07, recovery: 0.3,  range: 25, kd: 1.05, pose: 'knee' },
   takedown: { key: 'takedown', type: 'grapple', zone: null, dmg: 0,   stam: 7,   startup: 0.28, active: 0.12, recovery: 0.6,  range: 33, kd: 0,    pose: 'shoot', tdBonus: 0 },
 };
 
@@ -34,7 +35,7 @@ const STYLE_VARIANTS = {
     takedown: { tdBonus: -0.05 },
   },
   muay_thai: {
-    elbow: { dmg: 1.2, kd: 1.15 },
+    elbow: { dmg: 1.2, kd: 1.15 }, knee: { dmg: 1.25, kd: 1.1 },
     lowKick: { dmg: 1.25 }, bodyKick: { dmg: 1.25 }, highKick: { dmg: 1.05 },
   },
   bjj: {
@@ -53,7 +54,7 @@ const MULT_FIELDS = ['dmg', 'stam', 'startup', 'active', 'recovery', 'range', 'k
 // Los efectos de reglas (esquiva, contras, mentón, aguante...) están en engine.js.
 const TECHNIQUE_VARIANTS = {
   elbow: { elbow: { dmg: 1.2, startup: 0.85, kd: 1.2 } },
-  spinKick: { spinKick: { dmg: 1.15, startup: 0.8, kd: 1.15 } },
+  spinKick: { spinKick: { dmg: 1.1, startup: 0.88, kd: 1.05 } },
   singleLeg: { takedown: { nameKey: 'move_singleLeg', tdBonus: 0.08 } },
   doubleLeg: { takedown: { nameKey: 'move_doubleLeg', tdBonus: 0.15, startup: 0.85 } },
   heavyHands: { jab: { kd: 1.2, dmg: 1.05 }, cross: { kd: 1.2, dmg: 1.05 }, hook: { kd: 1.2, dmg: 1.05 }, elbow: { kd: 1.12 } },
@@ -92,6 +93,6 @@ export function movesForStyle(style, learned = []) {
   return out;
 }
 
-export const STANDING_ACTIONS = ['jab', 'cross', 'hook', 'elbow', 'lowKick', 'bodyKick', 'highKick', 'spinKick', 'takedown'];
+export const STANDING_ACTIONS = ['jab', 'cross', 'hook', 'elbow', 'lowKick', 'bodyKick', 'highKick', 'spinKick', 'knee', 'takedown'];
 // Esquema de 2 botones: toques seguidos avanzan por la cadena.
 export const CHAINS = { punch: ['jab', 'cross', 'hook', 'elbow'], kick: ['lowKick', 'bodyKick', 'highKick', 'spinKick'] };

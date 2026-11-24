@@ -44,12 +44,12 @@ export function drawDana(ctx, x, y, { t = 0, armUp = false } = {}) {
   px(ctx, x - 8, y - 35, 16, 1, skinD); px(ctx, x - 6, y - 34, 12, 1, skinD); // papada
 }
 
-export function drawPerson(ctx, x, y, tipo, { armUp = false, t = 0, face = null, shirt: shirtColor = null } = {}) {
+export function drawPerson(ctx, x, y, tipo, { armUp = false, t = 0, face = null, shirt: shirtColor = null, acc = [], belts = 0 } = {}) {
   if (tipo === 'dana') return drawDana(ctx, x, y, { t, armUp });
   const OUT = '#120c09';
   const skin = '#e9b896', skinD = '#c99372';
-  const suit = shirtColor || (tipo === 'ref' ? '#151515' : '#16161c');
-  const shirt = shirtColor || (tipo === 'announcer' ? '#ffffff' : tipo === 'dana' ? '#1e1e24' : '#151515');
+  const suit = shirtColor || (tipo === 'ref' ? '#151515' : tipo === 'suit' ? '#1d2030' : '#16161c');
+  const shirt = shirtColor || (tipo === 'announcer' || tipo === 'suit' ? '#ffffff' : tipo === 'dana' ? '#1e1e24' : '#151515');
   const bob = Math.round(Math.sin(t * 4) * 0.6);
   y += bob;
   // Piernas
@@ -62,6 +62,7 @@ export function drawPerson(ctx, x, y, tipo, { armUp = false, t = 0, face = null,
   px(ctx, x - 2, y - 31, 4, 12, shirt);
   if (tipo === 'announcer') { px(ctx, x - 2, y - 31, 4, 2, '#111'); px(ctx, x - 3, y - 31, 1, 2, '#111'); px(ctx, x + 2, y - 31, 1, 2, '#111'); }
   if (tipo === 'ref') { for (let i = 0; i < 4; i++) px(ctx, x - 8 + i * 4, y - 31, 2, 17, '#ffffff22'); px(ctx, x - 7, y - 28, 4, 2, '#d20a0a'); }
+  if (tipo === 'suit') { px(ctx, x - 1, y - 30, 2, 9, '#8c1414'); px(ctx, x - 3, y - 31, 1, 6, '#2b2f44'); px(ctx, x + 2, y - 31, 1, 6, '#2b2f44'); } // corbata y solapas
   // Brazos
   px(ctx, x - 12, y - 31, 4, 14, OUT); px(ctx, x - 11, y - 30, 2, 12, suit); px(ctx, x - 11, y - 18, 3, 3, tipo === 'ref' ? '#2a5bd7' : skin);
   if (armUp) { px(ctx, x + 8, y - 46, 4, 16, OUT); px(ctx, x + 9, y - 45, 2, 14, suit); px(ctx, x + 8, y - 48, 4, 3, tipo === 'ref' ? '#2a5bd7' : skin); }
@@ -72,7 +73,10 @@ export function drawPerson(ctx, x, y, tipo, { armUp = false, t = 0, face = null,
     // Solo cabeza y cuello: los hombros desnudos del retrato tapaban la remera.
     ctx.save(); ctx.beginPath(); ctx.rect(x - 16, y - 58, 32, 27); ctx.clip();
     drawPortrait(ctx, face, x - 16, y - 58, 1);
-    ctx.restore(); return;
+    ctx.restore();
+    drawAccessories(ctx, x, y, acc, t);
+    if (belts) drawShoulderBelts(ctx, x, y, belts, t);
+    return;
   }
   px(ctx, x - 7, y - 46, 14, 15, OUT);
   px(ctx, x - 6, y - 45, 12, 13, skin);
@@ -84,6 +88,69 @@ export function drawPerson(ctx, x, y, tipo, { armUp = false, t = 0, face = null,
   px(ctx, x - 2, y - 35, 4, 1, tipo === 'announcer' ? '#7a2b22' : '#8a4a3a');
   if (tipo === 'announcer' && Math.sin(t * 12) > 0) px(ctx, x - 2, y - 36, 4, 3, '#4a1210'); // boca abierta gritando
   if (tipo === 'dana') { px(ctx, x - 6, y - 37, 12, 1, '#c99372'); }
+}
+
+// Lujos sobre el retrato (origen del retrato en x-16, y-58; ojos en la fila 15).
+function drawAccessories(ctx, x, y, acc = [], t = 0) {
+  const ox = x - 16, oy = y - 58;
+  const shine = (sx, sy, k) => { if (Math.sin(t * 5 + k) > 0.6) { px(ctx, sx, sy - 1, 1, 3, '#ffffff'); px(ctx, sx - 1, sy, 3, 1, '#ffffff'); } };
+  if (acc.includes('lentes')) {
+    px(ctx, ox + 10, oy + 14, 13, 1, '#d9b43a');
+    px(ctx, ox + 10, oy + 14, 5, 3, '#0d0d12'); px(ctx, ox + 18, oy + 14, 5, 3, '#0d0d12');
+    px(ctx, ox + 11, oy + 14, 2, 1, '#5a6a8a'); px(ctx, ox + 19, oy + 14, 2, 1, '#5a6a8a');
+  }
+  if (acc.includes('sombrero')) {
+    px(ctx, ox + 5, oy + 7, 22, 2, '#16161c'); px(ctx, ox + 9, oy + 1, 14, 6, '#1f1f28'); px(ctx, ox + 9, oy + 5, 14, 1, '#c9a24a');
+  }
+  const chain = acc.includes('cadenaDiamantes') ? 'diam' : acc.includes('cadenaOro') ? 'oro' : null;
+  if (chain) {
+    const col = chain === 'diam' ? '#e8f6ff' : '#f2c230', dk = chain === 'diam' ? '#7fc6ff' : '#b8860b';
+    for (let i = -6; i <= 6; i++) px(ctx, x + i, y - 31 + Math.round((36 - i * i) / 9), 1, 1, i % 2 ? col : dk);
+    px(ctx, x - 2, y - 26, 4, 4, col); px(ctx, x - 1, y - 25, 2, 2, dk);
+    shine(x + 1, y - 25, 0); if (chain === 'diam') { shine(x - 5, y - 29, 2); shine(x + 5, y - 29, 4); }
+  }
+}
+
+// Cinturones sobre los hombros (doble campeón).
+function drawShoulderBelts(ctx, x, y, n, t = 0) {
+  // Correas cruzadas sobre el pecho y la placa dorada apoyada en cada hombro.
+  for (const s of n >= 2 ? [-1, 1] : [-1]) {
+    for (let i = 0; i < 18; i++) px(ctx, x + s * 8 - s * Math.round(i * 0.85), y - 32 + i, 3, 2, i % 4 ? '#121212' : '#2a2a2a');
+    const bx = x + s * 8;
+    px(ctx, bx - 5, y - 36, 10, 8, '#1a1205'); px(ctx, bx - 4, y - 35, 8, 6, '#f2c230'); px(ctx, bx - 4, y - 35, 8, 1, '#fff1a8');
+    px(ctx, bx - 2, y - 34, 4, 3, '#d20a0a'); px(ctx, bx - 1, y - 33, 1, 1, '#ffd6d6');
+    if (Math.sin(t * 4 + s) > 0.6) px(ctx, bx - 4 + ((t * 20) | 0) % 8, y - 35, 1, 6, '#ffffff');
+  }
+}
+
+// Conferencia de prensa de una pelea de título: Dana en el atril del medio, los dos peleadores de traje
+// a los costados con micrófonos de UFC. speaker: 0 = jugador (izquierda), 1 = rival, 2 = Dana.
+export function drawTitlePresser(ctx, W, H, { t, logo, faceL, faceR, accL = [], accR = [], speaker = 2 }) {
+  px(ctx, 0, 0, W, H, '#0b0d14');
+  for (let y = 0; y < H * 0.62; y += 22) for (let x = (y / 22) % 2 ? -20 : 0; x < W; x += 48) {
+    px(ctx, x, y, 46, 20, '#14182a');
+    if (logo) { ctx.globalAlpha = 0.5; ctx.drawImage(logo, x + 6, y + 5, 34, Math.round(34 * logo.height / logo.width)); ctx.globalAlpha = 1; }
+  }
+  const base = Math.round(H * 0.72);
+  drawPerson(ctx, Math.round(W * 0.2), base, 'suit', { t, face: faceL, acc: accL });
+  drawPerson(ctx, Math.round(W * 0.8), base, 'suit', { t: t + 2, face: faceR, acc: accR });
+  drawPerson(ctx, Math.round(W / 2), base - 6, 'dana', { t: t + 1 });
+  // Mesa a los costados y atril de Dana en el medio, con el logo
+  px(ctx, 0, H * 0.66, W, H * 0.34, '#08090d');
+  px(ctx, W * 0.04, H * 0.68, W * 0.32, 14, '#1d2235'); px(ctx, W * 0.64, H * 0.68, W * 0.32, 14, '#1d2235');
+  px(ctx, W * 0.04, H * 0.68, W * 0.32, 2, '#d20a0a'); px(ctx, W * 0.64, H * 0.68, W * 0.32, 2, '#d20a0a');
+  px(ctx, W / 2 - 15, H * 0.6, 30, H * 0.4, '#151826'); px(ctx, W / 2 - 15, H * 0.6, 30, 2, '#d20a0a');
+  if (logo) ctx.drawImage(logo, W / 2 - 12, H * 0.66, 24, Math.round(24 * logo.height / logo.width));
+  // Micrófonos con la bandera de UFC
+  for (const mx of [0.2, 0.5, 0.8]) {
+    const mxp = Math.round(W * mx), my = Math.round(H * (mx === 0.5 ? 0.55 : 0.6));
+    px(ctx, mxp, my, 1, 9, '#555'); px(ctx, mxp - 1, my - 3, 3, 4, '#222');
+    px(ctx, mxp - 3, my + 1, 7, 3, '#d20a0a'); px(ctx, mxp - 2, my + 2, 5, 1, '#ffffff');
+  }
+  // Quién habla
+  const sx = [W * 0.2, W * 0.8, W / 2][speaker];
+  if (Math.sin(t * 8) > -0.2) { px(ctx, sx - 2, 3, 5, 2, '#f2c230'); px(ctx, sx - 1, 5, 3, 2, '#f2c230'); px(ctx, sx, 7, 1, 1, '#f2c230'); }
+  if (Math.sin(t * 9) > 0.9) { ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.fillRect(0, 0, W, H); }
 }
 
 // Escena de conferencia de prensa: fondo con logos, mesa, Dana y el peleador.
@@ -150,17 +217,19 @@ export function drawSignature(ctx, pts, progress, color = '#10204a') {
 }
 
 // Cinturón de campeón detallado (base 96x40 px), con brillo animado.
-export function drawBelt(ctx, cx, cy, scale, t, { label = 'CHAMPION', strap = '#121212', accent = '#d20a0a' } = {}) {
+export function drawBelt(ctx, cx, cy, scale, t, { label = 'CHAMPION', strap = '#121212', accent = '#d20a0a', bmf = false } = {}) {
   ctx.save();
   ctx.translate(cx, cy); ctx.scale(scale, scale); ctx.translate(-48, -20);
-  const GOLD = '#f2c230', GOLD_D = '#b8860b', GOLD_L = '#fff1a8', OUT = '#1a1205';
+  // BMF: cuero negro con placas de plata oscura y letras cromadas (título simbólico).
+  const [GOLD, GOLD_D, GOLD_L, OUT] = bmf ? ['#a9aeb7', '#4b4f57', '#eef1f6', '#08080a'] : ['#f2c230', '#b8860b', '#fff1a8', '#1a1205'];
+  if (bmf) { accent = '#1d1f24'; strap = '#0d0d0f'; }
   // Correa con costuras
   px(ctx, 0, 12, 96, 16, OUT); px(ctx, 1, 13, 94, 14, strap);
   for (let x = 3; x < 94; x += 3) { px(ctx, x, 14, 1, 1, '#3a3a3a'); px(ctx, x, 25, 1, 1, '#3a3a3a'); }
   // Placas laterales (4)
   for (const [x, w] of [[6, 12], [20, 10], [66, 10], [78, 12]]) {
     px(ctx, x - 1, 11, w + 2, 18, OUT); px(ctx, x, 12, w, 16, GOLD); px(ctx, x, 12, w, 2, GOLD_L); px(ctx, x, 26, w, 2, GOLD_D);
-    px(ctx, x + (w >> 1) - 2, 17, 4, 6, accent); px(ctx, x + (w >> 1) - 1, 18, 2, 2, '#ff9a9a');
+    px(ctx, x + (w >> 1) - 2, 17, 4, 6, accent); px(ctx, x + (w >> 1) - 1, 18, 2, 2, bmf ? '#6d7178' : '#ff9a9a');
   }
   // Placa central: octógono dorado
   const oct = [[34, 2], [62, 2], [70, 10], [70, 30], [62, 38], [34, 38], [26, 30], [26, 10]];
@@ -169,10 +238,10 @@ export function drawBelt(ctx, cx, cy, scale, t, { label = 'CHAMPION', strap = '#
   px(ctx, 30, 6, 36, 2, GOLD_L); px(ctx, 30, 33, 36, 2, GOLD_D);
   // Anillo interior y gema
   px(ctx, 34, 9, 28, 22, GOLD_D); px(ctx, 35, 10, 26, 20, '#151515'); px(ctx, 36, 11, 24, 18, accent);
-  px(ctx, 40, 13, 16, 3, '#ffffff'); px(ctx, 40, 16, 16, 1, '#ffd6d6');
+  if (!bmf) { px(ctx, 40, 13, 16, 3, '#ffffff'); px(ctx, 40, 16, 16, 1, '#ffd6d6'); }
   // Texto de la placa
-  ctx.fillStyle = GOLD_L; ctx.font = '5px "Press Start 2P", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.fillText(label.slice(0, 9), 48, 23);
+  ctx.fillStyle = GOLD_L; ctx.font = `${bmf ? 8 : 5}px "Press Start 2P", monospace`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(bmf ? 'BMF' : label.slice(0, 9), 48, bmf ? 20 : 23);
   // Remaches
   for (const [x, y] of [[29, 9], [67, 9], [29, 31], [67, 31]]) { px(ctx, x - 1, y - 1, 2, 2, GOLD_L); }
   // Brillo que recorre el cinturón

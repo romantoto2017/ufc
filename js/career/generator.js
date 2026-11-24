@@ -180,7 +180,7 @@ export function randomFace(rng, country) {
   };
 }
 
-const HEIGHT_BY_DIV = { mosca: 165, gallo: 170, pluma: 173, ligero: 177, welter: 181, medio: 185, semipesado: 189, pesado: 193 };
+export const HEIGHT_BY_DIV = { mosca: 165, gallo: 170, pluma: 173, ligero: 177, welter: 181, medio: 185, semipesado: 189, pesado: 193 };
 
 // Crea un rival genérico.
 // Estrellas de los rivales según el nivel de la organización (1.5 = Samurai ... 3.5 = ONE).

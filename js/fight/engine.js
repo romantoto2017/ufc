@@ -89,7 +89,7 @@ export class Fight {
     this.groundT = 0;
     this.judgeCards = [[], [], []]; // por juez: [ptsA, ptsB] por round
     // Escala del daño acumulado: rounds más cortos comprimen la pelea para que siga habiendo finalizaciones.
-    this.zoneScale = 0.08 * Math.pow(300 / this.roundSeconds, 0.75);
+    this.zoneScale = 0.062 * Math.pow(300 / this.roundSeconds, 0.75);
     for (const f of this.f) f.newRoundStats();
   }
 
@@ -340,9 +340,10 @@ export class Fight {
     if (counter) koPower *= 1.5; // el golpe que no ves venir
     if (killer) koPower *= 1.2;
     koPower *= 1 + ((DIV_POWER[A.data.division] || 1) - 1) * 0.6; // los pesados pegan más fuerte (algo moderado en la pelea jugada)
-    const p = clamp((koPower - chin * 0.95) / (chin * 4.5), 0, 0.5);
+    if (m.type === 'kick') koPower *= 0.75; // los nocauts salen sobre todo de las manos
+    const p = clamp((koPower - chin * 1.1) / (chin * 5.5), 0, 0.4);
     if (this.rng() >= p) return;
-    const pKO = Math.pow(D.dmg.head / 100, 2) * 0.5 + (koPower > chin * 1.6 ? 0.35 : 0);
+    const pKO = Math.pow(D.dmg.head / 100, 2) * 0.4 + (koPower > chin * 1.9 ? 0.3 : 0);
     if (this.rng() < pKO) {
       // Corazón de campeón: una vez por pelea, el nocaut queda en knockdown.
       if (D.tech.has('unbreakable') && !D.survivedKO) D.survivedKO = true;

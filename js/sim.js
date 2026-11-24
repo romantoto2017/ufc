@@ -1,6 +1,10 @@
 // Simulación realista de peleas (sin jugar) y actualización del mundo.
 import { starsExact, progressAfterFight } from './ratings.js';
 import { techSimBonus } from './fight/techniques.js';
+import { HEIGHT_BY_DIV } from './career/generator.js';
+
+// Tamaño para la división: el que es chico para su peso (p. ej. subió de división) sufre y lo noquean más.
+export const sizeScore = f => (f.altura && HEIGHT_BY_DIV[f.division] ? Math.max(-1.2, Math.min(0.5, (f.altura - HEIGHT_BY_DIV[f.division]) / 8)) : 0);
 
 export const MAX_FAVORITE = 0.92;
 // Pegada por división: cuanto más pesado, más nocauts (y más lesiones).
@@ -24,12 +28,13 @@ export function matchupFactors(a, b) {
   const chin = (a.atributos.menton - b.atributos.menton) / 100 * 0.4;
   const age = agePenalty(b.edad) - agePenalty(a.edad);
   const tech = techSimBonus(a.tecnicas) - techSimBonus(b.tecnicas); // habilidades especiales (carrera)
-  return { rating, style, reach, chin, age, tech };
+  const size = (sizeScore(a) - sizeScore(b)) * 0.35;
+  return { rating, style, reach, chin, age, tech, size };
 }
 
 export function winProbability(a, b) {
   const f = matchupFactors(a, b);
-  const x = f.rating + f.style + f.reach + f.chin + f.age + f.tech;
+  const x = f.rating + f.style + f.reach + f.chin + f.age + f.tech + f.size;
   return clamp(logistic(x), 1 - MAX_FAVORITE, MAX_FAVORITE);
 }
 
@@ -88,7 +93,7 @@ export function simulateFight(a, b, { rounds = 3, roundSeconds = 300, rng = Math
 
   const wa = W.atributos, la = L.atributos;
   const power = ((wa.golpeo + wa.patadas) / 2) / 75 * (DIV_POWER[W.division] || 1);
-  const koW = 0.30 * power * ((100 - la.menton + 30) / 80) * (1 + gap);
+  const koW = 0.30 * power * ((100 - la.menton + 30) / 80) * (1 + gap) * (1 + Math.max(0, -sizeScore(L)) * 0.6);
   const subW = 0.17 * (wa.sumisiones / 75) * ((130 - (la.grappling + la.defensa) / 2) / 80) * (1 + gap);
   const decW = 0.5 * (1 - gap * 0.4) / (DIV_POWER[W.division] || 1); // los livianos van más a decisión
   const method = pickWeighted(rng, [['ko', koW], ['sub', subW], ['dec', decW]]);

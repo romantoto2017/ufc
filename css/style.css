@@ -357,7 +357,7 @@ table.stats td:nth-child(2) { text-align: center; color: var(--muted); }
 .pad-right.simple { grid-template-columns: repeat(2, calc(var(--btn) * 1.7)); }
 .pad-right.simple .cbtn.big { width: calc(var(--btn) * 1.7); height: calc(var(--btn) * 1.5); flex-direction: column; gap: 4px; font-size: calc(var(--btn) * 0.2); }
 .pad-right.simple .cbtn.big small { font-family: var(--font-text); font-size: calc(var(--btn) * 0.2); opacity: 0.85; line-height: 1; }
-.pad-right.simple [data-action="takedown"] { grid-column: 1 / -1; width: 100%; height: calc(var(--btn) * 0.8); }
+.pad-right.simple [data-action="takedown"] { grid-column: auto; width: 100%; height: calc(var(--btn) * 0.8); }
 .chain-tag { position: absolute; right: 18px; bottom: calc(var(--btn) * 3.6); font-family: var(--font-pixel); font-size: 12px; color: #fff; text-shadow: 2px 2px 0 #000; opacity: 0; pointer-events: none; }
 .chain-tag.show { animation: chaintag 0.7s steps(5) both; }
 @keyframes chaintag { 0% { opacity: 1; transform: translateY(6px); } 70% { opacity: 1; } 100% { opacity: 0; transform: translateY(-6px); } }
@@ -421,4 +421,11 @@ button, .btn, .cbtn, a, input, select { touch-action: manipulation; }
 /* Esquema clásico: botones de golpe un poco más chicos y el derribo en una franja baja */
 .pad-right.classic { grid-template-columns: repeat(4, calc(var(--btn) * 0.86)); gap: 6px; }
 .pad-right.classic .cbtn { width: calc(var(--btn) * 0.86); height: calc(var(--btn) * 0.86); font-size: calc(var(--btn) * 0.11); }
-.pad-right.classic [data-action="takedown"] { grid-column: 1 / -1; width: 100%; height: calc(var(--btn) * 0.6); }
+.pad-right.classic [data-action="takedown"] { grid-column: 2 / -1; width: 100%; height: calc(var(--btn) * 0.6); }
+.pad-right.classic [data-action="knee"] { height: calc(var(--btn) * 0.6); }
+.pad-right.simple [data-action="knee"] { grid-column: auto; width: 100%; height: calc(var(--btn) * 0.8); }
+
+/* Tarjeta de la pelea: Rechazar / Simular / Jugar en una sola fila */
+.fight-card .row-actions { flex-wrap: nowrap; gap: 4px; justify-content: stretch; }
+.fight-card .row-actions .btn { flex: 1 1 0; min-width: 0; padding: 8px 2px; font-size: 8px; min-height: 40px; overflow: hidden; white-space: nowrap; }
+.fight-card .row-actions .btn-primary { flex-grow: 1.2; }

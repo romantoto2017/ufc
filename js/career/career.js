@@ -2,7 +2,7 @@
 // ofertas de pelea, contratos, entrenamiento, dinero y simulación del mundo UFC. Módulo puro (testeable en Node).
 import { ATTRS, STYLE_PROFILE, stars, starsExact, overall } from '../ratings.js';
 import { simulateFight, applyResult, winProbability, DIV_POWER } from '../sim.js';
-import { generateFighter, makeAttributes, starsToOverall, namesFor, orgStars, plausibleRecord, ADVANCED_TIER } from './generator.js';
+import { generateFighter, makeAttributes, starsToOverall, namesFor, orgStars, plausibleRecord, ADVANCED_TIER, randomName, randomFace, HEIGHT_BY_DIV } from './generator.js';
 import { TECHNIQUES } from '../fight/techniques.js';
 export { TECHNIQUES };
 
@@ -92,6 +92,42 @@ export const TRAINING = {
 };
 
 export const GYM_COST = { 2: 20000, 3: 80000 };
+
+// ---------- en qué gastar la plata ----------
+// staff: mejoras permanentes del equipo; lujo: se lucen en las conferencias de prensa; camp: solo este campamento.
+export const SHOP = {
+  sparring:   { kind: 'staff', cost: 30000 },   // todo el entrenamiento rinde +15%
+  coachGolpe: { kind: 'staff', cost: 45000 },   // golpeo, patadas y velocidad +25%
+  coachLucha: { kind: 'staff', cost: 45000 },   // lucha y sumisiones +25%
+  nutri:      { kind: 'staff', cost: 18000 },   // cardio +35% y parates más cortos
+  fisio:      { kind: 'staff', cost: 25000 },   // la mitad de lesiones y parates más cortos
+  altura:     { kind: 'camp', cost: 8000 },     // +2 sesiones en este campamento
+  lentes:     { kind: 'lujo', cost: 6000 },
+  sombrero:   { kind: 'lujo', cost: 12000 },
+  cadenaOro:  { kind: 'lujo', cost: 35000 },
+  cadenaDiamantes: { kind: 'lujo', cost: 120000 },
+};
+const has = (p, k) => (p.compras || []).includes(k);
+function staffBoost(p, attr) {
+  let m = has(p, 'sparring') ? 1.15 : 1;
+  if (has(p, 'coachGolpe') && ['golpeo', 'patadas', 'velocidad'].includes(attr)) m *= 1.25;
+  if (has(p, 'coachLucha') && ['grappling', 'sumisiones'].includes(attr)) m *= 1.25;
+  if (has(p, 'nutri') && attr === 'cardio') m *= 1.35;
+  return m;
+}
+export function shopStatus(c, key) {
+  const p = c.player, it = SHOP[key];
+  if (it.kind !== 'camp' && has(p, key)) return 'owned';
+  if (it.kind === 'camp' && (!c.camp || c.camp.altura)) return 'unavailable';
+  return p.dinero >= it.cost ? 'ok' : 'money';
+}
+export function buy(c, key) {
+  if (shopStatus(c, key) !== 'ok') return false;
+  const p = c.player, it = SHOP[key];
+  p.dinero -= it.cost;
+  if (it.kind === 'camp') { c.camp.max += 2; c.camp.altura = true; } else p.compras = [...(p.compras || []), key];
+  return true;
+}
 export const PURSE = { nacional: 800, regional: 4000, dwcs: 8000, rtu: 10000, pfl: 30000, ufc: 14000 };
 
 // ---------- regiones y organizaciones ----------
@@ -134,7 +170,7 @@ export function newCareer({ player, promos, fighters, existing = false, seed = D
     stage: 'nacional', org: null, stageFights: 0, stageWins: 0, sameCountryFights: 0,
     ufc: fighters.map(f => ({ ...f, atributos: { ...f.atributos } })),
     generics: {}, regionalChamp: {}, eventNo: {}, offer: null, pendingContract: null, camp: null,
-    news: [], dwcsTries: 0, rtuRound: 0, released: false, injuryWeeks: 0, lastWorldSim: START_DATE, techV: 2,
+    news: [], dwcsTries: 0, rtuRound: 0, released: false, injuryWeeks: 0, lastWorldSim: START_DATE, techV: 2, countryV: 2,
   };
   if (existing) {
     // Tomar un peleador existente: ya está en UFC con su récord y ranking.
@@ -196,7 +232,7 @@ export function makeOffer(c, ctx) {
   const rng = rngOf(c);
   const p = c.player;
   const org = stageOrg(c, promos);
-  let opponent, rounds = 3, title = false, kind = c.stage;
+  let opponent, rounds = 3, title = false, kind = c.stage, bmf = false;
   if (c.stage === 'nacional') {
     const mustLocal = c.sameCountryFights < NATIONAL_SAME_COUNTRY_FIGHTS;
     const country = mustLocal || rng() < 0.7 ? p.pais : pick(rng, regionCountries(promos, c));
@@ -226,16 +262,22 @@ export function makeOffer(c, ctx) {
   } else if (c.stage === 'ufc') {
     opponent = ufcOpponent(c, rng);
     if (opponent.ranking === 0 || p.ranking === 0) { rounds = 5; title = true; }
+    // BMF: para los violentos rankeados de pluma a wélter (o defensa si ya lo tenés).
+    const h = bmfHolder(c);
+    if (!title && h && BMF_DIVS.includes(p.division) && p.ranking != null && p.ranking <= 12 && ufcWins(p) >= 3 && finishRate(p) >= 0.6 && rng() < 0.3) {
+      const rival = h === p ? pick(rng, c.ufc.filter(f => f.division === p.division && f.ranking != null && f.ranking > 0 && !f.retirado)) : h;
+      if (rival && rival !== p) { opponent = rival; rounds = 5; bmf = true; }
+    }
     else if (opponent.ranking != null && opponent.ranking <= 5 && rng() < 0.5) rounds = 5; // evento estelar
   }
   const fecha = nextFightDate(c, rng);
-  const big = title || (opponent.ranking != null && opponent.ranking <= 10) || (p.ranking != null && p.ranking <= 10);
+  const big = title || bmf || (opponent.ranking != null && opponent.ranking <= 10) || (p.ranking != null && p.ranking <= 10);
   const ev = eventName(c, org, promos, fecha, big);
   const base = PURSE[c.stage === 'regional' ? 'regional' : c.stage] || 1000;
   const rankBonus = c.stage === 'ufc' && p.ranking != null ? (16 - p.ranking) * 6000 : 0;
   const show = Math.round((base + rankBonus) * (title ? 2.5 : 1));
   c.offer = {
-    opponentId: opponent.id, org: org.id, event: ev, rounds, title, kind,
+    opponentId: opponent.id, org: org.id, event: ev, rounds, title, kind, bmf,
     purse: { show, win: show },
     fecha,
     country: c.stage === 'nacional' ? p.pais : org.pais,
@@ -271,6 +313,7 @@ function ufcOpponent(c, rng) {
   const fresh = allDiv.filter(f => timesVs(c, f.id) < MAX_VS_SAME);
   const div = fresh.length >= 4 ? fresh : allDiv;
   const byRank = r => div.find(f => f.ranking === r);
+  if (c.superfight && byRank(0)) { c.superfight = false; return byRank(0); }
   if (p.ranking === 0) {
     const contenders = [1, 2, 3].map(byRank).filter(Boolean);
     return pick(rng, contenders);
@@ -299,6 +342,19 @@ export function opponentOf(c) {
 }
 
 // ---------- entrenamiento ----------
+// Techo por atributo según el arte marcial de origen: lo tuyo puede pasar tu potencial general,
+// lo parecido un poco menos y lo opuesto queda por debajo (y cuesta más subirlo).
+const STYLE_CAPS = {
+  bjj:         { sumisiones: 7, grappling: 4, golpeo: -5, patadas: -6 },
+  lucha_libre: { grappling: 7, sumisiones: 4, cardio: 2, patadas: -6, golpeo: -3 },
+  boxeo:       { golpeo: 7, velocidad: 4, defensa: 3, patadas: -6, sumisiones: -5, grappling: -3 },
+  kickboxing:  { patadas: 7, golpeo: 7, velocidad: 3, grappling: -6, sumisiones: -6 },
+  muay_thai:   { patadas: 7, golpeo: 5, menton: 3, cardio: 2, sumisiones: -6, grappling: -3 },
+};
+export function attrCap(p, attr) { return clamp(Math.round(p.techo + (STYLE_CAPS[p.estilo]?.[attr] || 0)), 55, 97); }
+// Lo propio se aprende más rápido; lo opuesto, bastante más lento.
+const styleGain = (p, attr) => { const d = STYLE_CAPS[p.estilo]?.[attr] || 0; return d >= 6 ? 1.2 : d > 0 ? 1.08 : d < 0 ? 0.6 : 1; };
+
 export function trainingGain(age, gym, current, techo, r) {
   const youth = age <= 24 ? 1.3 : age <= 30 ? 1.0 : age <= 35 ? 0.75 : age <= 37 ? 0.45 : 0.25;
   const room = clamp((techo - current) / 25, 0.04, 1);
@@ -313,14 +369,15 @@ export function train(c, focus) {
   const map = TRAINING[focus];
   const gains = {};
   for (const [attr, w] of Object.entries(map)) {
-    const g = trainingGain(p.edad, p.gimnasio, p.atributos[attr], p.techo, rng()) * w;
-    p.atributos[attr] = Math.round(clamp(p.atributos[attr] + g, 15, p.techo) * 10) / 10;
+    const cap = attrCap(p, attr);
+    const g = trainingGain(p.edad, p.gimnasio, p.atributos[attr], cap, rng()) * w * styleGain(p, attr) * staffBoost(p, attr);
+    p.atributos[attr] = Math.round(clamp(p.atributos[attr] + g, 15, Math.max(cap, p.atributos[attr])) * 10) / 10;
     gains[attr] = Math.round(g * 10) / 10;
   }
   c.camp.sessions++;
   c.date = addDays(c.date, 7);
   let injury = false, cancelled = false;
-  if (rng() < 0.04) {
+  if (rng() < 0.04 * (has(p, 'fisio') ? 0.5 : 1)) {
     injury = true; p.atributos.cardio = Math.max(15, p.atributos.cardio - 1); news(c, 'news_injury', {});
     if (rng() < 0.35) {
       // Lesión seria: se cae la pelea y hay que esperar una nueva oferta.
@@ -357,7 +414,7 @@ export function learnTechnique(c, key) {
   const p = c.player, t = TECHNIQUES[key];
   if (!techniqueStatus(c, key).ok) return false;
   p.puntos -= t.cost; p.tecnicas.push(key);
-  if (key === 'ironChin') p.atributos.menton = Math.min(p.techo, p.atributos.menton + 3);
+  if (key === 'ironChin') p.atributos.menton = Math.min(attrCap(p, 'menton'), p.atributos.menton + 3);
   return true;
 }
 
@@ -403,7 +460,7 @@ export function applyCareerFight(c, ctx, result) {
 
   // Experiencia de pelea (el entrenamiento es la vía principal de mejora)
   const exp = won ? 0.8 : draw ? 0.4 : 0.25;
-  for (const a of ATTRS) p.atributos[a] = Math.round(clamp(p.atributos[a] + exp * (a === 'defensa' ? 1.5 : 0.6), 15, p.techo) * 10) / 10;
+  for (const a of ATTRS) p.atributos[a] = Math.round(clamp(p.atributos[a] + exp * (a === 'defensa' ? 1.5 : 0.6), 15, Math.max(attrCap(p, a), p.atributos[a])) * 10) / 10;
   if (!won && !draw && (result.method === 'ko' || result.method === 'tko')) p.atributos.menton = Math.max(15, p.atributos.menton - 1.5);
   // Puntos de habilidad: solo peleando. Ganar 1, por nocaut o sumisión +1, ganar un título +2.
   const finished = ['ko', 'tko', 'sub'].includes(result.method);
@@ -413,7 +470,8 @@ export function applyCareerFight(c, ctx, result) {
   const ko = result.method === 'ko' || result.method === 'tko';
   let layoff = 0;
   if (!won && ko) layoff = (2 + rng() * 4) * power;
-  else if (rng() < 0.12 * power) layoff = 1 + rng() * 3;
+  else if (rng() < 0.12 * power * (has(p, 'fisio') ? 0.5 : 1)) layoff = 1 + rng() * 3;
+  layoff *= (has(p, 'fisio') ? 0.7 : 1) * (has(p, 'nutri') ? 0.9 : 1);
   if (layoff >= 1) { c.layoffUntil = addDays(c.date, Math.round(layoff * 30)); events.push({ type: 'injury_layoff', months: Math.round(layoff) }); }
 
   // Bolsa
@@ -434,7 +492,7 @@ export function applyCareerFight(c, ctx, result) {
 
   // Títulos
   if (offer.title && won) {
-    if (c.stage === 'ufc') { const first = !p.cinturones.includes('ufc'); if (first) p.cinturones.push('ufc'); events.push({ type: 'belt', org: 'ufc', first }); news(c, first ? 'news_ufc_champ' : 'news_defense', { name: p.nombre, org: 'UFC' }); }
+    if (c.stage === 'ufc') { p.titulosUfc = [...new Set([...(p.titulosUfc || []), p.division])]; const first = !p.cinturones.includes('ufc'); if (first) p.cinturones.push('ufc'); events.push({ type: 'belt', org: 'ufc', first }); news(c, first ? 'news_ufc_champ' : 'news_defense', { name: p.nombre, org: 'UFC' }); }
     else {
       const orgId = c.stage === 'pfl' ? 'pfl' : c.org;
       const had = c.regionalChamp[orgId] === 'player';
@@ -443,6 +501,10 @@ export function applyCareerFight(c, ctx, result) {
       events.push({ type: 'belt', org: orgId, first: !had });
       news(c, had ? 'news_defense' : 'news_title', { name: p.nombre, org: promoById(promos, orgId)?.nombre || orgId });
     }
+  } else if (offer.bmf && !draw) {
+    initBmf(c);
+    if (won) { const first = c.bmf.holder !== 'player'; c.bmf.holder = 'player'; if (!p.cinturones.includes('bmf')) p.cinturones.push('bmf'); events.push({ type: 'belt', org: 'bmf', first }); news(c, 'news_bmf', { name: p.nombre }); }
+    else if (c.bmf.holder === 'player') { c.bmf.holder = opp.id; p.cinturones = p.cinturones.filter(x => x !== 'bmf'); news(c, 'news_bmf', { name: opp.nombre }); }
   } else if (offer.title && !won && !draw) {
     if (c.stage !== 'ufc') { const orgId = c.stage === 'pfl' ? 'pfl' : c.org; if (c.regionalChamp[orgId] === 'player') { c.regionalChamp[orgId] = opp.id; p.cinturones = p.cinturones.filter(x => x !== orgId); news(c, 'news_lost_title', { name: p.nombre }); } }
     else p.cinturones = p.cinturones.filter(x => x !== 'ufc');
@@ -500,6 +562,7 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
   const nFights = r.w + r.l + r.d, need = careerNeeds(c);
   const ufcReady = nFights >= need.ufc;
   // Con 14 peleas, buen récord y nivel, UFC ya debería haberlo llamado: se apuran las invitaciones.
+  const ufcInterest = c.ufcCut ? 0.08 : 1; // si UFC ya te cortó, casi nunca te vuelve a llamar
   const overdue = nFights >= 12 && winPct >= 0.65 && st >= 2.5;
   const offer = (org, type, fights, ev = 'contract') => { offerContract(c, org, type, fights); events.push({ type: ev, org, fights: c.pendingContract.fights }); };
   switch (c.stage) {
@@ -517,10 +580,10 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
       if (won && c.cooldownWins > 0) c.cooldownWins--;
       const ready = !(c.cooldownWins > 0);
       const hot = ((champ && won) || c.streakInStage >= 3) && r.w > r.l; // con récord perdedor no te llaman de arriba
-      if (ufcReady && r.w > r.l && won && champ && org.nivel >= 2.5 && rng() < 0.4 + (org.nivel - 2.5) * 0.3) {
+      if (ufcReady && r.w > r.l && won && champ && org.nivel >= 2.5 && rng() < (0.4 + (org.nivel - 2.5) * 0.3) * ufcInterest) {
         // Campeón de una promotora fuerte: UFC lo llama directo (contrato corto)
         offer('ufc', 'ufc', 1 + Math.floor(rng() * 2)); news(c, 'news_ufc_contract', { name: p.nombre });
-      } else if (nFights >= need.ufc - 1 && r.w > r.l && won && st >= 2.8 && c.streakInStage >= 3 && rng() < 0.07) {
+      } else if (nFights >= need.ufc - 1 && r.w > r.l && won && st >= 2.8 && c.streakInStage >= 3 && rng() < 0.07 * ufcInterest) {
         offer('ufc', 'ufc', 1, 'short_notice'); news(c, 'news_short_notice', { name: p.nombre });
       } else if (hot && rng() < 0.45 && higherOrg(c, promos, rng)) {
         offer(higherOrg(c, promos, rng).id, 'regional', 3 + Math.floor(rng() * 2));
@@ -534,7 +597,7 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
           c.stage = show; c.prevOrg = c.org; c.org = c.stage; c.stageFights = 0; c.stageWins = 0; c.streakInStage = 0; c.rtuRound = 0; c.contract = null;
           events.push({ type: 'invite', org: c.stage });
           news(c, show === 'rtu' ? 'news_rtu' : 'news_dwcs', { name: p.nombre });
-        } else if (ufcReady) { offer('ufc', 'ufc', 2 + Math.floor(rng() * 3)); news(c, 'news_ufc_contract', { name: p.nombre }); }
+        } else if (ufcReady && rng() < ufcInterest) { offer('ufc', 'ufc', 2 + Math.floor(rng() * 3)); news(c, 'news_ufc_contract', { name: p.nombre }); }
       } else if (r.w > r.l && won && champ && org.nivel >= 2.5 && rng() < 0.12) {
         offer('pfl', 'pfl', 3);
       } else if (p.racha <= -3 || (org.nivel >= ADVANCED_TIER && r.l > r.w)) {
@@ -570,7 +633,7 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
       break;
     }
     case 'pfl': {
-      if (ufcReady && won && (c.regionalChamp.pfl === 'player' ? rng() < 0.5 : rng() < (overdue ? 0.3 : 0.12)) && st >= 3.2) offer('ufc', 'ufc', 2 + Math.floor(rng() * 3));
+      if (ufcReady && won && (c.regionalChamp.pfl === 'player' ? rng() < 0.5 * ufcInterest : rng() < (overdue ? 0.3 : 0.12) * ufcInterest) && st >= 3.2) offer('ufc', 'ufc', 2 + Math.floor(rng() * 3));
       else if (!won && !draw && (p.racha <= -3 || r.l > r.w)) {
         events.push({ type: 'released', org: 'pfl' }); news(c, 'news_released_org', { name: p.nombre, org: 'PFL' });
         backToRegional(c, ctx);
@@ -599,6 +662,7 @@ function progression(c, ctx, { won, draw, result, opp, events, rng }) {
 
 function releaseFromUfc(c, ctx, events, rng) {
   const p = c.player;
+  c.ufcCut = (c.ufcCut || 0) + 1;
   c.ufc = c.ufc.filter(f => f.id !== 'player');
   p.ranking = null;
   backToRegional(c, ctx);
@@ -693,7 +757,11 @@ export function simulateWorld(c, months) {
     }
     // Envejecimiento anual de la IA (cada 12 meses simulados)
     c.worldMonths = (c.worldMonths || 0) + 1;
-    if (c.worldMonths % 12 === 0) yearlyTurnover(c, rng);
+    if (c.worldMonths % 12 === 0) { yearlyTurnover(c, rng); bmfWorld(c, rng); }
+    // Un cinturón retenido en otra división se deja vacante a los ~14 meses sin defenderlo.
+    for (const [div, since] of Object.entries(c.heldBelts || {})) {
+      if ((new Date(c.date) - new Date(since)) / 864e5 > 420) { delete c.heldBelts[div]; c.player.titulosUfc = (c.player.titulosUfc || []).filter(d => d !== div); rerank(c, div); news(c, 'news_vacated', { name: c.player.nombre, div }); }
+    }
   }
 }
 
@@ -712,13 +780,13 @@ function cutLosers(c, div, rng) {
 
 // De dónde vienen los que firman con UFC: proporciones parecidas al roster real (EE. UU., Brasil y Rusia
 // dominan); el resto de los países aparece de vez en cuando.
-const UFC_COUNTRIES = { US: 60, BR: 30, RU: 19, ENG: 8, AU: 8, MX: 7, PL: 7, CN: 6, CA: 5, JP: 4, FR: 4, KZ: 4, GE: 4, UZ: 4, KR: 4,
-  NZ: 3, AR: 3, DE: 3, IE: 3, SE: 3, KG: 3, AZ: 3, AM: 3, UA: 3, CZ: 3, TJ: 2, EC: 2, PE: 2, CO: 2, CL: 2, VE: 2, NL: 2, ES: 2,
-  IT: 2, MD: 2, HR: 2, RS: 2, AT: 2, TR: 2, NG: 2, ZA: 2, CM: 1, SCO: 1, WAL: 1, NIR: 1, DK: 1, NO: 1, FI: 1, BE: 1, CH: 1, SK: 1,
-  LT: 1, BG: 1, RO: 1, CU: 1, DO: 1, PR: 1, PH: 1, TH: 1, IN: 1, MN: 1, IR: 1, IQ: 1, MA: 1, EG: 1, AF: 1, AO: 1, CD: 1 };
+const UFC_COUNTRIES = { US: 95, BR: 38, RU: 30, ENG: 9, AU: 8, MX: 8, PL: 7, CN: 6, CA: 6, KZ: 5, GE: 5, UZ: 4, JP: 4, FR: 4, KR: 3,
+  NZ: 3, AR: 3, DE: 2, IE: 2, SE: 2, KG: 2, AZ: 2, AM: 2, UA: 2, CZ: 2, TJ: 1.5, EC: 1.5, PE: 1.5, CO: 1, CL: 1, VE: 1, NL: 1, ES: 1,
+  IT: 1, MD: 1, HR: 1, RS: 1, AT: 1, TR: 1, NG: 1, ZA: 1, CM: 0.5, SCO: 0.5, WAL: 0.5, NIR: 0.5, DK: 0.5, NO: 0.5, FI: 0.3, BE: 0.5, CH: 0.3, SK: 0.5,
+  LT: 0.3, BG: 0.3, RO: 0.5, CU: 1, DO: 0.5, PR: 0.5, PH: 0.5, TH: 0.5, IN: 0.3, MN: 0.5, IR: 0.5, IQ: 0.5, MA: 0.5, EG: 0.3, AF: 0.5, AO: 0.3, CD: 0.3 };
 function ufcCountry(rng) {
   const extra = Object.keys(NAMES).filter(k => /^[A-Z]{2,3}$/.test(k) && !UFC_COUNTRIES[k]);
-  const entries = [...Object.entries(UFC_COUNTRIES), ...extra.map(k => [k, 0.15])];
+  const entries = [...Object.entries(UFC_COUNTRIES), ...extra.map(k => [k, 0.08])];
   const total = entries.reduce((s, [, w]) => s + w, 0);
   let r = rng() * total;
   for (const [k, w] of entries) { r -= w; if (r <= 0) return k; }
@@ -775,19 +843,21 @@ function yearlyTurnover(c, rng) {
 function rerank(c, div) {
   const ranked = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking != null).sort((a, b) => a.ranking - b.ranking);
   const hadChamp = ranked.some(f => f.ranking === 0);
+  // Si el jugador conserva el cinturón de esta división (se fue a otra), nadie más es campeón.
+  const offset = !hadChamp && c.heldBelts?.[div] ? 1 : 0;
   ranked.forEach((f, i) => {
-    const r = i + (hadChamp ? 0 : 0);
-    if (!hadChamp && i === 0) news(c, 'news_new_champ', { name: f.nombre, div });
+    const r = i + offset;
+    if (!hadChamp && !offset && i === 0) news(c, 'news_new_champ', { name: f.nombre, div });
     f.ranking = r <= 15 ? r : null;
   });
   // Completar el top 15 con los mejores no rankeados
   const n = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking != null).length;
-  if (n < 16) {
+  if (n + offset < 16) {
     const free = c.ufc.filter(f => f.division === div && !f.retirado && f.ranking == null && f.id !== 'player');
     const byForm = (a, b) => b.racha - a.racha || starsExact(b.atributos) - starsExact(a.atributos);
     // Primero los que ya se ganaron el lugar; si faltan, los de más victorias en UFC (mínimo 3).
     const pool = [...free.filter(rankEligible).sort(byForm), ...free.filter(f => !rankEligible(f) && ufcWins(f) >= 3).sort((a, b) => ufcWins(b) - ufcWins(a) || byForm(a, b))];
-    pool.slice(0, 16 - n).forEach((f, i) => { f.ranking = n + i; });
+    pool.slice(0, 16 - n - offset).forEach((f, i) => { f.ranking = n + i + offset; });
   }
 }
 
@@ -815,7 +885,58 @@ function maintainRankings(c, div) {
 }
 
 export function rankingTable(c, division) {
-  return c.ufc.filter(f => f.division === division && f.ranking != null && !f.retirado).sort((a, b) => a.ranking - b.ranking);
+  const list = c.ufc.filter(f => f.division === division && f.ranking != null && !f.retirado).sort((a, b) => a.ranking - b.ranking);
+  // Cinturón retenido por el jugador en otra división: aparece como campeón.
+  return c.heldBelts?.[division] && !list.some(f => f.ranking === 0) ? [{ ...c.player, ranking: 0 }, ...list] : list;
+}
+
+// ---------- cambio de división ----------
+export const DIVISIONS = ['mosca', 'gallo', 'pluma', 'ligero', 'welter', 'medio', 'semipesado', 'pesado'];
+export const MAX_DIV_MOVES = 3;
+// División "natural" por altura: se puede ir como mucho una por encima o por debajo de ella.
+const naturalDiv = p => DIVISIONS.reduce((best, d, i) => (Math.abs(HEIGHT_BY_DIV[d] - p.altura) < Math.abs(HEIGHT_BY_DIV[DIVISIONS[best]] - p.altura) ? i : best), 0);
+export function divisionMoves(c) {
+  const p = c.player, i = DIVISIONS.indexOf(p.division), nat = naturalDiv(p), left = MAX_DIV_MOVES - (c.divMoves || 0);
+  const can = j => j >= 0 && j < DIVISIONS.length && left > 0 && Math.abs(j - nat) <= 1 && !c.offer?.title;
+  return { up: can(i + 1) ? DIVISIONS[i + 1] : null, down: can(i - 1) ? DIVISIONS[i - 1] : null, left };
+}
+export function changeDivision(c, div) {
+  const p = c.player, mv = divisionMoves(c);
+  if (div !== mv.up && div !== mv.down) return false;
+  const from = p.division;
+  c.divMoves = (c.divMoves || 0) + 1;
+  if (c.stage === 'ufc' && p.ranking === 0) {
+    // Campeón que cambia de división: conserva el cinturón un tiempo y va directo por el otro.
+    c.heldBelts = { ...(c.heldBelts || {}), [from]: c.date };
+    c.superfight = true;
+  }
+  if (div === mv.down) p.atributos.cardio = Math.max(15, p.atributos.cardio - 2); // corte de peso duro
+  p.division = div; p.ranking = null;
+  c.offer = null; c.camp = null;
+  news(c, 'news_div_change', { name: p.nombre, div });
+  return true;
+}
+
+// ---------- BMF: título simbólico para los más violentos (pluma a wélter) ----------
+const BMF_DIVS = ['pluma', 'ligero', 'welter'];
+const finishRate = f => { const h = f.historial || []; const w = h.filter(x => x.resultado === 'W'); return w.length ? w.filter(x => ['ko', 'tko', 'sub'].includes(x.metodo)).length / w.length : 0; };
+function initBmf(c) {
+  if (c.bmf) return;
+  const pool = c.ufc.filter(f => BMF_DIVS.includes(f.division) && !f.retirado && f.ranking != null);
+  const holder = c.ufc.find(f => f.id === 'max-holloway') || pool.sort((a, b) => starsExact(b.atributos) * (b.metodosVictoria?.ko || 1) - starsExact(a.atributos) * (a.metodosVictoria?.ko || 1))[0];
+  c.bmf = { holder: holder?.id || null };
+}
+function bmfHolder(c) { initBmf(c); return c.bmf.holder === 'player' ? c.player : c.ufc.find(f => f.id === c.bmf.holder && !f.retirado) || null; }
+function bmfWorld(c, rng) {
+  initBmf(c);
+  const h = bmfHolder(c);
+  if (!h) { const cand = c.ufc.filter(f => BMF_DIVS.includes(f.division) && !f.retirado && f.ranking != null && f.ranking > 0); const n = pick(rng, cand); if (n) { c.bmf.holder = n.id; news(c, 'news_bmf', { name: n.nombre }); } return; }
+  if (h === c.player || rng() > 0.45) return;
+  const cand = c.ufc.filter(f => f !== h && BMF_DIVS.includes(f.division) && !f.retirado && f.ranking != null && f.ranking > 0 && f.id !== c.offer?.opponentId);
+  const b = pick(rng, cand);
+  if (!b || h.id === c.offer?.opponentId) return;
+  const res = simulateFight(h, b, { rounds: 5, rng });
+  if (res.winnerId === b.id) { c.bmf.holder = b.id; news(c, 'news_bmf', { name: b.nombre }); }
 }
 
 export function playerWinProb(c) {
@@ -836,7 +957,13 @@ export function load() {
 export function relink(c) {
   // v2 de habilidades: los puntos se ganan solo peleando; las partidas viejas tenían cientos acumulados.
   if ((c.techV || 1) < 2) { c.techV = 2; if (c.player) c.player.puntos = Math.min(c.player.puntos || 0, 8); }
-  if (c.player?.historial?.some(h => h.org === 'dwcs')) c.dwcsDone = true; // el Contender Series es una sola vez
+  if (c.player?.historial?.some(h => h.org === 'dwcs')) c.dwcsDone = true;
+  // v2 de países: los que entraron a UFC con la versión vieja venían de cualquier país por igual.
+  if (!c.countryV && NAMES) {
+    c.countryV = 2;
+    const rng = rngOf(c);
+    for (const f of c.ufc) if (f.nuevo && !(UFC_COUNTRIES[f.pais] >= 1) && rng() < 0.85) { f.pais = ufcCountry(rng); f.nombre = randomName(rng, namesFor(NAMES, f.pais)); f.cara = randomFace(rng, f.pais); }
+  } // el Contender Series es una sola vez
   const i = c.ufc.findIndex(f => f.id === 'player');
   if (i >= 0) c.ufc[i] = c.player;
   return c;

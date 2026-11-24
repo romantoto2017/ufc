@@ -14,7 +14,7 @@ import { Tutorial } from './tutorial.js';
 const DT = 1 / 60;
 let current = null;
 
-const BTN_CLASS = { jab: 'punch', cross: 'punch', hook: 'punch', elbow: 'punch', lowKick: 'kick', bodyKick: 'kick', highKick: 'kick', spinKick: 'kick', takedown: 'grapple',
+const BTN_CLASS = { jab: 'punch', cross: 'punch', hook: 'punch', elbow: 'punch', lowKick: 'kick', bodyKick: 'kick', highKick: 'kick', spinKick: 'kick', knee: 'kick', takedown: 'grapple',
   gnpPunch: 'punch', gnpElbow: 'punch', upStrike: 'punch', sub: 'special', escape: 'grapple', standUp: 'grapple' };
 
 export function startFight(a, b, { rounds, onEnd, ufcLogo, danaChance = 0.35, eventLabel = '', tutorial = false }) {
@@ -141,7 +141,7 @@ function setPadMode(ctx, mode) {
   const simple = (state.settings.esquemaControles || 'clasico') === 'simple';
   pad.classList.toggle('simple', simple && mode === 'stand');
   pad.classList.toggle('classic', !simple && mode === 'stand');
-  if (mode === 'stand' && simple) actions = ['chain:punch', 'chain:kick', 'takedown'];
+  if (mode === 'stand' && simple) actions = ['chain:punch', 'chain:kick', 'knee', 'takedown'];
   else if (mode === 'stand') actions = STANDING_ACTIONS;
   else if (mode === 'ground-top') actions = ['gnpPunch', 'gnpElbow', 'sub', 'standUp'];
   else actions = ['upStrike', 'sub', 'escape'];
