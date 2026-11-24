@@ -142,3 +142,19 @@ test('escalera: ~5 peleas para la primera promotora, 10+ para UFC; las habilidad
   }
   assert.ok(learnedMax < Object.keys(TECHNIQUES).length / 2, `aprendió ${learnedMax} de ${Object.keys(TECHNIQUES).length}`);
 });
+
+test('cambio de división: límites por altura, máximo 3, y el campeón que vuelve recupera su cinturón', async () => {
+  const { divisionMoves, changeDivision } = await import('../js/career/career.js');
+  const mkC = (altura, division) => newCareer({ player: createPlayer({ nombre: 'T', pais: 'US', edad: 22, division, altura, alcance: altura, estilo: 'boxeo', postura: 'ortodoxa', cara: {} }), promos, fighters, seed: 4 });
+  assert.equal(divisionMoves(mkC(160, 'pluma')).up, null, 'el bajito no sube');
+  const tall = mkC(187, 'ligero');
+  for (const d of ['welter', 'medio', 'semipesado']) assert.ok(changeDivision(tall, d), d);
+  assert.equal(divisionMoves(tall).left, 0); assert.equal(changeDivision(tall, 'pesado'), false);
+  // Campeón de ligero sube a wélter y vuelve: recupera el cinturón y la retención se borra
+  const c = mkC(178, 'ligero');
+  c.stage = 'ufc'; c.org = 'ufc'; c.player.ranking = 0;
+  assert.ok(changeDivision(c, 'welter'));
+  assert.ok(c.heldBelts.ligero); assert.equal(c.player.ranking, null);
+  assert.ok(changeDivision(c, 'ligero'));
+  assert.equal(c.player.ranking, 0); assert.equal(c.heldBelts.ligero, undefined);
+});

@@ -262,13 +262,13 @@ export function makeOffer(c, ctx) {
   } else if (c.stage === 'ufc') {
     opponent = ufcOpponent(c, rng);
     if (opponent.ranking === 0 || p.ranking === 0) { rounds = 5; title = true; }
+    else if (opponent.ranking != null && opponent.ranking <= 5 && rng() < 0.5) rounds = 5; // evento estelar
     // BMF: para los violentos rankeados de pluma a wélter (o defensa si ya lo tenés).
     const h = bmfHolder(c);
     if (!title && h && BMF_DIVS.includes(p.division) && p.ranking != null && p.ranking <= 12 && ufcWins(p) >= 3 && finishRate(p) >= 0.6 && rng() < 0.3) {
       const rival = h === p ? pick(rng, c.ufc.filter(f => f.division === p.division && f.ranking != null && f.ranking > 0 && !f.retirado)) : h;
       if (rival && rival !== p) { opponent = rival; rounds = 5; bmf = true; }
     }
-    else if (opponent.ranking != null && opponent.ranking <= 5 && rng() < 0.5) rounds = 5; // evento estelar
   }
   const fecha = nextFightDate(c, rng);
   const big = title || bmf || (opponent.ranking != null && opponent.ranking <= 10) || (p.ranking != null && p.ranking <= 10);
@@ -912,6 +912,7 @@ export function changeDivision(c, div) {
   }
   if (div === mv.down) p.atributos.cardio = Math.max(15, p.atributos.cardio - 2); // corte de peso duro
   p.division = div; p.ranking = null;
+  if (c.heldBelts?.[div]) { delete c.heldBelts[div]; p.ranking = 0; } // vuelve a la división donde conserva el cinturón
   c.offer = null; c.camp = null;
   news(c, 'news_div_change', { name: p.nombre, div });
   return true;
@@ -957,13 +958,13 @@ export function load() {
 export function relink(c) {
   // v2 de habilidades: los puntos se ganan solo peleando; las partidas viejas tenían cientos acumulados.
   if ((c.techV || 1) < 2) { c.techV = 2; if (c.player) c.player.puntos = Math.min(c.player.puntos || 0, 8); }
-  if (c.player?.historial?.some(h => h.org === 'dwcs')) c.dwcsDone = true;
+  if (c.player?.historial?.some(h => h.org === 'dwcs')) c.dwcsDone = true; // el Contender Series es una sola vez
   // v2 de países: los que entraron a UFC con la versión vieja venían de cualquier país por igual.
   if (!c.countryV && NAMES) {
     c.countryV = 2;
     const rng = rngOf(c);
     for (const f of c.ufc) if (f.nuevo && !(UFC_COUNTRIES[f.pais] >= 1) && rng() < 0.85) { f.pais = ufcCountry(rng); f.nombre = randomName(rng, namesFor(NAMES, f.pais)); f.cara = randomFace(rng, f.pais); }
-  } // el Contender Series es una sola vez
+  }
   const i = c.ufc.findIndex(f => f.id === 'player');
   if (i >= 0) c.ufc[i] = c.player;
   return c;

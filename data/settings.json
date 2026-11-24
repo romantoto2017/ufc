@@ -1,7 +1,5 @@
 {
   "idioma": "es",
-  "volumenMusica": 60,
-  "volumenEfectos": 80,
   "dificultad": "normal",
   "duracionRoundMin": 5,
   "rounds": 3,

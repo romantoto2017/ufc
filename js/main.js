@@ -33,10 +33,6 @@ async function boot() {
   initSelectScreen(onFight);
   initCareer({ namesDb: state.names, logo: ufcLogo });
 
-  // La música arranca con el primer gesto (requisito de los navegadores).
-  const firstGesture = () => { audio.unlock(); audio.setVolumes(state.settings.volumenMusica, state.settings.volumenEfectos); if (isMenuish()) audio.startMusic(); };
-  window.addEventListener('pointerdown', firstGesture, { once: true });
-  window.addEventListener('keydown', firstGesture, { once: true });
 
   document.querySelectorAll('.screen').forEach(s => s.addEventListener('screen:show', () => {
     const menuish = isMenuish(s.id);

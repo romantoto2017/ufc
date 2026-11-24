@@ -391,8 +391,7 @@ async function fightNow(mode) {
   const c = career, p = c.player, opp = C.opponentOf(c), off = c.offer;
   audio.play('ui');
   if (c.stage === 'ufc' && (off.title || off.bmf) && !off.presserDone) {
-    off.presserDone = true; persist();
-    return titlePresser(p, opp, () => fightNow(mode));
+    return titlePresser(p, opp, () => { off.presserDone = true; persist(); fightNow(mode); });
   }
   const after = result => {
     const events = C.applyCareerFight(c, ctx(), result);

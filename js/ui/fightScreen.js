@@ -337,14 +337,7 @@ function startIntro(ctx, eventLabel) {
   ctx.endIntro = end;
   box.onclick = end;
   audio.roar(0.8);
-  try {
-    if (window.speechSynthesis && state.settings.volumenEfectos > 0) {
-      const u = new SpeechSynthesisUtterance("It's tiiime!");
-      u.lang = 'en-US'; u.rate = 0.62; u.pitch = 0.75; u.volume = state.settings.volumenEfectos / 100;
-      window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
-    }
-  } catch { /* sin voz sintetizada */ }
-  ctx.cleanup.push(() => { box.hidden = true; try { window.speechSynthesis?.cancel(); } catch { /* nada */ } });
+  ctx.cleanup.push(() => { box.hidden = true; });
 }
 
 function drawIntro(ctx, dt) {

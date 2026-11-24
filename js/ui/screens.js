@@ -35,8 +35,6 @@ export function buildSettings() {
   form.append(
     seg('idioma', 'settings_language', [{ value: 'es', label: 'Español' }, { value: 'en', label: 'English' }]),
     seg('dificultad', 'settings_difficulty', ['facil', 'normal', 'dificil', 'leyenda'].map(v => ({ value: v, label: t('diff_' + v) }))),
-    range('volumenMusica', 'settings_music'),
-    range('volumenEfectos', 'settings_sfx'),
     seg('duracionRoundMin', 'settings_round_length', [1, 2, 3, 5].map(v => ({ value: v, label: `${v} ${t('minutes_short')}` }))),
     seg('esquemaControles', 'settings_scheme', [{ value: 'simple', label: t('scheme_simple') }, { value: 'clasico', label: t('scheme_clasico') }]),
     seg('tamanoBotones', 'settings_button_size', ['pequeno', 'mediano', 'grande'].map(v => ({ value: v, label: t('size_' + v) }))),
@@ -50,7 +48,6 @@ export function applyControlSettings() {
   const size = { pequeno: 48, mediano: 60, grande: 72 }[s.tamanoBotones] || 60;
   document.documentElement.style.setProperty('--btn', size + 'px');
   document.documentElement.style.setProperty('--btn-op', String(Math.max(0.2, s.opacidadBotones / 100)));
-  audio.setVolumes(s.volumenMusica, s.volumenEfectos);
 }
 
 async function onSettingChanged(key) {
